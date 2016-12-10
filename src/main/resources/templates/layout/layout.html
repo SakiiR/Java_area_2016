@@ -1,0 +1,18 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="layout/head :: head">
+    <title>Area</title>
+</head>
+<body>
+    <div th:substituteby="layout/navbar :: navbar"></div>
+    <div class="container">
+        <p>Page content goes here</p>
+        <section layout:fragment="content">
+        </section>
+    </div>
+    <div th:substituteby="layout/footer :: footer"></div>
+    <div th:substituteby="layout/javascripts :: javascripts"></div>
+</body>
+</html>
