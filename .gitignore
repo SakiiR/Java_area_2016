@@ -1,6 +1,8 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
+src/main/resources/static/vendors
+
 ### Maven ###
 .mvn
 mvnw

@@ -1,0 +1,20 @@
+{
+  "name": "Area",
+  "homepage": "https://github.com/SakiiR/Java_area_2016",
+  "authors": [
+    "Erwan Dupard <erwan.dupard@epitech.eu>"
+  ],
+  "description": "Epitech Area Java Project",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.97.8"
+  }
+}
