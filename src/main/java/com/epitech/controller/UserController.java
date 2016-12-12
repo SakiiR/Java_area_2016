@@ -1,5 +1,6 @@
 package com.epitech.controller;
 
+import com.epitech.utils.BodyParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,12 @@ public class            UserController {
     )
     public String       login(@RequestBody String body) {
         // parse body and find user in database :)
+        BodyParser      bodyParser = new BodyParser(body);
+
+        // bodyParser.get("foo") == "bar"
+
         return "login";
-    };
+    }
 
     @RequestMapping("/register")
     public String       register() {
