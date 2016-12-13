@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="./vendors/materialize/dist/css/materialize.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>{% block title %}{% endblock %} - Area</title>
+    {% endblock %}
+</head>
+<body>
+    <div id="nav">
+        {% block navbar %}
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">Logo</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="/">Index</a></li>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                    </ul>
+                </div>
+            </nav>
+        {% endblock %}
+    </div>
+    <div id="content">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <div id="footer">
+        {% block footer %}
+            Area Epitech Project
+        {% endblock %}
+    </div>
+    <div id="javascripts">
+        {% block javascripts %}
+            <script type="text/javascript" src="./vendors/jquery/dist/jquery.min.js"></script>
+            <script src="./vendors/materialize/dist/js/materialize.min.js"></script>
+        {% endblock %}
+    </div>
+</body>
+</html>

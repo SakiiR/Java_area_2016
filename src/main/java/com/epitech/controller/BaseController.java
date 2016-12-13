@@ -1,6 +1,7 @@
 package com.epitech.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -13,7 +14,8 @@ public class BaseController {
             value = "/",
             method = RequestMethod.GET
     )
-    public String   index() {
-        return "index";
+    public String   index(ModelMap model) {
+        model.addAttribute("name", "SakiiR");
+        return "index.html";
     }
 }

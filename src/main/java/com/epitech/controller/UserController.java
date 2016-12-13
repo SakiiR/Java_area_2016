@@ -16,7 +16,7 @@ public class            UserController {
             method = RequestMethod.GET
     )
     public String       login() {
-        return "login";
+        return "login.html";
     }
 
     @RequestMapping(
@@ -27,13 +27,14 @@ public class            UserController {
         // parse body and find user in database :)
         BodyParser      bodyParser = new BodyParser(body);
 
-        // bodyParser.get("foo") == "bar"
+        String          username = bodyParser.get("username");
+        String          password = bodyParser.get("password");
 
-        return "login";
+        return "login.html";
     }
 
     @RequestMapping("/register")
     public String       register() {
-        return "register";
+        return "register.html";
     }
 }
