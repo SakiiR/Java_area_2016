@@ -2,10 +2,8 @@ package com.epitech.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.crypto.KeyGenerator;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.Random;
 
 /**
  * Created by sakiir on 14/12/16.
