@@ -73,7 +73,7 @@ public class                    Logger {
      * @param params the var args params
      */
     public static final void    logError(String fmt, Object ...params) {
-        System.out.println(String.format("[\033[31m-\033[0m] " + "\033[31m" + fmt + "\033[0m", params));
+        System.err.println(String.format("[\033[31m-\033[0m] " + "\033[31m" + fmt + "\033[0m", params));
     }
 
     /**
@@ -82,7 +82,7 @@ public class                    Logger {
      * @param str the string to display
      */
     public static final void    logError(String str) {
-        System.out.println("[\033[31m-\033[0m] " + "\033[31m" + str + "\033[0m");
+        System.err.println("[\033[31m-\033[0m] " + "\033[31m" + str + "\033[0m");
     }
 
 }
