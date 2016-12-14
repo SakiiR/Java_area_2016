@@ -27,14 +27,15 @@ public class                        PasswordManager {
      * @return a String array with the salt and
      * the hashed password respectively.
      */
-    public String[]                 encode(String password) {
-        String[]                    ret = new String[2];
+    public PasswordContainer        encode(String password) {
+        String                      salt;
+        String                      hash;
         BCryptPasswordEncoder       bcryptEncoder = new BCryptPasswordEncoder();
 
         SecureRandom random = new SecureRandom();
-        ret[0] = new BigInteger(130, random).toString(32);
-        ret[1] = bcryptEncoder.encode((ret[0] + password));
-        return ret;
+        salt = new BigInteger(130, random).toString(32);
+        hash = bcryptEncoder.encode((salt + password));
+        return new PasswordContainer(salt, hash);
     }
 
     /**
