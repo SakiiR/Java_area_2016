@@ -72,7 +72,7 @@ public class            UserController {
         }
 
         if (error.length() == 0) {
-            /**  Register ok ! adding user to db etc ..  */
+            //  Register ok ! adding user to db etc ..
 
             error = "You successfully registered ! you will be redirected in 3 seconds !";
             modelMap.addAttribute("success", true);

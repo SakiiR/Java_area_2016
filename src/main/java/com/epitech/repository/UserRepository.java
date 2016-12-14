@@ -7,8 +7,7 @@ import com.epitech.model.User;
 /**
  * Created by anakin on 14/12/16.
  */
-public interface UserRepository extends MongoRepository<User, String> {
-    public User findByUserName(String UserName);
-    public List<User> findByPassword(String password);
-
+public interface            UserRepository extends MongoRepository<User, String> {
+    public User             findByUserName(String username);
+    public List<User>       findByPassword(String password);
 }
