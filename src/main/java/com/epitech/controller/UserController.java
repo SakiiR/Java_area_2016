@@ -36,8 +36,13 @@ public class            UserController {
         return "login.html";
     }
 
-    @RequestMapping("/register")
-    public String       register() {
+    @RequestMapping(
+            value = "/register",
+            method = RequestMethod.POST
+    )
+    public String       register(@RequestBody String body) {
+        BodyParser      bodyParser = new BodyParser(body);
+
         return "register.html";
     }
 }
