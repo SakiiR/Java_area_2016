@@ -2,19 +2,13 @@ package com.epitech.controller;
 
 import com.epitech.model.User;
 import com.epitech.repository.UserRepository;
-import com.epitech.utils.BodyParser;
 import com.epitech.utils.Logger;
 import com.epitech.utils.PasswordContainer;
 import com.epitech.utils.PasswordManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
 
 /**
  * Created by sakiir on 10/12/16.
