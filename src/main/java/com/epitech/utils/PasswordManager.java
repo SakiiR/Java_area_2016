@@ -30,8 +30,9 @@ public class                        PasswordManager {
         return ret;
     }
 
-    public boolean          check(String password, String salt, String hash) {
-        // TODO: check bcrypt hash
-        return true;
+    public boolean                  check(String password, String salt, String hash) {
+        BCryptPasswordEncoder       bcryptEncoder = new BCryptPasswordEncoder();
+
+        return (bcryptEncoder.encode(salt + password) == hash);
     }
 }
