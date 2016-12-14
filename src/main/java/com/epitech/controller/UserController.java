@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class                    UserController {
 
+    public UserController() {
+    }
+
     @Autowired
     private UserRepository      userRepository;
 
