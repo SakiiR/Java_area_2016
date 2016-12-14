@@ -33,6 +33,6 @@ public class                        PasswordManager {
     public boolean                  check(String password, String salt, String hash) {
         BCryptPasswordEncoder       bcryptEncoder = new BCryptPasswordEncoder();
 
-        return (bcryptEncoder.encode(salt + password) == hash);
+        return (bcryptEncoder.encode(salt + password).equals(hash));
     }
 }
