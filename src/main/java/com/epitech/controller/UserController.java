@@ -1,84 +1,63 @@
 package com.epitech.controller;
 
+import com.epitech.model.User;
+import com.epitech.repository.UserRepository;
 import com.epitech.utils.BodyParser;
 import com.epitech.utils.Logger;
+import com.epitech.utils.PasswordContainer;
 import com.epitech.utils.PasswordManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 /**
  * Created by sakiir on 10/12/16.
  */
 @Controller
-public class            UserController {
-    @RequestMapping(
-            value  = "/login",
-            method = RequestMethod.GET
-    )
-    public String       login() {
-        PasswordManager p = new PasswordManager();
-        p.encode("lol");
+public class                    UserController {
+
+    @Autowired
+    private UserRepository      userRepository;
+
+    @RequestMapping(value  = "/login", method = RequestMethod.GET)
+    public String               login() {
         return "login.html";
     }
 
-    @RequestMapping(
-            value  = "/login",
-            method = RequestMethod.POST
-    )
-    public String       login(@RequestBody String body) {
+    @RequestMapping(value  = "/login", method = RequestMethod.POST)
+    public String               login(@ModelAttribute("user") User user) {
         // parse body and find user in database :)
-        BodyParser      bodyParser = new BodyParser(body);
-
-        String          username = bodyParser.get("username");
-        String          password = bodyParser.get("password");
-
         return "login.html";
     }
 
-    @RequestMapping(
-            value = "/register",
-            method = RequestMethod.GET
-    )
-    public String       register() {
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String               register() {
         return "register.html";
     }
 
-    @RequestMapping(
-            value = "/register",
-            method = RequestMethod.POST
-    )
-    public String       register(@RequestBody String body, ModelMap modelMap) {
-        BodyParser      bodyParser = new BodyParser(body);
-        String[]        form = new String[3];
-        String          error = "";
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String               register(@ModelAttribute("user") User user, ModelMap modelMap) {
+        if (!(user.getUsername() == null || user.getPassword() == null)) {
+            User exist = userRepository.findByUsername(user.getUsername());
+            if (exist == null) {
+                //creating user
+                PasswordManager passwordManager = new PasswordManager();
+                PasswordContainer passwordContainer = passwordManager.encode(user.getPassword());
+                user.setPassword(passwordContainer.getPassword())
+                        .setSalt(passwordContainer.getSalt());
+                userRepository.save(user);
+                Logger.logSuccess("User %s Created !", user.getUsername());
+                modelMap.addAttribute("success", true);
+                modelMap.addAttribute("error", String.format("User %s successfully created", user.getUsername()));
 
-        form[0] = bodyParser.get("username");
-        form[1] = bodyParser.get("password");
-        form[2] = bodyParser.get("password2");
-
-        for(String e : form) {
-            if (e == null) {
-                error = "Missing field !";
-            }
-        }
-
-        if (!(form[1].equals(form[2]))) {
-            error = "Password must be equals !";
-        }
-
-        if (error.length() == 0) {
-            //  Register ok ! adding user to db etc ..
-
-            error = "You successfully registered ! you will be redirected in 3 seconds !";
-            modelMap.addAttribute("success", true);
-        }
-
-        modelMap.addAttribute("error", error);
+            } else modelMap.addAttribute("error", String.format("User %s already exists", user.getUsername()));
+        } else modelMap.addAttribute("error", "Missing field !");
 
         return "register.html";
     }

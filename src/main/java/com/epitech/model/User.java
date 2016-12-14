@@ -1,32 +1,36 @@
 package com.epitech.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Created by anakin on 14/12/16.
  */
+
+@Document(collection = "user")
 public class                    User {
 
     @Id
     public String               id;
 
-    public String               userName;
+    public String               username;
     public String               password;
     public String               salt;
 
     public                      User() { }
 
-    public                      User(String userName, String password) {
-        this.userName = userName;
+    public                      User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public User                 setUsername(String userName) {
-        this.userName = userName;
+    public User                 setUsername(String username) {
+        this.username = username;
         return this;
     }
 
     public String               getUsername() {
-        return this.userName;
+        return this.username;
     }
 
     public User                 setPassword(String password) {
@@ -52,7 +56,7 @@ public class                    User {
         return String.format(
                 "User[id=%s, userName='%s', password='%s', salt='%s']",
                 this.id,
-                this.userName,
+                this.username,
                 this.password,
                 this.salt
         );
