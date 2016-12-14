@@ -1,6 +1,7 @@
 package com.epitech.controller;
 
 import com.epitech.utils.BodyParser;
+import com.epitech.utils.PasswordManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,8 @@ public class            UserController {
             method = RequestMethod.GET
     )
     public String       login() {
+        PasswordManager p = new PasswordManager();
+        p.encode("lol");
         return "login.html";
     }
 
