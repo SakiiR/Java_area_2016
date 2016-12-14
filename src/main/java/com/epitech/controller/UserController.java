@@ -10,9 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by sakiir on 10/12/16.
- */
 @Controller
 public class                    UserController {
 
