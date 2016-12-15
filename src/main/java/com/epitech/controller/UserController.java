@@ -34,7 +34,7 @@ public class                    UserController {
                 if (passwordManager.check(user.getPassword(), exist.getSalt(), exist.getPassword()) == true) {
                     // add session bag (HttpSession)
                     modelMap.addAttribute("success", true);
-                    modelMap.addAttribute("message", String.format("User %s successfully logged !"));
+                    modelMap.addAttribute("message", String.format("User %s successfully logged !", user.getUsername()));
                 } else modelMap.addAttribute("message", "Bad username / password !");
             } else modelMap.addAttribute("message", "Bad username / password !");
         } else modelMap.addAttribute("message", "Missing field(s) !");
