@@ -37,7 +37,6 @@ public class                    UserController {
         if (!(user.getUsername() == null || user.getPassword() == null)) {
             User exist = userRepository.findByUsername(user.getUsername());
             if (exist == null) {
-                //creating user
                 PasswordManager passwordManager = new PasswordManager();
                 PasswordContainer passwordContainer = passwordManager.encode(user.getPassword());
                 user.setPassword(passwordContainer.getPassword())
