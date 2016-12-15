@@ -3,9 +3,9 @@
 
 {% block content %}
     <h3>Login</h3>
-    {% if error is defined %}
+    {% if message is defined %}
         <ul class="collection">
-            <li class="collection-item">{{ error }}</li>
+            <li class="collection-item">{{ message }}</li>
         </ul>
     {% endif %}
     {% if success is defined %}
