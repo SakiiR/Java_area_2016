@@ -19,6 +19,20 @@ public class                        PasswordManager {
     public                          PasswordManager() {  }
 
     /**
+     * This method is used to encode/hash password.
+     *
+     * @param text the text to encode/hash
+     * @return the encoded/hashed text;
+     */
+    private String                  hash(String text) {
+        BCryptPasswordEncoder       bcryptEncoder = new BCryptPasswordEncoder();
+        String                      ret;
+
+        ret = bcryptEncoder.encode(text);
+        return ret;
+    }
+
+    /**
      * Encode the password with bcrypt alogrythms.
      *
      * @param password the password to encode/hash
@@ -28,11 +42,10 @@ public class                        PasswordManager {
     public PasswordContainer        encode(String password) {
         String                      salt;
         String                      hash;
-        BCryptPasswordEncoder       bcryptEncoder = new BCryptPasswordEncoder();
 
         SecureRandom random = new SecureRandom();
         salt = new BigInteger(130, random).toString(32);
-        hash = bcryptEncoder.encode((salt + password));
+        hash = this.hash(salt + password);
         return new PasswordContainer(hash, salt);
     }
 
@@ -46,8 +59,6 @@ public class                        PasswordManager {
      * @return a boolean that tell if the password is valid.
      */
     public boolean                  check(String password, String salt, String hash) {
-        BCryptPasswordEncoder       bcryptEncoder = new BCryptPasswordEncoder();
-
-        return (bcryptEncoder.encode(salt + password).equals(hash));
+        return (this.hash(salt + password).equals(hash));
     }
 }
