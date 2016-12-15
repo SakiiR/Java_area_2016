@@ -33,7 +33,7 @@ public class                        PasswordManager {
         SecureRandom random = new SecureRandom();
         salt = new BigInteger(130, random).toString(32);
         hash = bcryptEncoder.encode((salt + password));
-        return new PasswordContainer(salt, hash);
+        return new PasswordContainer(hash, salt);
     }
 
     /**

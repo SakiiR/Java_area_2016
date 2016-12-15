@@ -39,5 +39,7 @@ public class                    UserTest {
 
         Logger.logInfo("[TEST] %s == bar : %s", seek.getSalt(), seek.getSalt().equals("bar"));
         assert(seek.getSalt().equals("bar"));
+
+        userRepository.deleteAll();
     }
 }
