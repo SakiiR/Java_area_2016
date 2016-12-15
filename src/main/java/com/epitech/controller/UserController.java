@@ -18,12 +18,28 @@ public class                    UserController {
 
     @RequestMapping(value  = "/login", method = RequestMethod.GET)
     public String               login() {
+        System.out.println("bibi");
         return "login.html";
     }
 
     @RequestMapping(value  = "/login", method = RequestMethod.POST)
-    public String               login(@ModelAttribute("user") User user) {
-        // parse body and find user in database :)
+    public String               login(@ModelAttribute("user") User user, ModelMap modelMap) {
+        Logger.logInfo("user = %s && password = %s", user.getUsername(), user.getPassword());
+        if (user.getUsername().equals("") || user.getPassword().equals("")) {
+            modelMap.addAttribute("error", "Missing field !");
+        } else {
+            User exist = userRepository.findByUsername(user.getUsername());
+            if (exist == null) {
+                modelMap.addAttribute("error", String.format("User %s do not exist", user.getUsername()));
+            } else {
+                PasswordManager passwordManager = new PasswordManager();
+                if (passwordManager.check(user.getPassword(), exist.getSalt(), exist.getPassword())) {
+                    return "redirect:home";
+                } else {
+                    modelMap.addAttribute("error", String.format("Password %s do not exist", user.getPassword()));
+                }
+            }
+        }
         return "login.html";
     }
 
