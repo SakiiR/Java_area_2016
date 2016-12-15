@@ -1,0 +1,9 @@
+.area-logo {
+    width: 65px;
+}
+
+#footer {
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+}
