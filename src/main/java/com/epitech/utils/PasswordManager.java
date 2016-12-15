@@ -1,5 +1,6 @@
 package com.epitech.utils;
 
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigInteger;
@@ -25,10 +26,10 @@ public class                        PasswordManager {
      * @return the encoded/hashed text;
      */
     private String                  hash(String text) {
-        BCryptPasswordEncoder       bcryptEncoder = new BCryptPasswordEncoder();
+        ShaPasswordEncoder          shaPasswordEncoder = new ShaPasswordEncoder(512);
         String                      ret;
 
-        ret = bcryptEncoder.encode(text);
+        ret = shaPasswordEncoder.encodePassword(text, "");
         return ret;
     }
 
@@ -59,6 +60,7 @@ public class                        PasswordManager {
      * @return a boolean that tell if the password is valid.
      */
     public boolean                  check(String password, String salt, String hash) {
+        Logger.logInfo("Checking hash(%s, %s){%s} == %s", salt, password, this.hash(salt + password), hash);
         return (this.hash(salt + password).equals(hash));
     }
 }
