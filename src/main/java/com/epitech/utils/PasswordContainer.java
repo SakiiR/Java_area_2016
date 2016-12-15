@@ -15,6 +15,9 @@ public class                    PasswordContainer {
     private String              password;
     private String              salt;
 
+    /**
+     * Default constructor
+     */
     public                      PasswordContainer() {  }
 
     /**
