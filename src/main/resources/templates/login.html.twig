@@ -2,14 +2,23 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+    <h3>Login</h3>
+    {% if error is defined %}
+        <ul class="collection">
+            <li class="collection-item">{{ error }}</li>
+        </ul>
+    {% endif %}
+    {% if success is defined %}
+        <meta http-equiv="refresh" content="3; url=/" />
+    {% endif %}
     <div class="row">
-        <form class="col s12">
+        <form class="col s12" id="login-form" method="POST" action="/login">
             <div class="input-field col s6">
-                <input id="username" type="text" class="validate">
+                <input id="username" name="username" type="text" class="validate">
                 <label for="username">Username</label>
             </div>
             <div class="input-field col s6">
-                <input id="password" type="password" class="validate">
+                <input id="password" name="password" type="password" class="validate">
                 <label for="password">Password</label>
             </div>
             <div class="input-field col s6">
