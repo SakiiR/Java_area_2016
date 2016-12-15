@@ -71,4 +71,11 @@ public class                    PasswordContainer {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "PasswordContainer{" +
+                "password='" + this.password + '\'' +
+                ", salt='" + this.salt + '\'' +
+                '}';
+    }
 }
