@@ -24,15 +24,14 @@ public class                    UserController {
 
     @RequestMapping(value  = "/login", method = RequestMethod.GET)
     public String               login(HttpSession httpSession) {
-        Logger.logWarning("Username Session : %s", httpSession.getAttribute("username"));
         return "login.html";
     }
 
     @RequestMapping(value  = "/login", method = RequestMethod.POST)
     public String               login(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
-        if (!(user.getUsername().equals(null) ||
-                user.getUsername().length() == 0 ||
-                user.getPassword().equals(null) ||
+        if (!(user.getUsername().equals(null)           ||
+                user.getUsername().length() == 0        ||
+                user.getPassword().equals(null)         ||
                 user.getPassword().length() == 0)) {
             User exist = userRepository.findByUsername(user.getUsername());
             if (exist != null) {
