@@ -9,7 +9,7 @@
        </ul>
     {% endif %}
     {% if success is defined %}
-       <meta http-equiv="refresh" content="3; url=/login" />
+          <meta http-equiv="refresh" content="3; url={{ redirectUrl }}" />
     {% endif %}
     <div class="row">
        <form id="register-form" method="POST" action="/register">
