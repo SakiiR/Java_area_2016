@@ -14,10 +14,12 @@ public class            Module {
 
     private String       name;
     private String       imageUrl;
+    private String       description;
 
-    public              Module(String name, String imageUrl) {
+    public              Module(String name, String imageUrl, String description) {
         this.name = name;
         this.imageUrl = imageUrl;
+        this.description = description;
     }
 
     public String       getId() {
@@ -44,6 +46,15 @@ public class            Module {
 
     public Module       setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public String       getDescription() {
+        return description;
+    }
+
+    public Module       setDescription(String description) {
+        this.description = description;
         return this;
     }
 
