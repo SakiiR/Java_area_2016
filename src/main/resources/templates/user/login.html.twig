@@ -1,4 +1,4 @@
-{% extends "base/layout.html.twig" %}
+{% extends "../layout/layout.html.twig" %}
 {% block title %}Login{% endblock %}
 
 {% block content %}
@@ -9,7 +9,7 @@
         </ul>
     {% endif %}
     {% if success is defined %}
-        <meta http-equiv="refresh" content="3; url=/" />
+        <meta http-equiv="refresh" content="3; url={{ redirectUrl }}" />
     {% endif %}
     <div class="row">
         <form class="col s12" id="login-form" method="POST" action="/login">

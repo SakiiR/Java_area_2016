@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class BaseController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String   index(ModelMap model) {
-        return "index.html";
+        return "base/index.html";
     }
 }

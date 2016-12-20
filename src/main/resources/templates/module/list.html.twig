@@ -1,0 +1,54 @@
+{% extends "../layout/layout.html.twig" %}
+{% block title %}Login{% endblock %}
+
+{%  block content %}
+    <div class="col s12 m7">
+     <form id="module-list-form" method="POST" action="/module/manage">
+        <h3>Available modules</h3>
+         <div class = "scroller-card">
+         {%  for item in modules %}
+            <div class="card horizontal">
+                <div class="card-image">
+                    <img src="{{ item.imageUrl }}">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>{{ item.description }}</p>
+                 </div>
+                    <div class="card-action">
+                        <a> <input name="type" type="radio" id="{{ item.name }}" />
+                            <label for="{{  item.name }}">{{ item.name }}</label></a>
+                    </div>
+                </div>
+            </div>
+         {% endfor %}
+         </div>
+
+         <h3>Login</h3>
+         {% if message is defined %}
+             <ul class="collection">
+                 <li class="collection-item">{{ message }}</li>
+             </ul>
+         {% endif %}
+         {% if success is defined %}
+             <meta http-equiv="refresh" content="3; url=/" />
+         {% endif %}
+            <div class="input-field col s12">
+                 <i class="material-icons prefix">account_circle</i>
+                <input id="username" name="username" type="text" class="validate">
+                <label for="username">Username</label>
+            </div>
+            <div class="input-field col s12">
+                 <i class="material-icons prefix">lock_outline</i>
+                <input id="password" name="password" type="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+            <div class="input-field col s6">
+                 <button class="btn waves-effect waves-light purple" type="submit" name="action">
+                     Submit
+                     <i class="material-icons right">send</i>
+                </button>
+            </div>
+     </form>
+    </div>
+{%  endblock %}
