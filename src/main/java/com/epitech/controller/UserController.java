@@ -24,7 +24,7 @@ public class                    UserController {
 
     @RequestMapping(value  = "/login", method = RequestMethod.GET)
     public String               login(HttpSession httpSession) {
-        return "login.html";
+        return "user/login.html";
     }
 
     @RequestMapping(value  = "/login", method = RequestMethod.POST)
@@ -39,16 +39,17 @@ public class                    UserController {
                 if (passwordManager.check(user.getPassword(), exist.getSalt(), exist.getPassword())) {
                     httpSession.setAttribute("username", user.getUsername());
                     modelMap.addAttribute("success", true);
+                    modelMap.addAttribute("redirectUrl", "/module/list");
                     modelMap.addAttribute("message", String.format("User %s successfully logged !", user.getUsername()));
                 } else modelMap.addAttribute("message", "Bad username / password !");
             } else modelMap.addAttribute("message", "Bad username / password !");
         } else modelMap.addAttribute("message", "Missing field(s) !");
-        return "login.html";
+        return "user/login.html";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String               register() {
-        return "register.html";
+        return "user/register.html";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -71,12 +72,12 @@ public class                    UserController {
             } else modelMap.addAttribute("message", String.format("User %s already exists", user.getUsername()));
         } else modelMap.addAttribute("message", "Missing field !");
 
-        return "register.html";
+        return "user/register.html";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String               logout(ModelMap modelMap, HttpSession httpSession) {
         httpSession.removeAttribute("username");
-        return "logout.html";
+        return "user/logout.html";
     }
 }

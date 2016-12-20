@@ -3,9 +3,9 @@
 <head>
     {% block head %}
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-        <link rel="stylesheet" href="./vendors/materialize/dist/css/materialize.min.css"/>
+        <link rel="stylesheet" href="/vendors/materialize/dist/css/materialize.min.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="./css/master.css"/>
+        <link rel="stylesheet" href="/css/master.css"/>
         <title>{% block title %}{% endblock %} - Area</title>
     {% endblock %}
 </head>
@@ -14,7 +14,7 @@
         {% block navbar %}
             <nav class="purple darken-4">
                 <div class="nav-wrapper">
-                    <a href="/" class="brand-logo"><img class="area-logo" src="./img/logo.png"/></a>
+                    <a href="/" class="brand-logo"><img class="area-logo" src="/img/logo.png"/></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         {# TODO: Dynamic Templating #}
                         <li><a href="/">Index</a></li>
@@ -32,7 +32,7 @@
             {% endblock %}
         </div>
     </div>
-    <div id="footer">
+    {# <div id="footer">
         {% block footer %}
             <footer class="page-footer grey darken-4">
                 <div class="container">
@@ -56,11 +56,11 @@
                 </div>
             </footer>
         {% endblock %}
-    </div>
+    </div> #}
     <div id="javascripts">
         {% block javascripts %}
-            <script type="text/javascript" src="./vendors/jquery/dist/jquery.min.js"></script>
-            <script src="./vendors/materialize/dist/js/materialize.min.js"></script>
+            <script type="text/javascript" src="/vendors/jquery/dist/jquery.min.js"></script>
+            <script src="/vendors/materialize/dist/js/materialize.min.js"></script>
         {% endblock %}
     </div>
 </body>
