@@ -15,6 +15,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @Controller
 public class                    UserController {
@@ -63,7 +64,8 @@ public class                    UserController {
                 PasswordManager passwordManager = new PasswordManager();
                 PasswordContainer passwordContainer = passwordManager.encode(user.getPassword());
                 user.setPassword(passwordContainer.getPassword())
-                        .setSalt(passwordContainer.getSalt());
+                        .setSalt(passwordContainer.getSalt())
+                        .setModules(new ArrayList<>());
                 userRepository.save(user);
                 Logger.logSuccess("User %s Created !", user.getUsername());
                 modelMap.addAttribute("success", true);
