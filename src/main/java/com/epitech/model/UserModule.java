@@ -15,6 +15,9 @@ public class            UserModule {
     @DBRef
     private Module      module;
 
+    @DBRef
+    private User        user;
+
     private String      token;
 
     public              UserModule() { }
@@ -39,6 +42,15 @@ public class            UserModule {
 
     public UserModule   setToken(String token) {
         this.token = token;
+        return this;
+    }
+
+    public User         getUser() {
+        return user;
+    }
+
+    public UserModule   setUser(User user) {
+        this.user = user;
         return this;
     }
 

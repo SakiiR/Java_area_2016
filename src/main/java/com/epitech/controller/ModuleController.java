@@ -74,6 +74,7 @@ public class                        ModuleController {
                 UserModule userModule = new UserModule();
                 userModule.setModule(moduleRepository.findByName(moduleName))
                         .setToken(service.login(bodyUsername, bodyPassword));
+                userModule.setUser(user);
                 userModuleRepository.save(userModule);
                 user.addModule(userModule);
                 userRepository.save(user);
