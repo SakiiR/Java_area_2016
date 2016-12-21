@@ -8,6 +8,13 @@ public class            UserModule {
     private Module      module;
     private String      token;
 
+    public              UserModule() { }
+
+    public              UserModule(Module module, String token) {
+        this.module = module;
+        this.token = token;
+    }
+
     public Module       getModule() {
         return module;
     }

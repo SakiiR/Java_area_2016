@@ -1,7 +1,12 @@
 package com.epitech.controller;
 
+import com.epitech.model.User;
+import com.epitech.model.UserModule;
+import com.epitech.repository.UserRepository;
 import com.epitech.service.FacebookService;
+import com.epitech.service.IService;
 import com.epitech.utils.BodyParser;
+import com.epitech.utils.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,10 +23,13 @@ import java.lang.reflect.Constructor;
  */
 
 @Controller
-public class ModuleController {
+public class                    ModuleController {
 
     @Autowired
     private ModuleRepository    moduleRepository;
+
+    @Autowired
+    private UserRepository      userRepository;
 
     @RequestMapping(value = "/module/list", method = RequestMethod.GET)
     public String               list(HttpSession httpSession, ModelMap modelMap) {
@@ -44,15 +52,20 @@ public class ModuleController {
             return "redirect:login";
         }
         String bodyType = bodyParser.get("type");
+        String moduleName = bodyType;
         String bodyUsername = bodyParser.get("username");
         String bodyPassword = bodyParser.get("password");
-        System.out.println("type = " + bodyType + " username = " + bodyUsername + " password = " + bodyPassword);
+        Logger.logInfo("type = %s username = %s password = %s", bodyType, bodyUsername, bodyPassword);
         if (!(bodyType == null || bodyUsername == null || bodyPassword == null))
         {
             bodyType = "com.epitech.service." + Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1) + "Service";
-            System.out.println("new string class = " + bodyType);
             try {
-                Object instanceOfMyClass = Class.forName(bodyType).getConstructor().newInstance();
+                IService service = (IService)Class.forName(bodyType).getConstructor().newInstance();
+                User    user = userRepository.findByUsername(username);
+                Logger.logInfo("username = %s", username);
+                if (user == null)
+                    return "redirect:login";
+                user.addModule(new UserModule(moduleRepository.findByName(moduleName), service.login(bodyUsername, bodyPassword)));
                 modelMap.addAttribute("message", "Success");
             } catch (Exception e) {
                 e.printStackTrace();
