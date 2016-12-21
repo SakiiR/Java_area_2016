@@ -39,8 +39,9 @@ public class                        ModuleController {
     public String                   list(HttpSession httpSession, ModelMap modelMap) {
         List<Module>                availableModules;
 
+        Logger.logInfo("username : %s", httpSession.getAttribute("username"));
         if (httpSession.getAttribute("username") == null) {
-            return "redirect:login";
+            return "redirect:/login";
         }
         availableModules = moduleRepository.findAll();
         modelMap.addAttribute("modules", availableModules);
@@ -53,7 +54,7 @@ public class                        ModuleController {
         BodyParser                  bodyParser = new BodyParser(body);
 
         if (username == null) {
-            return "redirect:login";
+            return "redirect:/login";
         }
         String bodyType = bodyParser.get("type");
         String moduleName = bodyType;
@@ -68,7 +69,7 @@ public class                        ModuleController {
                 User    user = userRepository.findByUsername(username);
                 Logger.logInfo("username = %s", username);
                 if (user == null) {
-                    return "redirect:login";
+                    return "redirect:/login";
                 }
                 /** Create new module  */
                 UserModule userModule = new UserModule();

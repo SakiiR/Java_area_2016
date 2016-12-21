@@ -6,13 +6,9 @@ import com.epitech.utils.Logger;
 import com.epitech.utils.PasswordContainer;
 import com.epitech.utils.PasswordManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
