@@ -1,5 +1,6 @@
 package com.epitech.controller;
 
+import com.epitech.service.FacebookService;
 import com.epitech.utils.BodyParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,15 +46,16 @@ public class ModuleController {
         String bodyType = bodyParser.get("type");
         String bodyUsername = bodyParser.get("username");
         String bodyPassword = bodyParser.get("password");
+        System.out.println("type = " + bodyType + " username = " + bodyUsername + " password = " + bodyPassword);
         if (!(bodyType == null || bodyUsername == null || bodyPassword == null))
         {
-            bodyType = Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1) + "Service";
+            bodyType = "com.epitech.service." + Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1) + "Service";
+            System.out.println("new string class = " + bodyType);
             try {
-                Class myClass = Class.forName(bodyType);
-                Constructor constructor = myClass.getConstructor();
-                Object instanceOfMyClass = constructor.newInstance();
+                Object instanceOfMyClass = Class.forName(bodyType).getConstructor().newInstance();
                 modelMap.addAttribute("message", "Success");
             } catch (Exception e) {
+                e.printStackTrace();
                 modelMap.addAttribute("message", "Invalid Type");
             }
         } else modelMap.addAttribute("message", "Missing fields");
