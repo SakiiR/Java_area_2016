@@ -8,3 +8,6 @@ echo "db.userModule.remove({})" | mongo
 
 echo "[!] Clean module"
 echo "db.module.remove({})" | mongo
+
+echo "[!] Clean session"
+echo "db.sessions.remove({})" | mongo
