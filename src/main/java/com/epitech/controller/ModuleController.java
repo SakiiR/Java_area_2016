@@ -2,6 +2,7 @@ package com.epitech.controller;
 
 import com.epitech.model.User;
 import com.epitech.model.UserModule;
+import com.epitech.repository.UserModuleRepository;
 import com.epitech.repository.UserRepository;
 import com.epitech.service.FacebookService;
 import com.epitech.service.IService;
@@ -23,17 +24,20 @@ import java.lang.reflect.Constructor;
  */
 
 @Controller
-public class                    ModuleController {
+public class                        ModuleController {
 
     @Autowired
-    private ModuleRepository    moduleRepository;
+    private ModuleRepository        moduleRepository;
 
     @Autowired
-    private UserRepository      userRepository;
+    private UserRepository          userRepository;
+
+    @Autowired
+    private UserModuleRepository    userModuleRepository;
 
     @RequestMapping(value = "/module/list", method = RequestMethod.GET)
-    public String               list(HttpSession httpSession, ModelMap modelMap) {
-        List<Module>            availableModules;
+    public String                   list(HttpSession httpSession, ModelMap modelMap) {
+        List<Module>                availableModules;
 
         if (httpSession.getAttribute("username") == null) {
             return "redirect:login";
@@ -44,9 +48,9 @@ public class                    ModuleController {
     }
 
     @RequestMapping(value = "/module/manage", method = RequestMethod.POST)
-    public String               manage(HttpSession httpSession, ModelMap modelMap, @RequestBody String body) {
-        String                  username = (String) httpSession.getAttribute("username");
-        BodyParser              bodyParser = new BodyParser(body);
+    public String                   manage(HttpSession httpSession, ModelMap modelMap, @RequestBody String body) {
+        String                      username = (String) httpSession.getAttribute("username");
+        BodyParser                  bodyParser = new BodyParser(body);
 
         if (username == null) {
             return "redirect:login";
@@ -63,9 +67,16 @@ public class                    ModuleController {
                 IService service = (IService)Class.forName(bodyType).getConstructor().newInstance();
                 User    user = userRepository.findByUsername(username);
                 Logger.logInfo("username = %s", username);
-                if (user == null)
+                if (user == null) {
                     return "redirect:login";
-                user.addModule(new UserModule(moduleRepository.findByName(moduleName), service.login(bodyUsername, bodyPassword)));
+                }
+                /** Create new module  */
+                UserModule userModule = new UserModule();
+                userModule.setModule(moduleRepository.findByName(moduleName))
+                        .setToken(service.login(bodyUsername, bodyPassword));
+                userModuleRepository.save(userModule);
+                user.addModule(userModule);
+                userRepository.save(user);
                 modelMap.addAttribute("message", "Success");
             } catch (Exception e) {
                 e.printStackTrace();

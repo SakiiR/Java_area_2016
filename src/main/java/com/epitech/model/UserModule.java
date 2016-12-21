@@ -1,11 +1,20 @@
 package com.epitech.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 /**
  * Created by sakiir on 20/12/16.
  */
 
 public class            UserModule {
+
+    @Id
+    private String      id;
+
+    @DBRef
     private Module      module;
+
     private String      token;
 
     public              UserModule() { }
