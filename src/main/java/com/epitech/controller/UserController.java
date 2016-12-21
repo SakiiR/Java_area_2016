@@ -29,12 +29,12 @@ public class                    UserController {
 
     @RequestMapping(value  = "/login", method = RequestMethod.POST)
     public String               login(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
-        if (!(user.getUsername().equals(null)           ||
+        if (!(user.getUsername() == null                ||
                 user.getUsername().length() == 0        ||
-                user.getPassword().equals(null)         ||
+                user.getPassword() == null              ||
                 user.getPassword().length() == 0)) {
             User exist = userRepository.findByUsername(user.getUsername());
-            if (exist != null) {
+            if (!(exist == null)) {
                 PasswordManager passwordManager = new PasswordManager();
                 if (passwordManager.check(user.getPassword(), exist.getSalt(), exist.getPassword())) {
                     httpSession.setAttribute("username", user.getUsername());
@@ -54,9 +54,9 @@ public class                    UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String               register(@ModelAttribute("user") User user, ModelMap modelMap) {
-        if (!(user.getUsername().equals(null) ||
-                user.getUsername().length() == 0 ||
-                user.getPassword().equals(null) ||
+        if (!(user.getUsername() == null            ||
+                user.getUsername().length() == 0    ||
+                user.getPassword() == null          ||
                 user.getPassword().length() == 0)) {
             User exist = userRepository.findByUsername(user.getUsername());
             if (exist == null) {
@@ -68,7 +68,7 @@ public class                    UserController {
                 Logger.logSuccess("User %s Created !", user.getUsername());
                 modelMap.addAttribute("success", true);
                 modelMap.addAttribute("message", String.format("User %s successfully created", user.getUsername()));
-
+                modelMap.addAttribute("redirectUrl", "/login");
             } else modelMap.addAttribute("message", String.format("User %s already exists", user.getUsername()));
         } else modelMap.addAttribute("message", "Missing field !");
 
