@@ -63,7 +63,8 @@ public class                        ModuleController {
         String moduleName = bodyType;
         String bodyUsername = bodyParser.get("username");
         String bodyPassword = bodyParser.get("password");
-        if (!(bodyType == null || bodyUsername == null || bodyPassword == null)) {
+
+        if (!(bodyType == null)) {
             bodyType = "com.epitech.service." + Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1) + "Service";
             try {
                 IService service = (IService)Class.forName(bodyType).getConstructor().newInstance();
@@ -79,35 +80,34 @@ public class                        ModuleController {
                         String encoded = Base64.getEncoder().encodeToString(toEncode.getBytes());
                         return "redirect:" + module.getLoginUrl() + "&state=" + encoded;
                     }
-                    /** simple API authenticate  */
-                    UserModule userModule = new UserModule();
-                    userModule.setModule(module).setUser(user);
-                    String token = service.login(bodyUsername, bodyPassword);
-
-                    /** is login success  */
-                    if (!(token == null)) {
-                        Boolean foundModule = false;
-                        for (UserModule m : user.getModules()) {
-                            if (m.getModule().getName().equals(moduleName)) {
-                                foundModule = true;
-                                break;
+                    if (!(bodyType == null || bodyUsername == null || bodyPassword == null)) {
+                        /** simple API authenticate  */
+                        UserModule userModule = new UserModule();
+                        userModule.setModule(module).setUser(user);
+                        String token = service.login(bodyUsername, bodyPassword);
+                        if (!(token == null)) {
+                            Boolean foundModule = false;
+                            for (UserModule m : user.getModules()) {
+                                if (m.getModule().getName().equals(moduleName)) {
+                                    foundModule = true;
+                                    break;
+                                }
                             }
+                            if (!foundModule) {
+                                userModule.setToken(token);
+                                user.addModule(userModule);
+                                userModuleRepository.save(userModule);
+                                userRepository.save(user);
+                                modelMap.addAttribute("message", String.format("%s added to your modules !", moduleName));
+                                modelMap.addAttribute("success", true);
+                            } else modelMap.addAttribute("message", "You are already connected to this module");
                         }
-                        /** if the module is already existing in the user module array  */
-                        if (!foundModule) {
-                            userModule.setToken(token);
-                            user.addModule(userModule);
-                            userModuleRepository.save(userModule);
-                            userRepository.save(user);
-                            modelMap.addAttribute("message", String.format("%s added to your modules !", moduleName));
-                            modelMap.addAttribute("success", true);
-                        } else modelMap.addAttribute("message", "You are already connected to this module");
                     } else modelMap.addAttribute("message", "Can't login with theses credz !");
                 } else modelMap.addAttribute("message", String.format("Cannot find module : %s", moduleName));
             } catch (Exception e) {
                 modelMap.addAttribute("message", "Invalid Type");
             }
-        } else modelMap.addAttribute("message", "Missing fields");
+        }
         modelMap.addAttribute("redirectUrl", "/module/list");
         return "module/manage.html";
     }
