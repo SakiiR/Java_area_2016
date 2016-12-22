@@ -9,6 +9,7 @@ import com.epitech.service.IService;
 import com.epitech.utils.BodyParser;
 import com.epitech.utils.Logger;
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
+import javassist.bytecode.ByteArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,7 +43,6 @@ public class                        ModuleController {
     public String                   list(HttpSession httpSession, ModelMap modelMap) {
         List<Module>                availableModules;
 
-        Logger.logInfo("username : %s", httpSession.getAttribute("username"));
         if (httpSession.getAttribute("username") == null) {
             return "redirect:/login";
         }
@@ -63,28 +63,48 @@ public class                        ModuleController {
         String moduleName = bodyType;
         String bodyUsername = bodyParser.get("username");
         String bodyPassword = bodyParser.get("password");
-        Logger.logInfo("type = %s username = %s password = %s", bodyType, bodyUsername, bodyPassword);
-        if (!(bodyType == null || bodyUsername == null || bodyPassword == null))
-        {
+        if (!(bodyType == null || bodyUsername == null || bodyPassword == null)) {
             bodyType = "com.epitech.service." + Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1) + "Service";
             try {
                 IService service = (IService)Class.forName(bodyType).getConstructor().newInstance();
                 User    user = userRepository.findByUsername(username);
-                Logger.logInfo("username = %s", username);
                 if (user == null) {
                     return "redirect:/login";
                 }
-                /** Create new module  */
-                UserModule userModule = new UserModule();
-                userModule.setModule(moduleRepository.findByName(moduleName))
-                        .setToken(service.login(bodyUsername, bodyPassword));
-                userModule.setUser(user);
-                userModuleRepository.save(userModule);
-                user.addModule(userModule);
-                userRepository.save(user);
-                modelMap.addAttribute("message", "Success");
+                Module module = moduleRepository.findByName(moduleName);
+                if (!(module == null)) {
+                    /** if module required oauth callback url */
+                    if (!(module.getLoginUrl() == null)) {
+                        String toEncode = String.format("type=%s&username=%s", moduleName, user.getUsername());
+                        String encoded = Base64.getEncoder().encodeToString(toEncode.getBytes());
+                        return "redirect:" + module.getLoginUrl() + "&state=" + encoded;
+                    }
+                    /** simple API authenticate  */
+                    UserModule userModule = new UserModule();
+                    userModule.setModule(module).setUser(user);
+                    String token = service.login(bodyUsername, bodyPassword);
+
+                    /** is login success  */
+                    if (!(token == null)) {
+                        Boolean foundModule = false;
+                        for (UserModule m : user.getModules()) {
+                            if (m.getModule().getName().equals(moduleName)) {
+                                foundModule = true;
+                                break;
+                            }
+                        }
+                        /** if the module is already existing in the user module array  */
+                        if (!foundModule) {
+                            userModule.setToken(token);
+                            user.addModule(userModule);
+                            userModuleRepository.save(userModule);
+                            userRepository.save(user);
+                            modelMap.addAttribute("message", String.format("%s added to your modules !", moduleName));
+                            modelMap.addAttribute("success", true);
+                        } else modelMap.addAttribute("message", "You are already connected to this module");
+                    } else modelMap.addAttribute("message", "Can't login with theses credz !");
+                } else modelMap.addAttribute("message", String.format("Cannot find module : %s", moduleName));
             } catch (Exception e) {
-                e.printStackTrace();
                 modelMap.addAttribute("message", "Invalid Type");
             }
         } else modelMap.addAttribute("message", "Missing fields");
