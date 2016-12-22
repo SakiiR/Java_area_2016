@@ -2,5 +2,38 @@
 {% block title %}OAuth{% endblock %}
 
 {%  block content %}
-    <h3>{{ message }}</h3>
+    <h4>Registering new app .. wait a sec</h4>
 {%  endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="/vendors/materialize/dist/js/materialize.min.js"></script>
+    <script src="/vendors/ajax/dist/ajax.min.js"></script>
+    <script>
+        (function($) {
+            var $document = $(document);
+
+            $document.ready(function() {
+                var hash = window.location.hash;
+                var state = null;
+                var access_token = null;
+                hash = hash.substr(1).split("&");
+                for(var i = 0 ; i < hash.length ; ++i) {
+                    var keyVal = hash[i].split("=");
+                    if (keyVal[0] === "state") state = decodeURIComponent(keyVal[1]);
+                    if (keyVal[0] === "access_token") access_token = keyVal[1];
+                    if (access_token !== null && state !== null) break;
+                }
+
+                $.ajax({
+                    type    : 'POST',
+                    url     : '/module/oauth',
+                    data    : {access_token : access_token, state : state},
+                    done    : function(response) {
+                        console.log(response);
+                    }
+                });
+                console.log(access_token, state);
+            });
+        })(jQuery);
+    </script>
+{% endblock %}
