@@ -80,7 +80,7 @@ public class                        ModuleController {
                         String encoded = Base64.getEncoder().encodeToString(toEncode.getBytes());
                         return "redirect:" + module.getLoginUrl() + "&state=" + encoded;
                     }
-                    if (!(bodyType == null || bodyUsername == null || bodyPassword == null)) {
+                    if (!(bodyUsername == null || bodyPassword == null)) {
                         /** simple API authenticate  */
                         UserModule userModule = new UserModule();
                         userModule.setModule(module).setUser(user);
