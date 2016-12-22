@@ -23,6 +23,7 @@ public class                ModuleFixture {
         this.moduleRepository.save(new Module("slack", "/img/modules/slack.png", "Description for slack", ""));
         this.moduleRepository.save(new Module("github", "/img/modules/github.png", "Description for github", ""));
         this.moduleRepository.save(new Module("youtube", "/img/modules/youtube.png", "Description for youtube", ""));
+        this.moduleRepository.save(new Module("pastebin", "/img/modules/pastebin.png", "Description for pastebin", ""));
     }
 
     public void             clear() {
