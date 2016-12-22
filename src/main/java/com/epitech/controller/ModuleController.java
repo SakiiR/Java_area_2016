@@ -122,37 +122,6 @@ public class                        ModuleController {
 
     @RequestMapping(value = "/module/oauth", method = RequestMethod.GET)
     public String                   oauth(HttpServletRequest request, HttpSession httpSession, ModelMap modelMap) {
-        // TODO fix url query parameters
-        String access_token = "e";
-        String state = "a";
-        if (!(access_token == null || state == null)) {
-            BodyParser                  bodyParser = new BodyParser(new String(Base64.getDecoder().decode(state)));
-            String                      stateType = bodyParser.get("type");
-            String                      stateUsername = bodyParser.get("username");
-            String                      connectedUser = (String) httpSession.getAttribute("username");
-
-            if (null == connectedUser) {
-                return "redirect:../login";
-            }
-
-            if (!(stateType == null || stateUsername == null)) {
-                User user = userRepository.findByUsername(connectedUser);
-                if (!(user == null)) {
-                    UserModule userModule = new UserModule();
-                    Module module = moduleRepository.findByName(stateType);
-                    if (!(module == null)) {
-                        userModule.setModule(module)
-                                .setUser(user)
-                                .setToken(access_token);
-                        userModuleRepository.save(userModule);
-                        user.addModule(userModule);
-                        userRepository.save(user);
-                        modelMap.addAttribute("success", true);
-                        modelMap.addAttribute("message", String.format("You have been connected to %s", stateType));
-                    } else modelMap.addAttribute("message", "State's Type is unknown !");
-                } else modelMap.addAttribute("message", "Who are you ?!!");
-            } else modelMap.addAttribute("message", "Missing type or username in callback state");
-        } else modelMap.addAttribute("message", "Missing Field");
         return "module/oauth.html";
     }
 }

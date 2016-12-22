@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "materialize": "^0.97.8"
+    "materialize": "^0.97.8",
+    "ajax": "^2.1.2"
   }
 }
