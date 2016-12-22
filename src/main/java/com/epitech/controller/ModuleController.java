@@ -123,8 +123,8 @@ public class                        ModuleController {
     @RequestMapping(value = "/module/oauth", method = RequestMethod.GET)
     public String                   oauth(HttpServletRequest request, HttpSession httpSession, ModelMap modelMap) {
         // TODO fix url query parameters
-        String access_token = request.getParameter("access_token");
-        String state = request.getParameter("state");
+        String access_token = "e";
+        String state = "a";
         if (!(access_token == null || state == null)) {
             BodyParser                  bodyParser = new BodyParser(new String(Base64.getDecoder().decode(state)));
             String                      stateType = bodyParser.get("type");
