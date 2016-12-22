@@ -63,7 +63,7 @@ public class                        ModuleController {
         String moduleName = bodyType;
         String bodyUsername = bodyParser.get("username");
         String bodyPassword = bodyParser.get("password");
-
+        Logger.logInfo("type = %s username = %s password = %s", bodyType, bodyUsername, bodyPassword);
         if (!(bodyType == null)) {
             bodyType = "com.epitech.service." + Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1) + "Service";
             try {
@@ -75,11 +75,12 @@ public class                        ModuleController {
                 Module module = moduleRepository.findByName(moduleName);
                 if (!(module == null)) {
                     /** if module required oauth callback url */
-                    if (!(module.getLoginUrl() == null)) {
+                    if (!(module.getLoginUrl().length() == 0)) {
                         String toEncode = String.format("type=%s&username=%s", moduleName, user.getUsername());
                         String encoded = Base64.getEncoder().encodeToString(toEncode.getBytes());
                         return "redirect:" + module.getLoginUrl() + "&state=" + encoded;
                     }
+                    Logger.logInfo("type = %s username = %s password = %s", bodyType, bodyUsername, bodyPassword);
                     if (!(bodyType == null || bodyUsername == null || bodyPassword == null)) {
                         /** simple API authenticate  */
                         UserModule userModule = new UserModule();

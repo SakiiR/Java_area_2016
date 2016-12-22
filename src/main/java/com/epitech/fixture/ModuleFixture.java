@@ -19,6 +19,10 @@ public class                ModuleFixture {
         this.moduleRepository.save(new Module("gmail","/img/modules/gmail.png","Description for gmail/inbox", ""));
         this.moduleRepository.save(new Module("yammer","/img/modules/yammer.png","Description for yammer", ""));
         this.moduleRepository.save(new Module("onedrive","/img/modules/onedrive.png","Description for onedrive", ""));
+        this.moduleRepository.save(new Module("googledrive", "/img/modules/googledrive.png", "Description for googledrive", ""));
+        this.moduleRepository.save(new Module("slack", "/img/modules/slack.png", "Description for slack", ""));
+        this.moduleRepository.save(new Module("github", "/img/modules/github.png", "Description for github", ""));
+        this.moduleRepository.save(new Module("youtube", "/img/modules/youtube.png", "Description for youtube", ""));
     }
 
     public void             clear() {
