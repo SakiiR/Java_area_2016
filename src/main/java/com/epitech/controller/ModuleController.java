@@ -11,6 +11,7 @@ import com.epitech.utils.Logger;
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import javassist.bytecode.ByteArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import com.epitech.model.Module;
 import com.epitech.repository.ModuleRepository;
 import sun.rmi.runtime.Log;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Base64;
 import java.util.List;
@@ -63,11 +65,16 @@ public class                        ModuleController {
         String moduleName = bodyType;
         String bodyUsername = bodyParser.get("username");
         String bodyPassword = bodyParser.get("password");
-
         if (!(bodyType == null)) {
             bodyType = "com.epitech.service." + Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1) + "Service";
+
+            IService service = null;
             try {
-                IService service = (IService)Class.forName(bodyType).getConstructor().newInstance();
+                service = (IService)Class.forName(bodyType).getConstructor().newInstance();
+            } catch (Exception e) {
+                Logger.logWarning("Failed to instanciate service");
+            }
+            if (!(service == null)) {
                 User    user = userRepository.findByUsername(username);
                 if (user == null) {
                     return "redirect:/login";
@@ -101,47 +108,48 @@ public class                        ModuleController {
                                 modelMap.addAttribute("message", String.format("%s added to your modules !", moduleName));
                                 modelMap.addAttribute("success", true);
                             } else modelMap.addAttribute("message", "You are already connected to this module");
-                        }
-                    } else modelMap.addAttribute("message", "Can't login with theses credz !");
+                        } else modelMap.addAttribute("message", String.format("Can't login to %s with theses credz !", moduleName));
+                    } else modelMap.addAttribute("message", "Missing fields !");
                 } else modelMap.addAttribute("message", String.format("Cannot find module : %s", moduleName));
-            } catch (Exception e) {
-                modelMap.addAttribute("message", "Invalid Type");
-            }
+            } else modelMap.addAttribute("message", "Invalid Type");
         }
         modelMap.addAttribute("redirectUrl", "/module/list");
         return "module/manage.html";
     }
 
-    @RequestMapping(value = "/module/oauth", method = RequestMethod.GET, params = {"access_token", "state"})
-    public String                   oauth(HttpSession httpSession, ModelMap modelMap, @RequestParam(value = "access_token") String access_token, @RequestParam(value = "state") String state) {
-        BodyParser                  bodyParser = new BodyParser(new String(Base64.getDecoder().decode(state)));
-        String                      stateType = bodyParser.get("type");
-        String                      stateUsername = bodyParser.get("username");
-        String                      connectedUser = (String) httpSession.getAttribute("username");
+    @RequestMapping(value = "/module/oauth", method = RequestMethod.GET)
+    public String                   oauth(HttpServletRequest request, HttpSession httpSession, ModelMap modelMap) {
+        // TODO fix url query parameters
+        String access_token = request.getParameter("access_token");
+        String state = request.getParameter("state");
+        if (!(access_token == null || state == null)) {
+            BodyParser                  bodyParser = new BodyParser(new String(Base64.getDecoder().decode(state)));
+            String                      stateType = bodyParser.get("type");
+            String                      stateUsername = bodyParser.get("username");
+            String                      connectedUser = (String) httpSession.getAttribute("username");
 
-        if (null == connectedUser) {
-            return "redirect:../login";
-        }
+            if (null == connectedUser) {
+                return "redirect:../login";
+            }
 
-        if (!(stateType == null || stateUsername == null)) {
-            User user = userRepository.findByUsername(connectedUser);
-            if (!(user == null)) {
-                UserModule userModule = new UserModule();
-                Module module = moduleRepository.findByName(stateType);
-
-                if (!(module == null)) {
-                    userModule.setModule(module)
-                            .setUser(user)
-                            .setToken(access_token);
-                    userModuleRepository.save(userModule);
-                    user.addModule(userModule);
-                    userRepository.save(user);
-                    modelMap.addAttribute("success", true);
-                    modelMap.addAttribute("message", String.format("You have been connected to %s", stateType));
-                } else modelMap.addAttribute("message", "State's Type is unknown !");
-            } else modelMap.addAttribute("message", "Who are you ?!!");
-        } else modelMap.addAttribute("message", "Missing type or username in callback state");
-
+            if (!(stateType == null || stateUsername == null)) {
+                User user = userRepository.findByUsername(connectedUser);
+                if (!(user == null)) {
+                    UserModule userModule = new UserModule();
+                    Module module = moduleRepository.findByName(stateType);
+                    if (!(module == null)) {
+                        userModule.setModule(module)
+                                .setUser(user)
+                                .setToken(access_token);
+                        userModuleRepository.save(userModule);
+                        user.addModule(userModule);
+                        userRepository.save(user);
+                        modelMap.addAttribute("success", true);
+                        modelMap.addAttribute("message", String.format("You have been connected to %s", stateType));
+                    } else modelMap.addAttribute("message", "State's Type is unknown !");
+                } else modelMap.addAttribute("message", "Who are you ?!!");
+            } else modelMap.addAttribute("message", "Missing type or username in callback state");
+        } else modelMap.addAttribute("message", "Missing Field");
         return "module/oauth.html";
     }
 }
