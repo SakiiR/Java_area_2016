@@ -63,6 +63,7 @@ public class                        ModuleController {
         String moduleName = bodyType;
         String bodyUsername = bodyParser.get("username");
         String bodyPassword = bodyParser.get("password");
+        Logger.logInfo("type = %s bodyusername = %s bodypassword = %s", bodyType, bodyUsername, bodyPassword);
         if (!(bodyType == null || bodyUsername == null || bodyPassword == null)) {
             bodyType = "com.epitech.service." + Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1) + "Service";
             try {
