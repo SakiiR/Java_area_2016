@@ -15,11 +15,24 @@ public class            Module {
     private String       name;
     private String       imageUrl;
     private String       description;
+    private String       loginUrl;
+
+    public              Module() {
+
+    }
 
     public              Module(String name, String imageUrl, String description) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.description = description;
+        this.loginUrl = null;
+    }
+
+    public              Module(String name, String imageUrl, String description, String loginUrl) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.loginUrl = loginUrl;
     }
 
     public String       getId() {
@@ -55,6 +68,15 @@ public class            Module {
 
     public Module       setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public String       getLoginUrl() {
+        return loginUrl;
+    }
+
+    public Module       setLoginUrl(String loginUrl) {
+        this.loginUrl = loginUrl;
         return this;
     }
 
