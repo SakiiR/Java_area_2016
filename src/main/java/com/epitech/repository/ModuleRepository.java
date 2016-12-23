@@ -11,4 +11,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface            ModuleRepository extends MongoRepository<Module, String> {
     public Module           findByName(String name);
+    public Module           findById(String id);
 }
