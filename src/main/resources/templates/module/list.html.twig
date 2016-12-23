@@ -66,7 +66,7 @@
             <h3>My modules</h3>
             <div class="scroller-card">
                 <div class="collection">
-                    {% for module in modules %}
+                    {% for module in usermodules %}
                         <form method="POST" action="/module/{{ module.id }}/disconnect">
                             <li class="collection-item avatar">
                                 <img src="{{ module.imageUrl }}" alt="" class="circle">
