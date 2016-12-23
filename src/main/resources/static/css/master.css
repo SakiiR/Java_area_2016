@@ -7,10 +7,10 @@
 }
 
 .scroller-card {
-     height: 600px;
-     overflow: hidden;
-     overflow-y: scroll;
-     padding: 5px;
+    height: 600px;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 5px;
 }
 
 .block {
