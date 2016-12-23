@@ -23,3 +23,7 @@
     bottom: 0;
     position: absolute;
 }
+
+.circle {
+    border-radius: 50% !important;
+}
