@@ -8,7 +8,6 @@ import com.epitech.service.FacebookService;
 import com.epitech.service.IService;
 import com.epitech.utils.BodyParser;
 import com.epitech.utils.Logger;
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import javassist.bytecode.ByteArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -17,7 +16,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.epitech.model.Module;
 import com.epitech.repository.ModuleRepository;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
