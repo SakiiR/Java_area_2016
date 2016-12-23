@@ -7,10 +7,6 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 /**
- * Created by sakiir on 14/12/16.
- */
-
-/**
  * This class is used to encode or check hashed password
  * with bcrypt crypto library.
  *

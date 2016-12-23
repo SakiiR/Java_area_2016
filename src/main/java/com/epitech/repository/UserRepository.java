@@ -1,6 +1,5 @@
 package com.epitech.repository;
 
-import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import com.epitech.model.User;
 import org.springframework.stereotype.Component;
