@@ -12,4 +12,7 @@ echo "db.module.remove({})" | mongo > /dev/null
 echo "[!] Clean session"
 echo "db.sessions.remove({})" | mongo > /dev/null
 
+echo "[!] Clean backoffice users"
+echo "db.backoffice_user.remove({})" | mongo > /dev/null
+
 echo "[+] OKAY!"
