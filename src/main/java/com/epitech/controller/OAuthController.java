@@ -55,18 +55,30 @@ public class                        OAuthController {
             if (!(stateType == null || stateUsername == null)) {
                 User user = userRepository.findByUsername(connectedUser);
                 if (!(user == null)) {
-                    UserModule userModule = new UserModule();
-                    Module module = moduleRepository.findByName(stateType);
-                    if (!(module == null)) {
-                        userModule.setModule(module)
-                                .setUser(user)
-                                .setToken(access_token);
-                        userModuleRepository.save(userModule);
-                        user.addModule(userModule);
-                        userRepository.save(user);
-                        responseObject.success = true;
-                        responseObject.message = String.format("You have been connected to %s", stateType);
-                    } else responseObject.message = "State's Type is unknown !";
+
+                    /**  Check if user already have this module */
+                    boolean found = false;
+                    for (UserModule m : user.getModules()) {
+                        if (m.getModule() != null && m.getModule().getName().equals(stateType)) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        UserModule userModule = new UserModule();
+                        Module module = moduleRepository.findByName(stateType);
+                        if (!(module == null)) {
+                            userModule.setModule(module)
+                                    .setUser(user)
+                                    .setToken(access_token);
+                            userModuleRepository.save(userModule);
+                            user.addModule(userModule);
+                            userRepository.save(user);
+                            responseObject.success = true;
+                            responseObject.message = String.format("You have been connected to %s", stateType);
+                        } else responseObject.message = "State's Type is unknown !";
+                    } else responseObject.message = "You already have this module !";
                 } else responseObject.message = "Who are you ?!!";
             } else responseObject.message = "Missing type or username in callback state";
         } else responseObject.message = "Missing Field";
