@@ -29,6 +29,10 @@ import java.lang.reflect.Constructor;
  * Created by anakin on 20/12/16.
  */
 
+/**
+ * This controller is relative to modules
+ * and it is used to interact with them.
+ */
 @Controller
 public class                        ModuleController {
 
@@ -41,6 +45,14 @@ public class                        ModuleController {
     @Autowired
     private UserModuleRepository    userModuleRepository;
 
+    /**
+     * This route return the list of all module
+     * available and user relative ones.
+     *
+     * @param httpSession The session parameter object
+     * @param modelMap The view parameter object
+     * @return a view name
+     */
     @RequestMapping(value = "/module/list", method = RequestMethod.GET)
     public String                   list(HttpSession httpSession, ModelMap modelMap) {
         List<Module>                availableModules;
@@ -53,6 +65,14 @@ public class                        ModuleController {
         return "module/list.html";
     }
 
+    /**
+     * This route is used to connect with a module.
+     *
+     * @param httpSession The session parameter object
+     * @param modelMap The view parameter object
+     * @param body The body request parameters
+     * @return a view name
+     */
     @RequestMapping(value = "/module/manage", method = RequestMethod.POST)
     public String                   manage(HttpSession httpSession, ModelMap modelMap, @RequestBody String body) {
         String                      username = (String) httpSession.getAttribute("username");
@@ -120,8 +140,19 @@ public class                        ModuleController {
         return "module/manage.html";
     }
 
+    /**
+     * This route simply return a view with a
+     * jquery/ajax call to a route from OAuthController
+     *
+     * @see OAuthController
+     * @param httpSession The session parameter object
+     * @return a view name
+     */
     @RequestMapping(value = "/module/oauth", method = RequestMethod.GET)
-    public String                   oauth(HttpServletRequest request, HttpSession httpSession, ModelMap modelMap) {
+    public String                   oauth(HttpSession httpSession) {
+        if (null ==httpSession.getAttribute("username")) {
+            return "redirect:/login";
+        }
         return "module/oauth.html";
     }
 }

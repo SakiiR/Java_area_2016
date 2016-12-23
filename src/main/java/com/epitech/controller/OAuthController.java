@@ -21,7 +21,10 @@ import javax.servlet.http.HttpSession;
 import java.util.Base64;
 
 /**
- * Created by sakiir on 22/12/16.
+ * This controller is used to connect to an API but
+ * the OAuth Type.
+ *
+ * @see ModuleController
  */
 @RestController
 public class                        OAuthController {
@@ -34,6 +37,13 @@ public class                        OAuthController {
     @Autowired
     private UserRepository          userRepository;
 
+    /**
+     * This route connect a user with an OAuth API.
+     *
+     * @param httpSession the session parameter object
+     * @param body the POST parameters Object
+     * @return a JSON String
+     */
     @RequestMapping(value = "/module/oauth", method = RequestMethod.POST, produces = "application/json")
     public String                   oauth(HttpSession httpSession, @RequestBody String body) {
         BodyParser                  bodyParser = new BodyParser(body);
@@ -64,7 +74,6 @@ public class                        OAuthController {
                             break;
                         }
                     }
-
                     if (!found) {
                         UserModule userModule = new UserModule();
                         Module module = moduleRepository.findByName(stateType);

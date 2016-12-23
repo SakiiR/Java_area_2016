@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 /**
- * Created by anakin on 14/12/16.
+ * This class is the representation
+ * of a User.
  */
-
 @Document(collection = "user")
 public class                        User {
 

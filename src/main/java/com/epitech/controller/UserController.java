@@ -13,17 +13,35 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
+/**
+ * This controller is used to manage
+ * user of the database.
+ */
 @Controller
 public class                    UserController {
 
     @Autowired
     private UserRepository      userRepository;
 
+    /**
+     * This route simply return the login form.
+     *
+     * @return a view name
+     */
     @RequestMapping(value  = "/login", method = RequestMethod.GET)
-    public String               login(HttpSession httpSession) {
+    public String               login() {
         return "user/login.html";
     }
 
+    /**
+     * This route is used when a non-connected
+     * user try to connect to the server.
+     *
+     * @param user The POSTed used
+     * @param modelMap The view parameters Object.
+     * @param httpSession The session parameters Object
+     * @return a view name.
+     */
     @RequestMapping(value  = "/login", method = RequestMethod.POST)
     public String               login(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
         if (!(user.getUsername() == null                ||
@@ -44,11 +62,25 @@ public class                    UserController {
         return "user/login.html";
     }
 
+    /**
+     * This route simply return the Register
+     * Form.
+     *
+     * @return a view name.
+     */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String               register() {
         return "user/register.html";
     }
 
+    /**
+     * This route is used to add a new user to
+     * the database.
+     *
+     * @param user The POSTed user.
+     * @param modelMap The view parameter Object.
+     * @return a view name.
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String               register(@ModelAttribute("user") User user, ModelMap modelMap) {
         if (!(user.getUsername() == null            ||
@@ -73,8 +105,18 @@ public class                    UserController {
         return "user/register.html";
     }
 
+
+    /**
+     * This route is used to logout a user.
+     *
+     * @param httpSession the session parameter object.
+     * @return a view name.
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String               logout(ModelMap modelMap, HttpSession httpSession) {
+    public String               logout(HttpSession httpSession) {
+        if (null == httpSession.getAttribute("username")) {
+            return "redirect:/login";
+        }
         httpSession.removeAttribute("username");
         return "user/logout.html";
     }
