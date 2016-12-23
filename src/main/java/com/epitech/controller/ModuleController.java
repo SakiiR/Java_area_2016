@@ -4,28 +4,19 @@ import com.epitech.model.User;
 import com.epitech.model.UserModule;
 import com.epitech.repository.UserModuleRepository;
 import com.epitech.repository.UserRepository;
-import com.epitech.service.FacebookService;
 import com.epitech.service.IService;
 import com.epitech.utils.BodyParser;
 import com.epitech.utils.Logger;
-import javassist.bytecode.ByteArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.epitech.model.Module;
 import com.epitech.repository.ModuleRepository;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Base64;
 import java.util.List;
-import java.lang.reflect.Constructor;
-
-/**
- * Created by anakin on 20/12/16.
- */
 
 /**
  * This controller is relative to modules

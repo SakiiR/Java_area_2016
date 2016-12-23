@@ -1,10 +1,6 @@
 package com.epitech.utils;
 
 /**
- * Created by sakiir on 14/12/16.
- */
-
-/**
  * This class is used to store
  * password and salt in the same entity.
  *

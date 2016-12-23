@@ -1,9 +1,7 @@
 package com.epitech.config;
 
 import com.epitech.fixture.ModuleFixture;
-import com.epitech.model.Module;
 import com.epitech.repository.ModuleRepository;
-import com.epitech.utils.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
