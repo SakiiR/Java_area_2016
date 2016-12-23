@@ -11,13 +11,20 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by sakiir on 20/12/16.
+ * This class is used to listen to some
+ * application event like "startup"
  */
 @Component
 public class                    StartupListener implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     private ModuleRepository    moduleRepository;
 
+    /**
+     * This method is called when the application
+     * start.
+     *
+     * @param event the event context object.
+     */
     @Override
     public void                 onApplicationEvent(final ContextRefreshedEvent event) {
         ModuleFixture           moduleFixture = new ModuleFixture(this.moduleRepository);
