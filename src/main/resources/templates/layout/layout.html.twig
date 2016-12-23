@@ -17,7 +17,6 @@
                 <div class="nav-wrapper">
                     <a href="/" class="brand-logo"><img class="area-logo" src="/img/logo.png"/></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        {# TODO: Dynamic Templating #}
                         <li><a href="/">Index</a></li>
                         {% if username  %}<li><a href="/module/list">Modules</a></li>{% endif %}
                          {% if not username %}<li><a href="/login">Login</a></li>{% endif %}

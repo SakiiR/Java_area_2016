@@ -1,0 +1,37 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block content %}
+    {% if message is defined %}
+        <ul class="collection">
+            <li class="collection-item">{{ message }}</li>
+        </ul>
+    {% endif %}
+    {% if success is defined %}
+        <meta http-equiv="refresh" content="3; url={{ redirectUrl }}" />
+    {% endif %}
+    <div id="backoffice-login-form">
+        <form action="/backoffice/login" method="POST">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="username" type="text" class="validate" name="username">
+                    <label for="username">Username</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="password">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                        Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

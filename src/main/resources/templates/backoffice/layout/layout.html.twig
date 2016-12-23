@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <link rel="stylesheet" href="/vendors/materialize/dist/css/materialize.min.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="/css/master.css"/>
+        <link rel="icon" type="image/png" href="/img/logo2.png" />
+        <title>Backoffice - Area</title>
+    {% endblock %}
+</head>
+<body>
+<div id="nav">
+    {% block navbar %}
+        <nav class="blue darken-4">
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo">Backoffice</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/">Back to Area</a></li>
+                    {% if backoffice_username  %}<li><a href="/backoffice/modules">Modules</a></li>{% endif %}
+                    {% if backoffice_username %} <li><a href="/backoffice/users">Users</a></li>{% endif %}
+                </ul>
+            </div>
+        </nav>
+    {% endblock %}
+</div>
+<div id="content">
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+<div id="javascripts">
+    {% block javascripts %}
+        <script type="text/javascript" src="/vendors/jquery/dist/jquery.min.js"></script>
+        <script src="/vendors/materialize/dist/js/materialize.min.js"></script>
+        <script src="/vendors/ajax/dist/ajax.min.js"></script>
+    {% endblock %}
+</div>
+</body>
+</html>
