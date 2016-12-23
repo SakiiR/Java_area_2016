@@ -2,8 +2,8 @@
 {% block title %}List{% endblock %}
 
 {%  block content %}
-    <div class="col s12 m7">
-        <div class="block">
+    <div class="row">
+        <div class="block col s6">
             <h3>Available modules</h3>
             <div class = "scroller-card">
                 {%  for item in modules %}
@@ -19,7 +19,7 @@
                                 <form id="module-list-form" method="POST" action="/module/manage">
                                     {% if item.loginUrl != null %}
                                         <a> <button class="btn waves-effect waves-light purple" name="type" type="submit" value="{{ item.name }}">
-                                                Connexion
+                                                OAuth Connection
                                                 <i class="material-icons right">send</i>
                                             </button></a>
                                     {% else %}
@@ -32,21 +32,25 @@
                                             <meta http-equiv="refresh" content="3; url=/" />
                                         {% endif %}
                                         <div class="row">
-                                            <div class="input-field col s4">
+                                            <div class="input-field col s6">
                                                 <i class="material-icons prefix">account_circle</i>
                                                 <input id="username" name="username" type="text" class="validate">
                                                 <label for="username">Username</label>
                                             </div>
-                                            <div class="input-field col s4">
+                                            <div class="input-field col s6">
                                                 <i class="material-icons prefix">lock_outline</i>
                                                 <input id="password" name="password" type="password" class="validate">
                                                 <label for="password">Password</label>
                                             </div>
-                                            <div class="input-field col s4">
-                                                <button class="btn waves-effect waves-light purple" name="type" type="submit" value="{{ item.name }}">
-                                                    Submit
-                                                    <i class="material-icons right">send</i>
-                                                </button>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <a>
+                                                    <button class="btn waves-effect waves-light purple" name="type" type="submit" value="{{ item.name }}">
+                                                        Connection
+                                                        <i class="material-icons right">send</i>
+                                                    </button>
+                                                </a>
                                             </div>
                                         </div>
                                     {% endif %}
@@ -54,37 +58,32 @@
                             </div>
                         </div>
                     </div>
-
                 {% endfor %}
             </div>
         </div>
-    </div>
 
-    <div class="block">
-        <h3>My modules</h3>
-        <div class = "scroller-card">
-            {%  for item in modules %}
-                <div class="card horizontal">
-                    <form action="/module/{{ item.id }}/disconnect" method="POST">
-                        <div class="card-image">
-                            <img src="{{ item.imageUrl }}">
-                        </div>
-                        <div class="card-stacked">
-                            <div class="card-content">
-                                <p>{{ item.description }}</p>
-                            </div>
-                            <div class="card-action">
+        <div class="block col s6">
+            <h3>My modules</h3>
+            <div class="scroller-card">
+                <div class="collection">
+                    {% for module in modules %}
+                        <form method="POST" action="/module/{{ module.id }}/disconnect">
+                            <li class="collection-item avatar">
+                                <img src="{{ module.imageUrl }}" alt="" class="circle">
+                                <span class="title"><b>{{ module.name | upper }}</b></span>
                                 <p>
-                                    <button class="btn waves-effect waves-light purple" name="type" type="submit">
-                                        Disconnect
-                                        <i class="material-icons right">send</i>
-                                    </button>
+                                    {{ module.description }}
                                 </p>
-                            </div>
-                        </div>
+                                <button class="btn waves-effect waves-light secondary-content" type="submit" name="action">
+                                    Disconnect
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </li>
+                        </form>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
+
         </div>
-    </div>
     </div>
 {%  endblock %}
