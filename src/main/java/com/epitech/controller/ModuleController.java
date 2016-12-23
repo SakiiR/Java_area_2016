@@ -51,6 +51,7 @@ public class                        ModuleController {
         }
         availableModules = moduleRepository.findAll();
         modelMap.addAttribute("modules", availableModules);
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "module/list.html";
     }
 
@@ -125,6 +126,7 @@ public class                        ModuleController {
                 } else modelMap.addAttribute("message", String.format("Cannot find module : %s", moduleName));
             } else modelMap.addAttribute("message", "Invalid Type");
         }
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         modelMap.addAttribute("redirectUrl", "/module/list");
         return "module/manage.html";
     }
@@ -185,6 +187,7 @@ public class                        ModuleController {
         } else modelMap.addAttribute("message", String.format("Unknown module id %s", id));
 
         modelMap.addAttribute("redirectUrl", "/module/list");
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "module/disconnect.html";
     }
 }

@@ -7,6 +7,7 @@ import com.epitech.utils.PasswordContainer;
 import com.epitech.utils.PasswordManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,13 @@ public class                    UserController {
      * @return a view name
      */
     @RequestMapping(value  = "/login", method = RequestMethod.GET)
-    public String               login() {
+    public String               login(HttpSession httpSession, ModelMap modelMap) {
+
+        if (null != httpSession.getAttribute("username")) {
+            return "redirect:/module/list";
+        }
+
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "user/login.html";
     }
 
@@ -44,6 +51,9 @@ public class                    UserController {
      */
     @RequestMapping(value  = "/login", method = RequestMethod.POST)
     public String               login(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
+        if (null != httpSession.getAttribute("username")) {
+            return "redirect:/module/list";
+        }
         if (!(user.getUsername() == null                ||
                 user.getUsername().length() == 0        ||
                 user.getPassword() == null              ||
@@ -59,6 +69,7 @@ public class                    UserController {
                 } else modelMap.addAttribute("message", "Bad username / password !");
             } else modelMap.addAttribute("message", "Bad username / password !");
         } else modelMap.addAttribute("message", "Missing field(s) !");
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "user/login.html";
     }
 
@@ -69,7 +80,11 @@ public class                    UserController {
      * @return a view name.
      */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String               register() {
+    public String               register(HttpSession httpSession, ModelMap modelMap) {
+        if (null != httpSession.getAttribute("username")) {
+            return "redirect:/module/list";
+        }
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "user/register.html";
     }
 
@@ -82,7 +97,10 @@ public class                    UserController {
      * @return a view name.
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String               register(@ModelAttribute("user") User user, ModelMap modelMap) {
+    public String               register(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
+        if (null != httpSession.getAttribute("username")) {
+            return "redirect:/module/list";
+        }
         if (!(user.getUsername() == null            ||
                 user.getUsername().length() == 0    ||
                 user.getPassword() == null          ||
@@ -101,7 +119,7 @@ public class                    UserController {
                 modelMap.addAttribute("redirectUrl", "/login");
             } else modelMap.addAttribute("message", String.format("User %s already exists", user.getUsername()));
         } else modelMap.addAttribute("message", "Missing field !");
-
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "user/register.html";
     }
 
@@ -113,7 +131,7 @@ public class                    UserController {
      * @return a view name.
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String               logout(HttpSession httpSession) {
+    public String               logout(HttpSession httpSession, ModelMap modelMap) {
         if (null == httpSession.getAttribute("username")) {
             return "redirect:/login";
         }
