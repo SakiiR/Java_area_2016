@@ -28,11 +28,13 @@
                     type    : 'POST',
                     url     : '/module/oauth',
                     data    : {access_token : access_token, state : state},
-                    done    : function(response) {
-                        console.log(response);
+                    success : function(response) {
+                        setTimeout(function() {
+                            window.location.replace('/module/list');
+                        }, 3000);
+                        Materialize.toast(response.message + " - Redirecting ..", 3000);
                     }
                 });
-                console.log(access_token, state);
             });
         })(jQuery);
     </script>
