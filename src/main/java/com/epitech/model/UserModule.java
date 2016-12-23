@@ -54,6 +54,15 @@ public class            UserModule {
         return this;
     }
 
+    public String       getId() {
+        return id;
+    }
+
+    public UserModule   setId(String id) {
+        this.id = id;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "UserModule{" +

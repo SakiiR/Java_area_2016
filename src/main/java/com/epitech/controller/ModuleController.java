@@ -155,4 +155,47 @@ public class                        ModuleController {
         }
         return "module/oauth.html";
     }
+
+    /**
+     * This route is used to remove UserModule from
+     * the user module array.
+     *
+     * @param httpSession The session parameters object.
+     * @param modelMap The view parameters object.
+     * @param id the id given is the url.
+     * @return a view name
+     */
+    @RequestMapping(value = "/module/{id}/disconnect", method = RequestMethod.POST)
+    public String                   moduleDisconnect(HttpSession httpSession, ModelMap modelMap, @PathVariable(value="id") String id) {
+        String                      username = (String) httpSession.getAttribute("username");
+        Module                      module;
+        User                        user;
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        module = moduleRepository.findById(id);
+        if (!(null == module)) {
+            user = userRepository.findByUsername(username);
+            if (!(user == null)) {
+                boolean found = false;
+                for(UserModule m : user.getModules()) {
+                    if (m.getModule() != null && m.getModule().getName().equals(module.getName())) {
+                        found = true;
+                        userModuleRepository.delete(m.getId());
+                        user.removeModule(m);
+                        userRepository.save(user);
+                        break;
+                    }
+                }
+                if (found) {
+                    modelMap.addAttribute("message", "Successfully disconnected from this module !");
+                } else modelMap.addAttribute("message", "You are not connected to this module !");
+            } else modelMap.addAttribute("message", "Who are you ??");
+        } else modelMap.addAttribute("message", String.format("Unknown module id %s", id));
+
+        modelMap.addAttribute("redirectUrl", "/module/list");
+        return "module/disconnect.html";
+    }
 }
