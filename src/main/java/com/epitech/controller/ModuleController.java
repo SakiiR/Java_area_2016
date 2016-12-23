@@ -15,6 +15,7 @@ import com.epitech.model.Module;
 import com.epitech.repository.ModuleRepository;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -44,13 +45,35 @@ public class                        ModuleController {
      */
     @RequestMapping(value = "/module/list", method = RequestMethod.GET)
     public String                   list(HttpSession httpSession, ModelMap modelMap) {
-        List<Module>                availableModules;
+        List<Module>                allModules;
+        ArrayList<Module>           userModules = new ArrayList<>();
+        ArrayList<Module>           availableModules = new ArrayList<>();
 
         if (httpSession.getAttribute("username") == null) {
             return "redirect:/login";
         }
-        availableModules = moduleRepository.findAll();
+        User user = userRepository.findByUsername((String)httpSession.getAttribute("username"));
+        if (user == null) {
+            return "redirect:/login";
+        }
+        allModules = moduleRepository.findAll();
+        for (UserModule m : user.getModules()) {
+            userModules.add(m.getModule());
+        }
+       boolean find;
+        for (Module m : allModules) {
+            find = false;
+            for (Module um : userModules) {
+                if (um.getName().equals(m.getName())) {
+                    find = true;
+                }
+            }
+            if (!find) {
+                availableModules.add(m);
+            }
+        }
         modelMap.addAttribute("modules", availableModules);
+        modelMap.addAttribute("usermodules", userModules);
         modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "module/list.html";
     }
