@@ -190,7 +190,7 @@ public class                        ModuleController {
                     }
                 }
                 if (found) {
-                    modelMap.addAttribute("message", "Successfully disconnected from this module !");
+                    modelMap.addAttribute("message", String.format("Successfully disconnected from %s !", module.getName().toUpperCase()));
                 } else modelMap.addAttribute("message", "You are not connected to this module !");
             } else modelMap.addAttribute("message", "Who are you ??");
         } else modelMap.addAttribute("message", String.format("Unknown module id %s", id));
