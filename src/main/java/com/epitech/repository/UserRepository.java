@@ -6,7 +6,8 @@ import com.epitech.model.User;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by anakin on 14/12/16.
+ * This interface is used to
+ * interact with Users.
  */
 @Component
 public interface            UserRepository extends MongoRepository<User, String> {

@@ -4,9 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
- * Created by sakiir on 20/12/16.
+ * This class is the representation
+ * of a UserModule.
  */
-
 public class            UserModule {
 
     @Id

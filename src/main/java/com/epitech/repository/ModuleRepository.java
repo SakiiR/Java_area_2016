@@ -5,7 +5,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by sakiir on 20/12/16.
+ * This interface is used to
+ * interact with Modules.
  */
 @Component
 public interface            ModuleRepository extends MongoRepository<Module, String> {

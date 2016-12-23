@@ -4,7 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Created by sakiir on 20/12/16.
+ * This class is the representation
+ * of a Module.
  */
 @Document(collection = "module")
 public class            Module {
