@@ -227,6 +227,7 @@ public class                            BackofficeController {
             user.setUsername(username)
                     .setPassword(passwordContainer.getPassword())
                     .setSalt(passwordContainer.getSalt())
+                    .setNotifications(new ArrayList<>())
                     .setModules(new ArrayList<>());
             userRepository.save(user);
         }
