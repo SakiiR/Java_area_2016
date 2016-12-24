@@ -1,6 +1,8 @@
 package com.epitech.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class is used to parse body parameters.
@@ -36,5 +38,19 @@ public class                            BodyParser {
      */
     public String                   get(String key) {
         return this._map.get(key);
+    }
+
+    public static List<String>      getDestinations(String body) {
+        List<String>                destinations = new ArrayList<>();
+
+        for (String keyVal : body.split("&")) {
+            String[] keyVal2 = keyVal.split("=");
+            if (keyVal2.length == 2) {
+                if (keyVal2[0].equals("to")) {
+                    destinations.add(keyVal2[1]);
+                }
+            }
+        }
+        return destinations;
     }
 }

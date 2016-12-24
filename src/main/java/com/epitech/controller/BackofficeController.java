@@ -5,10 +5,9 @@ import com.epitech.model.Module;
 import com.epitech.model.User;
 import com.epitech.repository.BackofficeUserRepository;
 import com.epitech.repository.ModuleRepository;
+import com.epitech.repository.NotificationRepository;
 import com.epitech.repository.UserRepository;
-import com.epitech.utils.BodyParser;
-import com.epitech.utils.PasswordContainer;
-import com.epitech.utils.PasswordManager;
+import com.epitech.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This controller is used to administrate
@@ -32,6 +32,12 @@ public class                            BackofficeController {
 
     @Autowired
     private BackofficeUserRepository    backofficeUserRepository;
+
+    @Autowired
+    private NotificationRepository      notificationRepository;
+
+    @Autowired
+    private NotificationService         notificationService;
 
     /**
      * This route simply return
@@ -227,5 +233,32 @@ public class                            BackofficeController {
             userRepository.save(user);
         }
         return "redirect:/backoffice/users";
+    }
+
+    @RequestMapping(value = "/backoffice/notifications", method = RequestMethod.GET)
+    public String                       backofficeNotifications(HttpSession httpSession, ModelMap modelMap) {
+        if (null == httpSession.getAttribute("backoffice_username")) {
+            return "redirect:/backoffice/login";
+        }
+
+        modelMap.addAttribute("users", this.userRepository.findAll());
+        modelMap.addAttribute("backoffice_username", httpSession.getAttribute("backoffice_username"));
+        return "backoffice/notifications.html";
+    }
+
+    @RequestMapping(value = "/backoffice/notification/new", method = RequestMethod.POST)
+    public String                       backofficeAddNotification(HttpSession httpSession, ModelMap modelMap, @RequestBody String body) {
+        BodyParser                      bodyParser = new BodyParser(body);
+        List<String>                    to = BodyParser.getDestinations(body);
+        String                          message = bodyParser.get("message");
+
+        if (null == httpSession.getAttribute("backoffice_username")) {
+            return "redirect:/backoffice/login";
+        }
+
+        this.notificationService.send2(to, message);
+
+        modelMap.addAttribute("backoffice_username", httpSession.getAttribute("backoffice_username"));
+        return "backoffice/notifications.html";
     }
 }

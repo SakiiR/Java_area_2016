@@ -19,6 +19,7 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="/">Index</a></li>
                         {% if username  %}<li><a href="/module/list">Modules</a></li>{% endif %}
+                        {% if username  %}<li><a href="/module/notificaions">Notifications</a></li>{% endif %}
                          {% if not username %}<li><a href="/login">Login</a></li>{% endif %}
                          {% if not username %}<li><a href="/register">Register</a></li>{% endif %}
                         {% if username%}<li><a href="/logout">Logout</a></li>{% endif %}
