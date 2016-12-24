@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +127,7 @@ public class                            BackofficeController {
     }
 
     /**
-     * THis route create a new module.
+     * This route create a new module.
      *
      * @param httpSession the session parameters object.
      * @param body the request body.
@@ -235,6 +236,14 @@ public class                            BackofficeController {
         return "redirect:/backoffice/users";
     }
 
+    /**
+     * This route is used to display the
+     * notification form.
+     *
+     * @param httpSession The session parameters object.
+     * @param modelMap The view parameters object.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/notifications", method = RequestMethod.GET)
     public String                       backofficeNotifications(HttpSession httpSession, ModelMap modelMap) {
         if (null == httpSession.getAttribute("backoffice_username")) {
@@ -246,6 +255,16 @@ public class                            BackofficeController {
         return "backoffice/notifications.html";
     }
 
+    /**
+     * This route is used to send a
+     * notification to one or many
+     * users.
+     *
+     * @param httpSession the session parameters object.
+     * @param modelMap the view parameters object.
+     * @param body the POST body parameters.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/notification/new", method = RequestMethod.POST)
     public String                       backofficeAddNotification(HttpSession httpSession, ModelMap modelMap, @RequestBody String body) {
         BodyParser                      bodyParser = new BodyParser(body);
@@ -256,7 +275,11 @@ public class                            BackofficeController {
             return "redirect:/backoffice/login";
         }
 
-        this.notificationService.send2(to, message);
+        try {
+            this.notificationService.send2(to, java.net.URLDecoder.decode(message, "UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         modelMap.addAttribute("backoffice_username", httpSession.getAttribute("backoffice_username"));
         return "backoffice/notifications.html";

@@ -146,6 +146,13 @@ public class                        UserController {
         return "user/logout.html";
     }
 
+    /**
+     * This route is used to display all the user notifications.
+     *
+     * @param httpSession the session parameters object.
+     * @param modelMap the view parameters object.
+     * @return a view name.
+     */
     @RequestMapping(value = "/notifications", method = RequestMethod.GET)
     public String                   notifications(HttpSession httpSession, ModelMap modelMap) {
         String                      username = (String) httpSession.getAttribute("username");
