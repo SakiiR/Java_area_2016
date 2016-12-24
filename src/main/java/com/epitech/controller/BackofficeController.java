@@ -1,6 +1,7 @@
 package com.epitech.controller;
 
 import com.epitech.model.BackofficeUser;
+import com.epitech.model.Module;
 import com.epitech.repository.BackofficeUserRepository;
 import com.epitech.repository.ModuleRepository;
 import com.epitech.utils.BodyParser;
@@ -8,9 +9,7 @@ import com.epitech.utils.PasswordManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -78,6 +77,58 @@ public class                            BackofficeController {
 
         modelMap.addAttribute("backoffice_username", httpSession.getAttribute("backoffice_username"));
         return "backoffice/login.html";
+    }
+
+    @RequestMapping(value = "/backoffice/modules", method = RequestMethod.GET)
+    public String                       backofficeModules(ModelMap modelMap, HttpSession httpSession) {
+        if (null == httpSession.getAttribute("backoffice_username")) {
+            return "redirect:/backoffice/login";
+        }
+        modelMap.addAttribute("backoffice_username", httpSession.getAttribute("backoffice_username"));
+        modelMap.addAttribute("modules", moduleRepository.findAll());
+        return "backoffice/modules.html";
+    }
+
+    @RequestMapping(value = "/backoffice/module/{id}/remove", method = RequestMethod.POST)
+    public String                       backofficeRemoveModule(HttpSession httpSession, @PathVariable(value="id") String id) {
+        if (null == httpSession.getAttribute("backoffice_username")) {
+            return "redirect:/backoffice/login";
+        }
+        moduleRepository.delete(id);
+        return "redirect:/backoffice/modules";
+    }
+
+    @RequestMapping(value = "/backoffice/module/new", method = RequestMethod.POST)
+    public String                       backofficeAddModule(HttpSession httpSession, @RequestBody String body) {
+        BodyParser                      bodyParser = new BodyParser(body);
+        String                          name = bodyParser.get("name");
+        String                          description = bodyParser.get("description");
+        String                          imageUrl = bodyParser.get("image_url");
+        String                          callback = bodyParser.get("callback");
+
+        if (null == httpSession.getAttribute("backoffice_username")) {
+            return "redirect:/backoffice/login";
+        }
+
+        if (name != null &&
+                imageUrl != null &&
+                description != null &&
+                callback != null &&
+                name.length() != 0 &&
+                description.length() != 0 &&
+                imageUrl.length() != 0) {
+            Module module = new Module();
+            try {
+                module.setName(java.net.URLDecoder.decode(name, "UTF-8"))
+                        .setDescription(java.net.URLDecoder.decode(description, "UTF-8"))
+                        .setImageUrl(java.net.URLDecoder.decode(imageUrl, "UTF-8"))
+                        .setLoginUrl(java.net.URLDecoder.decode(callback, "UTF-8"));
+                moduleRepository.save(module);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "redirect:/backoffice/modules";
     }
 
 }
