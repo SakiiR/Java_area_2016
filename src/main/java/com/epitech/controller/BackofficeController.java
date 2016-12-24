@@ -86,6 +86,13 @@ public class                            BackofficeController {
         return "backoffice/login.html";
     }
 
+    /**
+     * This route return the list of modules.
+     *
+     * @param modelMap the view parameters object.
+     * @param httpSession the session parameters object.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/modules", method = RequestMethod.GET)
     public String                       backofficeModules(ModelMap modelMap, HttpSession httpSession) {
         if (null == httpSession.getAttribute("backoffice_username")) {
@@ -96,6 +103,13 @@ public class                            BackofficeController {
         return "backoffice/modules.html";
     }
 
+    /**
+     * This route remove a module.
+     *
+     * @param httpSession The session parameters object.
+     * @param id The module id.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/module/{id}/remove", method = RequestMethod.POST)
     public String                       backofficeRemoveModule(HttpSession httpSession, @PathVariable(value="id") String id) {
         if (null == httpSession.getAttribute("backoffice_username")) {
@@ -105,6 +119,13 @@ public class                            BackofficeController {
         return "redirect:/backoffice/modules";
     }
 
+    /**
+     * THis route create a new module.
+     *
+     * @param httpSession the session parameters object.
+     * @param body the request body.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/module/new", method = RequestMethod.POST)
     public String                       backofficeAddModule(HttpSession httpSession, @RequestBody String body) {
         BodyParser                      bodyParser = new BodyParser(body);
@@ -138,6 +159,13 @@ public class                            BackofficeController {
         return "redirect:/backoffice/modules";
     }
 
+    /**
+     * This route display the user list.
+     *
+     * @param httpSession the session parameters object.
+     * @param modelMap the view parameters object.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/users", method = RequestMethod.GET)
     public String                       backofficeUsers(HttpSession httpSession, ModelMap modelMap) {
         if (null == httpSession.getAttribute("backoffice_username")) {
@@ -149,6 +177,13 @@ public class                            BackofficeController {
         return "backoffice/users.html";
     }
 
+    /**
+     * This route remove a user.
+     *
+     * @param httpSession The session parameters object.
+     * @param id The user id.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/user/{id}/delete", method = RequestMethod.POST)
     public String                       backofficeRemoveUser(HttpSession httpSession, @PathVariable(value = "id") String id) {
         if (null == httpSession.getAttribute("backoffice_username")) {
@@ -163,6 +198,13 @@ public class                            BackofficeController {
         return "redirect:/backoffice/users";
     }
 
+    /**
+     * This route create a new user.
+     *
+     * @param httpSession the session parameters object.
+     * @param body the requaest body.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/user/new", method = RequestMethod.POST)
     public String                       backofficeAddUser(HttpSession httpSession, @RequestBody String body) {
         BodyParser                      bodyParser = new BodyParser(body);
