@@ -4,24 +4,26 @@
     <div class="row">
         <h2>Modules Manager</h2>
         <div class="block col s6">
-            <h3>Modules</h3>
-            <div class="collection scroller-card">
-                {% for module in modules %}
-                    <form method="POST" action="/backoffice/module/{{ module.id }}/remove">
-                        <li class="collection-item avatar">
-                            <img src="{{ module.imageUrl }}" alt="" class="circle">
-                            <span class="title"><b>{{ module.name | upper }}</b></span>
-                            <p>
-                                {{ module.description }}
-                            </p>
-                            <button class="btn waves-effect waves-light secondary-content" type="submit" name="action">
-                                Remove
-                                <i class="material-icons right">delete</i>
-                            </button>
-                        </li>
-                    </form>
-                {% endfor %}
-            </div>
+            <h3>Modules ( {{ modules | length }} )</h3>
+            {% if modules | length > 0 %}
+                <div class="collection scroller-card">
+                    {% for module in modules %}
+                        <form method="POST" action="/backoffice/module/{{ module.id }}/remove">
+                            <li class="collection-item avatar">
+                                <img src="{{ module.imageUrl }}" alt="" class="circle">
+                                <span class="title"><b>{{ module.name | upper }}</b></span>
+                                <p>
+                                    {{ module.description }}
+                                </p>
+                                <button class="btn waves-effect waves-light secondary-content" type="submit" name="action">
+                                    Remove
+                                    <i class="material-icons right">delete</i>
+                                </button>
+                            </li>
+                        </form>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
         <div class="block col s6">
             <h3>Add Module</h3>
