@@ -131,7 +131,6 @@ public class                        UserController {
         return "user/register.html";
     }
 
-
     /**
      * This route is used to logout a user.
      *
@@ -149,15 +148,15 @@ public class                        UserController {
 
     @RequestMapping(value = "/notifications", method = RequestMethod.GET)
     public String                   notifications(HttpSession httpSession, ModelMap modelMap) {
-        String                  username = (String) httpSession.getAttribute("username");
-        User                    user = userRepository.findByUsername(username);
+        String                      username = (String) httpSession.getAttribute("username");
+        User                        user = userRepository.findByUsername(username);
 
         if (null == user) {
             return "redirect:/login";
         }
 
-        List<Notification>      notifications = user.getNotifications();
-        List<Notification>      toRemove = new ArrayList<>();
+        List<Notification>          notifications = user.getNotifications();
+        List<Notification>          toRemove = new ArrayList<>();
 
         for (Notification notification : notifications) {
             if (notification.isReaded()) {
@@ -167,6 +166,7 @@ public class                        UserController {
 
         for (Notification notification : notifications) {
             notification.setReaded(true);
+            notificationRepository.save(notification);
         }
 
         user.getNotifications().removeAll(toRemove);
