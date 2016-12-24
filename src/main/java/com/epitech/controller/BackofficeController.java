@@ -284,4 +284,10 @@ public class                            BackofficeController {
         modelMap.addAttribute("backoffice_username", httpSession.getAttribute("backoffice_username"));
         return "backoffice/notifications.html";
     }
+
+    @RequestMapping(value = "/backoffice/logout", method = RequestMethod.GET)
+    public String                       backofficeLogout(HttpSession httpSession) {
+        httpSession.removeAttribute("backoffice_username");
+        return "redirect:/";
+    }
 }
