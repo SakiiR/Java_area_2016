@@ -1,10 +1,13 @@
 package com.epitech.controller;
 
+import com.epitech.model.Notification;
 import com.epitech.model.User;
+import com.epitech.repository.NotificationRepository;
 import com.epitech.repository.UserRepository;
 import com.epitech.utils.Logger;
 import com.epitech.utils.PasswordContainer;
 import com.epitech.utils.PasswordManager;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +16,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This controller is used to manage
  * user of the database.
  */
 @Controller
-public class                    UserController {
+public class                        UserController {
 
     @Autowired
-    private UserRepository      userRepository;
+    private NotificationRepository  notificationRepository;
+
+    @Autowired
+    private UserRepository          userRepository;
 
     /**
      * This route simply return the login form.
@@ -30,7 +37,7 @@ public class                    UserController {
      * @return a view name
      */
     @RequestMapping(value  = "/login", method = RequestMethod.GET)
-    public String               login(HttpSession httpSession, ModelMap modelMap) {
+    public String                   login(HttpSession httpSession, ModelMap modelMap) {
 
         if (null != httpSession.getAttribute("username")) {
             return "redirect:/module/list";
@@ -50,7 +57,7 @@ public class                    UserController {
      * @return a view name.
      */
     @RequestMapping(value  = "/login", method = RequestMethod.POST)
-    public String               login(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
+    public String                   login(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
         if (null != httpSession.getAttribute("username")) {
             return "redirect:/module/list";
         }
@@ -80,7 +87,7 @@ public class                    UserController {
      * @return a view name.
      */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String               register(HttpSession httpSession, ModelMap modelMap) {
+    public String                   register(HttpSession httpSession, ModelMap modelMap) {
         if (null != httpSession.getAttribute("username")) {
             return "redirect:/module/list";
         }
@@ -97,7 +104,7 @@ public class                    UserController {
      * @return a view name.
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String               register(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
+    public String                   register(@ModelAttribute("user") User user, ModelMap modelMap, HttpSession httpSession) {
         if (null != httpSession.getAttribute("username")) {
             return "redirect:/module/list";
         }
@@ -111,6 +118,7 @@ public class                    UserController {
                 PasswordContainer passwordContainer = passwordManager.encode(user.getPassword());
                 user.setPassword(passwordContainer.getPassword())
                         .setSalt(passwordContainer.getSalt())
+                        .setNotifications(new ArrayList<>())
                         .setModules(new ArrayList<>());
                 userRepository.save(user);
                 Logger.logSuccess("User %s Created !", user.getUsername());
@@ -131,11 +139,42 @@ public class                    UserController {
      * @return a view name.
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String               logout(HttpSession httpSession, ModelMap modelMap) {
+    public String                   logout(HttpSession httpSession, ModelMap modelMap) {
         if (null == httpSession.getAttribute("username")) {
             return "redirect:/login";
         }
         httpSession.removeAttribute("username");
         return "user/logout.html";
+    }
+
+    @RequestMapping(value = "/notifications", method = RequestMethod.GET)
+    public String                   notifications(HttpSession httpSession, ModelMap modelMap) {
+        String                  username = (String) httpSession.getAttribute("username");
+        User                    user = userRepository.findByUsername(username);
+
+        if (null == user) {
+            return "redirect:/login";
+        }
+
+        List<Notification>      notifications = user.getNotifications();
+        List<Notification>      toRemove = new ArrayList<>();
+
+        for (Notification notification : notifications) {
+            if (notification.isReaded()) {
+                toRemove.add(notification);
+            }
+        }
+
+        for (Notification notification : notifications) {
+            notification.setReaded(true);
+        }
+
+        user.getNotifications().removeAll(toRemove);
+        this.userRepository.save(user);
+        this.notificationRepository.delete(toRemove);
+
+        modelMap.addAttribute("notifications", user.getNotifications());
+        modelMap.addAttribute("username", user.getUsername());
+        return "user/notifications.html";
     }
 }

@@ -23,7 +23,10 @@ public class                        User {
     @DBRef
     private List<UserModule>        modules;
 
-    public                          User() { }
+    @DBRef
+    private List<Notification>      notifications;
+
+    public                          User() {}
 
     public                          User(String username, String password) {
         this.username = username;
@@ -73,6 +76,34 @@ public class                        User {
 
     public User                     removeModule(UserModule userModule) {
         this.modules.remove(userModule);
+        return this;
+    }
+
+    public String                   getId() {
+        return id;
+    }
+
+    public User                     setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public List<Notification>       getNotifications() {
+        return notifications;
+    }
+
+    public User                     setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+        return this;
+    }
+
+    public User                     addNotification(Notification notification) {
+        this.notifications.add(notification);
+        return this;
+    }
+
+    public User                     removeNotification(Notification notification) {
+        this.notifications.remove(notification);
         return this;
     }
 

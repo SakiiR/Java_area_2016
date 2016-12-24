@@ -1,0 +1,20 @@
+{% extends "../layout/layout.html.twig" %}
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+    <h4>Your notifications</h4>
+
+    <div class="collection">
+        <li class="collection-header"><h4>You have {{ notifications | length }} notification(s)</h4></li>
+        {% for notification in notifications %}
+            <li class="collection-item avatar">
+                <img src="/img/notification.png" alt="" class="circle">
+                <span class="title">for {{ notification.user.username }}</span>
+                <p>{{ notification.created }} <br>
+                    {{ notification.message }}
+                </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+            </li>
+        {% endfor %}
+    </div>
+{% endblock %}
