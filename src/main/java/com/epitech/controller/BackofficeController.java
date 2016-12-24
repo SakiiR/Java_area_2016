@@ -35,9 +35,6 @@ public class                            BackofficeController {
     private BackofficeUserRepository    backofficeUserRepository;
 
     @Autowired
-    private NotificationRepository      notificationRepository;
-
-    @Autowired
     private NotificationService         notificationService;
 
     /**
@@ -285,6 +282,12 @@ public class                            BackofficeController {
         return "backoffice/notifications.html";
     }
 
+    /**
+     * This route is used to logout a user.
+     *
+     * @param httpSession the session parameters object.
+     * @return a view name.
+     */
     @RequestMapping(value = "/backoffice/logout", method = RequestMethod.GET)
     public String                       backofficeLogout(HttpSession httpSession) {
         httpSession.removeAttribute("backoffice_username");
