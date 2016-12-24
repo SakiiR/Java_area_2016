@@ -11,7 +11,7 @@
                 <img src="/img/notification.png" alt="" class="circle">
                 <span class="title">for {{ notification.user.username }}</span>
                 <p>{{ notification.created }} <br>
-                    {{ notification.message }}
+                    {{ notification.message | escape }}
                 </p>
                 <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
             </li>
