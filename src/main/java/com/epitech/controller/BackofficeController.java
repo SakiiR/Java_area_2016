@@ -2,9 +2,12 @@ package com.epitech.controller;
 
 import com.epitech.model.BackofficeUser;
 import com.epitech.model.Module;
+import com.epitech.model.User;
 import com.epitech.repository.BackofficeUserRepository;
 import com.epitech.repository.ModuleRepository;
+import com.epitech.repository.UserRepository;
 import com.epitech.utils.BodyParser;
+import com.epitech.utils.PasswordContainer;
 import com.epitech.utils.PasswordManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  * This controller is used to administrate
@@ -22,6 +26,9 @@ public class                            BackofficeController {
 
     @Autowired
     private ModuleRepository            moduleRepository;
+
+    @Autowired
+    private UserRepository              userRepository;
 
     @Autowired
     private BackofficeUserRepository    backofficeUserRepository;
@@ -131,4 +138,52 @@ public class                            BackofficeController {
         return "redirect:/backoffice/modules";
     }
 
+    @RequestMapping(value = "/backoffice/users", method = RequestMethod.GET)
+    public String                       backofficeUsers(HttpSession httpSession, ModelMap modelMap) {
+        if (null == httpSession.getAttribute("backoffice_username")) {
+            return "redirect:/backoffice/login";
+        }
+
+        modelMap.addAttribute("users", userRepository.findAll());
+        modelMap.addAttribute("backoffice_username", httpSession.getAttribute("backoffice_username"));
+        return "backoffice/users.html";
+    }
+
+    @RequestMapping(value = "/backoffice/user/{id}/delete", method = RequestMethod.POST)
+    public String                       backofficeRemoveUser(HttpSession httpSession, @PathVariable(value = "id") String id) {
+        if (null == httpSession.getAttribute("backoffice_username")) {
+            return "redirect:/backoffice/login";
+        }
+
+        User                            user = userRepository.findOne(id);
+        if (null != user) {
+            userRepository.delete(user);
+        }
+
+        return "redirect:/backoffice/users";
+    }
+
+    @RequestMapping(value = "/backoffice/user/new", method = RequestMethod.POST)
+    public String                       backofficeAddUser(HttpSession httpSession, @RequestBody String body) {
+        BodyParser                      bodyParser = new BodyParser(body);
+        String                          username = bodyParser.get("username");
+        String                          password = bodyParser.get("password");
+
+        if (null == httpSession.getAttribute("backoffice_username")) {
+            return "redirect:/backoffice/login";
+        }
+
+        if (username != null && username.length() != 0 && password != null && password.length() != 0 && userRepository.findByUsername(username) == null) {
+            User user = new User();
+            PasswordManager passwordManager = new PasswordManager();
+            PasswordContainer passwordContainer;
+            passwordContainer = passwordManager.encode(password);
+            user.setUsername(username)
+                    .setPassword(passwordContainer.getPassword())
+                    .setSalt(passwordContainer.getSalt())
+                    .setModules(new ArrayList<>());
+            userRepository.save(user);
+        }
+        return "redirect:/backoffice/users";
+    }
 }

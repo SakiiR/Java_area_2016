@@ -1,0 +1,53 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <h2>Users Manager</h2>
+        <div class="block col s6">
+            <h3>Users ({{ users | length }} Count)</h3>
+            <div class="collection scroller-card">
+                {% for user in users %}
+                    <form method="POST" action="/backoffice/user/{{ user.id }}/delete">
+                        <li class="collection-item avatar">
+                            <img src="/img/user.png" alt="" class="circle">
+                            <span class="title"><b>{{ user.username | upper }}</b></span>
+                            <p>
+                                {{ user.id }}
+                                {# Add salt && password#}
+                            </p>
+                            <button class="btn waves-effect waves-light secondary-content" type="submit" name="action">
+                                Remove
+                                <i class="material-icons right">delete</i>
+                            </button>
+                        </li>
+                    </form>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="block col s6">
+            <h3>Add User</h3>
+            <form method="POST" action="/backoffice/user/new">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">person_pin</i>
+                        <input id="icon_prefix" type="text" class="validate" name="username">
+                        <label for="icon_prefix">Username</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">perm_media</i>
+                        <input id="icon_prefix" type="password" class="validate" name="password">
+                        <label for="icon_prefix">Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col col s12">
+                        <button class="btn waves-effect waves-light secondary-content" type="submit" name="action">
+                            Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
