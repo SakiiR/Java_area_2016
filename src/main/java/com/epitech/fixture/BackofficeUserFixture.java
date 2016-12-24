@@ -10,8 +10,8 @@ import com.epitech.utils.PasswordManager;
  * to the database when the server is starting.
  */
 public class                            BackofficeUserFixture {
-    static private String               secure_password = "123";
     static private String               secure_username = "SakiiR";
+    static private String               secure_password = "123";
 
     private BackofficeUserRepository    backofficeUserRepository;
 
