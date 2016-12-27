@@ -40,6 +40,13 @@ public class                            BodyParser {
         return this._map.get(key);
     }
 
+    /**
+     * This method is used to parse multiple
+     * value inside a request body.
+     *
+     * @param body The body to parse.
+     * @return a list of destination (ex : to=SakiiR&to=Karine => {SakiiR, Karine})
+     */
     public static List<String>          getDestinations(String body) {
         List<String>                    destinations = new ArrayList<>();
 
