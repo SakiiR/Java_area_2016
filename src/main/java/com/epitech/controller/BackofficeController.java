@@ -72,9 +72,9 @@ public class                            BackofficeController {
         String username = backofficeUser.getUsername();
         String password = backofficeUser.getPassword();
 
-        if (username != null && password != null) {
+        if (!(username == null || password == null)) {
             BackofficeUser exist = this.backofficeUserRepository.findByUsername(username);
-            if (backofficeUser != null) {
+            if (exist != null) {
                 PasswordManager passwordManager = new PasswordManager();
                 if (passwordManager.check(password, exist.getSalt(), exist.getPassword())) {
                     httpSession.setAttribute("backoffice_username", username);
