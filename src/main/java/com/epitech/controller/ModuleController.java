@@ -128,7 +128,9 @@ public class                        ModuleController {
                         if (!(token == null)) {
                             Boolean foundModule = false;
                             for (UserModule m : user.getModules()) {
-                                if (m.getModule() != null && m.getModule().getName().equals(moduleName)) {
+                                if (m.getModule() != null && m.getModule()
+                                        .getName()
+                                        .equals(moduleName)) {
                                     foundModule = true;
                                     break;
                                 }
@@ -160,7 +162,7 @@ public class                        ModuleController {
      *
      * @see OAuthController
      * @param httpSession The session parameter object
-     * @return a view name
+     * @return a view name.
      */
     @RequestMapping(value = "/module/oauth", method = RequestMethod.GET)
     public String                   oauth(HttpSession httpSession) {
@@ -177,7 +179,7 @@ public class                        ModuleController {
      * @param httpSession The session parameters object.
      * @param modelMap The view parameters object.
      * @param id the id given is the url.
-     * @return a view name
+     * @return a view name.
      */
     @RequestMapping(value = "/module/{id}/disconnect", method = RequestMethod.POST)
     public String                   moduleDisconnect(HttpSession httpSession, ModelMap modelMap, @PathVariable(value="id") String id) {
