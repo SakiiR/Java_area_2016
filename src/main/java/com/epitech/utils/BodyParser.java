@@ -18,7 +18,7 @@ public class                            BodyParser {
      *
      * @param body the string to parse
      */
-    public                          BodyParser(String body) {
+    public                              BodyParser(String body) {
         this._map = new HashMap<>();
 
         for (String keyVal : body.split("&")) {
@@ -36,12 +36,12 @@ public class                            BodyParser {
      * @param key the key to seek.
      * @return a String value from the key.
      */
-    public String                   get(String key) {
+    public String                       get(String key) {
         return this._map.get(key);
     }
 
-    public static List<String>      getDestinations(String body) {
-        List<String>                destinations = new ArrayList<>();
+    public static List<String>          getDestinations(String body) {
+        List<String>                    destinations = new ArrayList<>();
 
         for (String keyVal : body.split("&")) {
             String[] keyVal2 = keyVal.split("=");
