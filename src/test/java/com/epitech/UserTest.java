@@ -19,6 +19,7 @@ public class                    UserTest {
 
     @Autowired
     private UserRepository      userRepository;
+
     @Test
     public void                 createUserTest() {
         User                    user = new User();
