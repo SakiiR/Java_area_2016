@@ -1,7 +1,9 @@
 package com.epitech.config;
 
+import com.epitech.fixture.AreaFixture;
 import com.epitech.fixture.BackofficeUserFixture;
 import com.epitech.fixture.ModuleFixture;
+import com.epitech.repository.AreaRepository;
 import com.epitech.repository.BackofficeUserRepository;
 import com.epitech.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class                            StartupListener implements ApplicationLi
     @Autowired
     private BackofficeUserRepository    backofficeUserRepository;
 
+    @Autowired
+    private AreaRepository              areaRepository;
+
     /**
      * This method is called when the application
      * start.
@@ -31,8 +36,10 @@ public class                            StartupListener implements ApplicationLi
     public void                 onApplicationEvent(final ContextRefreshedEvent event) {
         ModuleFixture           moduleFixture = new ModuleFixture(this.moduleRepository);
         BackofficeUserFixture   backofficeUserFixture = new BackofficeUserFixture(this.backofficeUserRepository);
+        AreaFixture             areaFixture = new AreaFixture(this.areaRepository);
 
         backofficeUserFixture.init();
         moduleFixture.init();
+        areaFixture.init();
     }
 }

@@ -17,4 +17,8 @@ echo "db.backoffice_user.remove({})" | mongo > /dev/null
 
 echo "[!] Clean notifications" 
 echo "db.notification.remove({})" | mongo > /dev/null
+
+echo "[!] Clean areas"
+echo "db.area.remove({})" | mongo > /dev/null
+
 echo "[+] OKAY!"
