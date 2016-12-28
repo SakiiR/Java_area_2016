@@ -21,6 +21,9 @@ public class                        User {
     private String                  salt;
 
     @DBRef
+    private List<Area>              areas;
+
+    @DBRef
     private List<UserModule>        modules;
 
     @DBRef
@@ -104,6 +107,25 @@ public class                        User {
 
     public User                     removeNotification(Notification notification) {
         this.notifications.remove(notification);
+        return this;
+    }
+
+    public List<Area>               getAreas() {
+        return areas;
+    }
+
+    public User                     setAreas(List<Area> areas) {
+        this.areas = areas;
+        return this;
+    }
+
+    public User                     addArea(Area area) {
+        this.areas.add(area);
+        return this;
+    }
+
+    public User                     removeArea(Area area) {
+        this.areas.remove(area);
         return this;
     }
 

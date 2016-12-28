@@ -119,6 +119,7 @@ public class                        UserController {
                 user.setPassword(passwordContainer.getPassword())
                         .setSalt(passwordContainer.getSalt())
                         .setNotifications(new ArrayList<>())
+                        .setAreas(new ArrayList<>())
                         .setModules(new ArrayList<>());
                 userRepository.save(user);
                 Logger.logSuccess("User %s Created !", user.getUsername());
