@@ -67,7 +67,7 @@ public class AreaWorker implements Runnable {
         while (this.isRunning) {
             users = this.userRepository.findAll();
 
-            Logger.logSuccess("[WORKER] Checking for %d users", users.size());
+            Logger.logSuccess("[WORKER] Checking for %d users last check time %d", users.size(), AreaWorker.timestamp);
 
             for (User user : users) {
                 List<Area> areas = user.getAreas();
