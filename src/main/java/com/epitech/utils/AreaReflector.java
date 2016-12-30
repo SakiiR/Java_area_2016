@@ -8,22 +8,24 @@ import org.apache.tomcat.util.bcel.Const;
 import java.lang.reflect.Constructor;
 
 public class                    AreaReflector {
-    public static IAction       instanciateAction(String actionName, String token, IService service) {
+    public static IAction       instanciateAction(String actionName, String token) {
         IAction                 actionObject = null;
 
+        actionName = "com.epitech.action." + actionName;
         try {
             Class actionClass = Class.forName(actionName);
-            Class[] types = {String.class, IService.class};
+            Class[] types = {String.class};
             Constructor actionConstructor = actionClass.getConstructor(types);
-            Object[] parameters = {token, service};
+            Object[] parameters = {token};
             actionObject = (IAction) actionConstructor.newInstance(parameters);
         } catch (Exception e) {
             Logger.logWarning("Failed to instanciate Action %s", actionName);
+            e.printStackTrace();
         }
         return actionObject;
     }
 
-    public static IReaction     instanciateReaction(String reactionName, String token, IService service, Object data) {
+    public static IReaction     instanciateReaction(String reactionName, String token, Object data) {
         IReaction               reactionObject = null;
 
         return reactionObject;
@@ -32,6 +34,7 @@ public class                    AreaReflector {
     public static IService      instanciateService(String serviceName) {
         IService                serviceObject = null;
 
+        serviceName = "com.epitech.service." + AreaReflector.getServiceNameByModuleName(serviceName);
         try {
             Class serviceClass = Class.forName(serviceName);
             Constructor serviceConstructor = serviceClass.getConstructor();

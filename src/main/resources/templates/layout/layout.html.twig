@@ -20,9 +20,10 @@
                         <li><a href="/">Index</a></li>
                         {% if username  %}<li><a href="/module/list">Modules</a></li>{% endif %}
                         {% if username  %}<li><a href="/notifications">Notifications</a></li>{% endif %}
+                        {% if username  %}<li><a href="/area/list">Areas</a></li>{% endif %}
                          {% if not username %}<li><a href="/login">Login</a></li>{% endif %}
                         {% if not username %}<li><a href="/register">Register</a></li>{% endif %}
-                        {% if username%}<li><a href="/logout">Logout</a></li>{% endif %}
+                        {% if username %}<li><a href="/logout">Logout</a></li>{% endif %}
                         <li><a href="/backoffice/login">Backoffice</a></li>
                     </ul>
                 </div>

@@ -12,8 +12,6 @@ import com.epitech.utils.AreaReflector;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 
-import java.lang.reflect.Constructor;
-import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -28,15 +26,28 @@ public class AreaWorker implements Runnable {
     private AreaRepository          areaRepository;
     // etc ..
 
-    public static long              timestamp;
+    public static Date              timestamp;
 
     private boolean                 isRunning = true;
 
+    /**
+     * Contructor
+     *
+     * @param userRepository user repository
+     * @param areaRepository area repository
+     */
     public AreaWorker(UserRepository userRepository, AreaRepository areaRepository) {
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
     }
 
+    /**
+     * Return a token string by module name.
+     *
+     * @param user the user to search in.
+     * @param moduleName the module name we are searching for.
+     * @return a token string.
+     */
     private String                  getTokenByModuleName(User user, String moduleName) {
         for (UserModule userModule : user.getModules()) {
             if (userModule.getModule().getName().equals(moduleName)) {
@@ -46,28 +57,37 @@ public class AreaWorker implements Runnable {
         return null;
     }
 
+    /**
+     * This method process a user area.
+     *
+     * @param user the area owner.
+     * @param area the area to process.
+     */
     private void                    processArea(User user, Area area) {
         String                      actionToken = this.getTokenByModuleName(user, area.getActionModuleName());
         String                      reactionToken = this.getTokenByModuleName(user, area.getReactionModuleName());
         IService                    actionService = AreaReflector.instanciateService(area.getActionModuleName());
         IService                    reactionService = AreaReflector.instanciateService(area.getReactionModuleName());
-        IAction                     action = AreaReflector.instanciateAction(area.getActionName(), actionToken, actionService);
+        IAction                     action = AreaReflector.instanciateAction(area.getActionName(), actionToken);
 
         if (action.run() == ErrorCode.SUCCESS) {
-            IReaction reaction = AreaReflector.instanciateReaction(area.getReactionName(), reactionToken, reactionService, action.getData());
+            IReaction reaction = AreaReflector.instanciateReaction(area.getReactionName(), reactionToken, action.getData());
         }
     }
 
+    /**
+     * The main thread.
+     */
     @Override
     public void                     run() {
         List<User>                  users;
 
-        AreaWorker.timestamp = new Date().getTime();
+        AreaWorker.timestamp = new Date();
 
         while (this.isRunning) {
             users = this.userRepository.findAll();
 
-            Logger.logSuccess("[WORKER] Checking for %d users last check time %d", users.size(), AreaWorker.timestamp);
+            Logger.logSuccess("[WORKER] Checking for %d users last check time %s", users.size(), AreaWorker.timestamp.toString());
 
             for (User user : users) {
                 List<Area> areas = user.getAreas();
@@ -76,7 +96,7 @@ public class AreaWorker implements Runnable {
                 }
             }
 
-            AreaWorker.timestamp = new Date().getTime();
+            AreaWorker.timestamp = new Date();
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {

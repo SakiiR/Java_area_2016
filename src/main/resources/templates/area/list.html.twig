@@ -1,0 +1,53 @@
+{% extends "../layout/layout.html.twig" %}
+{% block title %}List{% endblock %}
+
+{%  block content %}
+    <div class="row">
+        <div class="block col s6">
+            <h3>Available areas</h3>
+            <div class="scroller-card">
+                <div class="collection">
+                    {%  for area in areas %}
+                        <form method="POST" action="/area/{{ area.id }}/add">
+                            <li class="collection-item avatar">
+                                <img src="/img/modules/{{ area.actionModuleName}}.png" alt="" class="circle"><br/><br/>
+                                <img src="/img/modules/{{ area.reactionModuleName}}.png" alt="" class="circle">
+                                <p>
+                                    {{ area.description }}
+                                </p>
+                                <button class="btn waves-effect waves-light secondary-content" type="submit" name="action">
+                                    Add
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </li>
+                        </form>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="block col s6">
+            <h3>My areas</h3>
+            <div class="scroller-card">
+                <div class="collection">
+                    {% for area in userareas %}
+                        <form method="POST" action="/area/{{ area.id }}/remove">
+                            <li class="collection-item avatar">
+                                <img src="/img/modules/{{ area.actionModuleName}}.png" alt="" class="circle"><br/><br/>
+                                <img src="/img/modules/{{ area.reactionModuleName}}.png" alt="" class="circle">
+                                <p>
+                                    {{ area.description }}
+                                </p>
+                                <button class="btn waves-effect waves-light secondary-content" type="submit" name="action">
+                                    Remove
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </li>
+                        </form>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{%  endblock %}
