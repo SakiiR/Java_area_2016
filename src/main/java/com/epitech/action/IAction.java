@@ -7,5 +7,5 @@ import com.epitech.utils.ErrorCode;
  */
 public interface        IAction {
     ErrorCode           run();
-    String              getData();
+    Object              getData();
 }
