@@ -17,17 +17,20 @@ public class                    Area {
     private String              reactionName;
     private String              actionModuleName;
     private String              reactionModuleName;
+    private String              description;
 
     public                      Area() {}
 
     public                      Area(String actionName,
                                      String reactionName,
                                      String actionModuleName,
-                                     String reactionModuleName) {
+                                     String reactionModuleName,
+                                     String description) {
         this.actionName = actionName;
         this.reactionName = reactionName;
         this.actionModuleName = actionModuleName;
         this.reactionModuleName = reactionModuleName;
+        this.description = description;
     }
 
     public String               getId() {
@@ -72,6 +75,15 @@ public class                    Area {
 
     public Area                 setReactionModuleName(String reactionModuleName) {
         this.reactionModuleName = reactionModuleName;
+        return this;
+    }
+
+    public String               getDescription() {
+        return description;
+    }
+
+    public Area                 setDescription(String description) {
+        this.description = description;
         return this;
     }
 

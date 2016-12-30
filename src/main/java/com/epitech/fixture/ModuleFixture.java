@@ -30,7 +30,6 @@ public class                    ModuleFixture {
      * This method add modules.
      */
     public void             init() {
-        this.clear();
         this.add(new Module("facebook", "/img/modules/facebook.png", "Description for facebook", "https://www.facebook.com/v2.8/dialog/oauth?client_id=760127370809959&redirect_uri=http://localhost:8080/module/oauth&response_type=token"));
         this.add(new Module("twitter", "/img/modules/twitter.png", "Description for twitter", ""));
         this.add(new Module("epitech","/img/modules/intra-epitech.png","Description for intra epitech", ""));

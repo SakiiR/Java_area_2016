@@ -45,8 +45,8 @@ public class                    AreaFixture {
      * Load all areas
      */
     public void                 init() {
-        this.clear();
         // add some areas
+        this.add(new Area("GmailAttachmentsAction", "GoogleDriveSaveFileReaction", "gmail", "googledrive", "Save all google mail attachments in your google drive"));
     }
 
     /**
