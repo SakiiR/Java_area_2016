@@ -10,8 +10,13 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Key;
+import org.springframework.format.annotation.DateTimeFormat;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -102,6 +107,17 @@ public class                        YammerNewPrivateMessageAction implements IAc
         }
     }
 
+    private Date                    formatDate(String stringDate) {
+        DateFormat                  dateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss Z");
+        Date                        date = null;
+        try {
+            date = dateFormat.parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
     public ErrorCode                run() {
         Logger.logSuccess("run() YammerNewPrivateMessageAction %s", this.token);
 
@@ -119,10 +135,13 @@ public class                        YammerNewPrivateMessageAction implements IAc
             List<Message>               newMessages = new ArrayList<>();
             for (Message m : messageFeed.getMessages()) {
                 if (m.getSenderId() != messageFeed.getMeta().getCurrentUserId()) {
-                    // format and check date
-                    Logger.logInfo("Date : %s", m.getCreatedAt());
+                    Date d = this.formatDate(m.getCreatedAt());
+                    if (AreaWorker.isNewEntity(d)) {
+                        newMessages.add(m);
+                    }
                 }
             }
+            Logger.logInfo("There is %d new Yammer Messages !!", newMessages.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
