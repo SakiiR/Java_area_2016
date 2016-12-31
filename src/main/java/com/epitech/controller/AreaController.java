@@ -42,7 +42,7 @@ public class                    AreaController {
 
         modelMap.addAttribute("areas", this.areaRepository.findAll());
         modelMap.addAttribute("userareas", this.userRepository.findByUsername((String) httpSession.getAttribute("username")).getAreas());
-        modelMap.addAttribute("username ", httpSession.getAttribute("username"));
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "area/list.html";
     }
 
