@@ -32,6 +32,9 @@ public class                        YammerNewPrivateMessageAction implements IAc
     static final HttpTransport      HTTP_TRANSPORT = new NetHttpTransport();
     static final JsonFactory        JSON_FACTORY = new JacksonFactory();
 
+    /** reaction data */
+    private Object                  data;
+
     public                          YammerNewPrivateMessageAction(String token) {
         this.token = token;
     }
@@ -108,7 +111,7 @@ public class                        YammerNewPrivateMessageAction implements IAc
     }
 
     private Date                    formatDate(String stringDate) {
-        DateFormat                  dateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss Z");
+        DateFormat                  dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss Z");
         Date                        date = null;
         try {
             date = dateFormat.parse(stringDate);
@@ -132,7 +135,7 @@ public class                        YammerNewPrivateMessageAction implements IAc
 
             request.getHeaders().setAuthorization(String.format("Bearer %s", this.token));
             Messages messageFeed = request.execute().parseAs(Messages.class);
-            List<Message>               newMessages = new ArrayList<>();
+            List<Message> newMessages = new ArrayList<>();
             for (Message m : messageFeed.getMessages()) {
                 if (m.getSenderId() != messageFeed.getMeta().getCurrentUserId()) {
                     Date d = this.formatDate(m.getCreatedAt());
@@ -141,14 +144,17 @@ public class                        YammerNewPrivateMessageAction implements IAc
                     }
                 }
             }
-            Logger.logInfo("There is %d new Yammer Messages !!", newMessages.size());
+            Logger.logSuccess("There is %d new Yammer Messages !!", newMessages.size());
+            this.data = newMessages;
+            if (newMessages.size() == 0) this.data = null;
         } catch (Exception e) {
             e.printStackTrace();
+            return ErrorCode.AUTH;
         }
         return ErrorCode.SUCCESS;
     }
 
     public Object                   getData() {
-        return null;
+        return this.data;
     }
 }
