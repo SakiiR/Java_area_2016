@@ -28,6 +28,17 @@ public class                    AreaReflector {
     public static IReaction     instanciateReaction(String reactionName, String token, Object data) {
         IReaction               reactionObject = null;
 
+        reactionName = "com.epitech.reaction." + reactionName;
+        try {
+            Class reactionClass = Class.forName(reactionName);
+            Class[] types = {String.class};
+            Constructor reactionConstructor = reactionClass.getConstructor(types);
+            Object[] parameters = {token};
+            reactionObject = (IReaction) reactionConstructor.newInstance(parameters);
+        } catch (Exception e) {
+            Logger.logWarning("Failed to instanciate Reaction %s", reactionName);
+            e.printStackTrace();
+        }
         return reactionObject;
     }
 

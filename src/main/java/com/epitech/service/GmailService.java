@@ -1,6 +1,7 @@
 package com.epitech.service;
 
 import com.epitech.reaction.GmailSendMessageReaction;
+import com.epitech.utils.Logger;
 import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -9,6 +10,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.gmail.model.Message;
+import sun.rmi.runtime.Log;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -50,16 +52,14 @@ public class                GmailService implements IService {
         email.addRecipient(javax.mail.Message.RecipientType.TO,
                 new InternetAddress(to));
         email.setSubject(subject);
+        Logger.logInfo("Creating mail with length : %d", bodyText.length());
         email.setText(bodyText);
         return email;
     }
 
     public static void sendMessage(Gmail service, String userId, MimeMessage email) throws IOException, MessagingException {
-        Message message = GmailSendMessageReaction.createMessageWithEmail(email);
+        Message message = GmailService.createMessageWithEmail(email);
         message = service.users().messages().send(userId, message).execute();
-
-        System.out.println("Message id: " + message.getId());
-        System.out.println(message.toPrettyString());
     }
 
     public static Message createMessageWithEmail(MimeMessage email)

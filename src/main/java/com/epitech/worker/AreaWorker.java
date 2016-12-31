@@ -74,9 +74,11 @@ public class AreaWorker implements Runnable {
         IService                    reactionService = AreaReflector.instanciateService(area.getReactionModuleName());
         IAction                     action = AreaReflector.instanciateAction(area.getActionName(), actionToken);
 
-        if (action.run() == ErrorCode.SUCCESS) {
+        if (action.run() == ErrorCode.SUCCESS && action.getData() != null) {
             IReaction reaction = AreaReflector.instanciateReaction(area.getReactionName(), reactionToken, action.getData());
+            reaction.run(action.getData());
         }
+        Logger.logInfo("Finished Area !");
     }
 
     /**
