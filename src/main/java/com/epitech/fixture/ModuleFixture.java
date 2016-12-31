@@ -34,7 +34,7 @@ public class                    ModuleFixture {
         this.add(new Module("twitter", "/img/modules/twitter.png", "Description for twitter", ""));
         this.add(new Module("epitech","/img/modules/intra-epitech.png","Description for intra epitech", ""));
         this.add(new Module("office","/img/modules/office.png","Description for office 365", ""));
-        this.add(new Module("gmail","/img/modules/gmail.png","Description for gmail/inbox", "https://accounts.google.com/o/oauth2/v2/auth?client_id=801969793224-jh02oeqpfvi2ocjrebbp21dks178qav5.apps.googleusercontent.com&redirect_uri=http://localhost:8080/module/oauth&response_type=token&scope=email"));
+        this.add(new Module("gmail","/img/modules/gmail.png","Description for gmail/inbox", "https://accounts.google.com/o/oauth2/v2/auth?client_id=801969793224-jh02oeqpfvi2ocjrebbp21dks178qav5.apps.googleusercontent.com&redirect_uri=http://localhost:8080/module/oauth&response_type=token&scope=https://mail.google.com/"));
         this.add(new Module("yammer","/img/modules/yammer.png","Description for yammer", "https://www.yammer.com/oauth2/authorize?client_id=zPX7lhZerhGVn9beAAfGg&redirect_uri=http://localhost:8080/module/oauth&response_type=token"));
         this.add(new Module("onedrive","/img/modules/onedrive.png","Description for onedrive", ""));
         this.add(new Module("googledrive", "/img/modules/googledrive.png", "Description for googledrive", "https://accounts.google.com/o/oauth2/v2/auth?client_id=801969793224-jh02oeqpfvi2ocjrebbp21dks178qav5.apps.googleusercontent.com&redirect_uri=http://localhost:8080/module/oauth&response_type=token&scope=https://www.googleapis.com/auth/drive"));
