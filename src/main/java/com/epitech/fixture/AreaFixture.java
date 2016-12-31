@@ -47,6 +47,7 @@ public class                    AreaFixture {
     public void                 init() {
         // add some areas
         this.add(new Area("GmailAttachmentsAction", "GoogleDriveSaveFileReaction", "gmail", "googledrive", "Save all google mail attachments in your google drive"));
+        this.add(new Area("YammerNewPrivateMessageAction", "GmailSendMessageReaction", "yammer", "gmail", "Add a new gmail mesage when a new yammer private message is inbox"));
     }
 
     /**

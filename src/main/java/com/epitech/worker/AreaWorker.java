@@ -26,7 +26,7 @@ public class AreaWorker implements Runnable {
     private AreaRepository          areaRepository;
     // etc ..
 
-    public static Date              timestamp;
+    public static Date              lastCheck;
 
     private boolean                 isRunning = true;
 
@@ -36,9 +36,13 @@ public class AreaWorker implements Runnable {
      * @param userRepository user repository
      * @param areaRepository area repository
      */
-    public AreaWorker(UserRepository userRepository, AreaRepository areaRepository) {
+    public                          AreaWorker(UserRepository userRepository, AreaRepository areaRepository) {
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
+    }
+
+    public static boolean           isNewEntity(Date date) {
+        return date.getTime() > AreaWorker.lastCheck.getTime();
     }
 
     /**
@@ -82,12 +86,12 @@ public class AreaWorker implements Runnable {
     public void                     run() {
         List<User>                  users;
 
-        AreaWorker.timestamp = new Date();
+        AreaWorker.lastCheck = new Date();
 
         while (this.isRunning) {
             users = this.userRepository.findAll();
 
-            Logger.logSuccess("[WORKER] Checking for %d users last check time %s", users.size(), AreaWorker.timestamp.toString());
+            Logger.logSuccess("[WORKER] Checking for %d users last check time %s", users.size(), AreaWorker.lastCheck.toString());
 
             for (User user : users) {
                 List<Area> areas = user.getAreas();
@@ -96,9 +100,9 @@ public class AreaWorker implements Runnable {
                 }
             }
 
-            AreaWorker.timestamp = new Date();
+            AreaWorker.lastCheck = new Date();
             try {
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

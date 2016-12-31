@@ -165,10 +165,12 @@ public class                        ModuleController {
      * @return a view name.
      */
     @RequestMapping(value = "/module/oauth", method = RequestMethod.GET)
-    public String                   oauth(HttpSession httpSession) {
-        if (null ==httpSession.getAttribute("username")) {
+    public String                   oauth(HttpSession httpSession, ModelMap modelMap) {
+        if (null == httpSession.getAttribute("username")) {
             return "redirect:/login";
         }
+
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "module/oauth.html";
     }
 
