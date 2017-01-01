@@ -2,6 +2,7 @@ package com.epitech.reaction;
 
 import com.epitech.action.GmailAttachmentsAction;
 import com.epitech.service.DriveService;
+import com.epitech.service.GmailService;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -45,13 +46,13 @@ public class                                GoogleDriveSaveFileReaction implemen
     }
 
     public ErrorCode                        run(Object object) {
-        List<GmailAttachmentsAction.File>   files = (List<GmailAttachmentsAction.File>) object;
+        List<GmailService.File>   files = (List<GmailService.File>) object;
         DriveService                        driveService = new DriveService();
         Drive                               drive = driveService.getDriveService(this.token);
 
 
         Logger.logInfo("Reaction GoogleDriveSaveFileReaction with %d files", files.size());
-        for (GmailAttachmentsAction.File file : files) {
+        for (GmailService.File file : files) {
             try {
                 java.io.File f = file.saveFile();
                 com.google.api.services.drive.model.File fileMetaData = new com.google.api.services.drive.model.File();

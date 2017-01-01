@@ -33,38 +33,6 @@ public class                GmailAttachmentsAction implements IAction {
         this.token = token;
     }
 
-    public static class                 File {
-        private byte[]                  data;
-        private String                  filename;
-        private String                  mime;
-
-        public                          File(String filename, byte[] data, String mime) {
-            this.data = data;
-            this.filename = filename;
-            this.mime = mime;
-        }
-
-        public byte[]                   getData() {
-            return this.data;
-        }
-
-        public String                   getFilename() {
-            return filename;
-        }
-
-        public String                   getMime() {
-            return mime;
-        }
-
-        public java.io.File             saveFile() throws FileNotFoundException, IOException {
-            java.io.File                newFile = new java.io.File(String.format("/tmp/%s", filename));
-            FileOutputStream            fileOutputStream = new FileOutputStream(newFile.getAbsoluteFile());
-            fileOutputStream.write(this.data);
-            fileOutputStream.close();
-            return newFile;
-        }
-    }
-
     public ErrorCode        run() {
         GmailService        gmailService = new GmailService();
         Gmail               service;
@@ -90,7 +58,7 @@ public class                GmailAttachmentsAction implements IAction {
     }
 
     private  void                     getAttachments(Gmail service, String userId, Message message) throws IOException {
-        List<GmailAttachmentsAction.File>   files = new ArrayList<>();
+        List<GmailService.File>   files = new ArrayList<>();
         List<MessagePart> parts = message.getPayload().getParts();
         for (MessagePart part : parts) {
             if (part.getFilename() != null && part.getFilename().length() > 0) {
@@ -101,7 +69,7 @@ public class                GmailAttachmentsAction implements IAction {
 
                 Base64 base64Url = new Base64(true);
                 byte[] fileByteArray = base64Url.decodeBase64(attachPart.getData());
-                files.add(new File(filename, fileByteArray, part.getMimeType()));
+                files.add(new GmailService.File(filename, fileByteArray, part.getMimeType()));
             }
         }
         this.data = files;
