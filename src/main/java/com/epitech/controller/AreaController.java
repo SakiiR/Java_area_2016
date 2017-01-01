@@ -71,7 +71,6 @@ public class                    AreaController {
                     }
                 }
                 if (!found) {
-
                     boolean actionModuleFound = false;
                     boolean reactionModuleFound = false;
                     for (UserModule m : user.getModules()) {
