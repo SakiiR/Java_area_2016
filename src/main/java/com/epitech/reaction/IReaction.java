@@ -7,5 +7,5 @@ import com.epitech.utils.ErrorCode;
  * This interface is implemented by all Reactions
  */
 public interface        IReaction {
-    public ErrorCode    run(String data);
+    public ErrorCode    run(Object data);
 }

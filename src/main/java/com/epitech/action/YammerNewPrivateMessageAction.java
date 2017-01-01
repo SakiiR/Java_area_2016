@@ -74,6 +74,13 @@ public class                        YammerNewPrivateMessageAction implements IAc
         @Key(value = "body")
         private MessageBody         body;
 
+        @Key(value = "web_url")
+        private String              url;
+
+        public String               getUrl() {
+            return this.url;
+        }
+
         public MessageBody          getBody() {
             return this.body;
         }
@@ -145,13 +152,23 @@ public class                        YammerNewPrivateMessageAction implements IAc
                 }
             }
             Logger.logSuccess("There is %d new Yammer Messages !!", newMessages.size());
-            this.data = newMessages;
+            this.data = this.formatReactionString(newMessages);
             if (newMessages.size() == 0) this.data = null;
         } catch (Exception e) {
             e.printStackTrace();
             return ErrorCode.AUTH;
         }
         return ErrorCode.SUCCESS;
+    }
+
+    private String                  formatReactionString(List<Message> messages) {
+        String                      output = "";
+
+        for (Message message : messages) {
+            output += String.format("[YAMMER] Received a new private message : \"%s\" look at : %s<br/>", message.getBody().getPlain(), message.getUrl());
+        }
+
+        return output;
     }
 
     public Object                   getData() {

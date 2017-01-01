@@ -2,6 +2,7 @@ package com.epitech.controller;
 
 import com.epitech.model.Area;
 import com.epitech.model.User;
+import com.epitech.model.UserModule;
 import com.epitech.repository.AreaRepository;
 import com.epitech.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +71,23 @@ public class                    AreaController {
                     }
                 }
                 if (!found) {
-                    user.addArea(area);
-                    this.userRepository.save(user);
+
+                    boolean actionModuleFound = false;
+                    boolean reactionModuleFound = false;
+                    for (UserModule m : user.getModules()) {
+                        if (m.getModule().getName().equals(area.getActionModuleName())) {
+                            actionModuleFound = true;
+                        }
+                        if (m.getModule().getName().equals(area.getReactionModuleName())) {
+                            reactionModuleFound = true;
+                        }
+                        if (actionModuleFound && reactionModuleFound) break;
+                    }
+
+                    if (actionModuleFound && reactionModuleFound) {
+                        user.addArea(area);
+                        this.userRepository.save(user);
+                    }
                 }
             }
         }
