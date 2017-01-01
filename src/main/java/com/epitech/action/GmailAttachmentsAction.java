@@ -5,11 +5,11 @@ import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 import com.epitech.worker.AreaWorker;
 import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.model.Message;
-import com.google.api.services.gmail.model.ListMessagesResponse;
-import com.google.api.services.gmail.model.MessagePartHeader;
+import com.google.api.services.gmail.model.*;
+import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
 
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +49,27 @@ public class                GmailAttachmentsAction implements IAction {
         return ErrorCode.SUCCESS;
     }
 
-    private List<Message>   getNewMessages(Gmail service, String userId, List<Message> allMessages) throws IOException {
+    private static void         getAttachments(Gmail service, String userId, Message message)
+            throws IOException {
+        List<MessagePart> parts = message.getPayload().getParts();
+        for (MessagePart part : parts) {
+            if (part.getFilename() != null && part.getFilename().length() > 0) {
+                String filename = part.getFilename();
+                String attId = part.getBody().getAttachmentId();
+                MessagePartBody attachPart = service.users().messages().attachments().
+                        get(userId, message.getId(), attId).execute();
+
+                Base64 base64Url = new Base64(true);
+                byte[] fileByteArray = base64Url.decodeBase64(attachPart.getData());
+/*                FileOutputStream fileOutFile =
+                        new FileOutputStream("directory_to_store_attachments" + filename);
+                fileOutFile.write(fileByteArray);
+                fileOutFile.close();*/
+            }
+        }
+    }
+
+        private List<Message>   getNewMessages(Gmail service, String userId, List<Message> allMessages) throws IOException {
         List<Message>       messages = new ArrayList<>();
         String              date;
         List<MessagePartHeader> headers;
