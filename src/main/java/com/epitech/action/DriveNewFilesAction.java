@@ -9,16 +9,10 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
-import sun.rmi.runtime.Log;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class                        DriveNewFilesAction implements IAction {
@@ -50,7 +44,7 @@ public class                        DriveNewFilesAction implements IAction {
             }
             if (result != null) {
                 for(File file: result.getFiles()) {
-                    Logger.logInfo("checking %s", file.getName(), file.getCreatedTime().getValue(), new DateTime(AreaWorker.lastCheck).getValue());
+                    Logger.logInfo("checking %s", file.getName());
                     if (!file.getMimeType().equals("application/vnd.google-apps.folder")) {
                         Logger.logInfo("Adding file %s -> %s", file.getName(), file.getMimeType());
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -75,10 +69,9 @@ public class                        DriveNewFilesAction implements IAction {
             }
         } while (pageToken != null);
         this.data = files;
-            if (files.size() == 0) {
-                this.data = null;
-            }
-
+        if (files.size() == 0) {
+            this.data = null;
+        }
         return ErrorCode.SUCCESS;
     }
 
