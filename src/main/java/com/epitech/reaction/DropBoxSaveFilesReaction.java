@@ -32,6 +32,7 @@ public class                                DropBoxSaveFilesReaction implements 
                 savedFile.delete();
             } catch (Exception e) {
                 Logger.logWarning("Failed to upload file : %s", e.getMessage());
+                return ErrorCode.AUTH;
             }
         }
 
