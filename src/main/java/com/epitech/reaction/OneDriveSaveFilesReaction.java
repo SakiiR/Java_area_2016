@@ -24,14 +24,6 @@ public class OneDriveSaveFilesReaction implements IReaction {
         Logger.logInfo("Files : %d", files.size());
 
         OnedriveService             onedriveService = new OnedriveService();
-        OneDriveAPI                 api = new OneDriveBasicAPI(this.token);
-        OneDriveFolder              root = OneDriveFolder.getRoot(api);
-        try {
-            OneDriveFolder.Metadata metadata = root.getMetadata();
-            Logger.logInfo("%d children", metadata.getChildCount());
-        } catch (Exception e) {
-            Logger.logWarning("OneDrive Error : %s", e.getMessage());
-        }
         return ErrorCode.SUCCESS;
     }
 }
