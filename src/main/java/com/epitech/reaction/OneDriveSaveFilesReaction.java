@@ -4,9 +4,6 @@ import com.epitech.service.GmailService;
 import com.epitech.service.OnedriveService;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
-import org.nuxeo.onedrive.client.OneDriveAPI;
-import org.nuxeo.onedrive.client.OneDriveBasicAPI;
-import org.nuxeo.onedrive.client.OneDriveFolder;
 
 import java.util.List;
 
