@@ -7,8 +7,11 @@ import com.epitech.worker.AreaWorker;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.*;
 import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,8 +27,9 @@ import java.util.Locale;
 public class                GmailAttachmentsAction implements IAction {
     private String          token;
 
-    public                  GmailAttachmentsAction(String token) {
+    private Object          data = null;
 
+    public                  GmailAttachmentsAction(String token) {
         this.token = token;
     }
 
@@ -41,16 +45,20 @@ public class                GmailAttachmentsAction implements IAction {
             messages = this.getMessagesMatchingQuery(service, "me", query);
             if (messages.size() > 0) {
                 messages = this.getNewMessages(service, "me", messages);
+                for (Message m : messages) {
+                    this.getAttachments(service, "me", m);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
             Logger.logError("Error !");
+            return ErrorCode.AUTH;
         }
         return ErrorCode.SUCCESS;
     }
 
-    private static void         getAttachments(Gmail service, String userId, Message message)
-            throws IOException {
+    private  void                     getAttachments(Gmail service, String userId, Message message) throws IOException {
+        List<GmailService.File>   files = new ArrayList<>();
         List<MessagePart> parts = message.getPayload().getParts();
         for (MessagePart part : parts) {
             if (part.getFilename() != null && part.getFilename().length() > 0) {
@@ -61,15 +69,16 @@ public class                GmailAttachmentsAction implements IAction {
 
                 Base64 base64Url = new Base64(true);
                 byte[] fileByteArray = base64Url.decodeBase64(attachPart.getData());
-/*                FileOutputStream fileOutFile =
-                        new FileOutputStream("directory_to_store_attachments" + filename);
-                fileOutFile.write(fileByteArray);
-                fileOutFile.close();*/
+                files.add(new GmailService.File(filename, fileByteArray, part.getMimeType()));
             }
+        }
+        this.data = files;
+        if (files.size() == 0) {
+            this.data = null;
         }
     }
 
-        private List<Message>   getNewMessages(Gmail service, String userId, List<Message> allMessages) throws IOException {
+    private List<Message>   getNewMessages(Gmail service, String userId, List<Message> allMessages) throws IOException {
         List<Message>       messages = new ArrayList<>();
         String              date;
         List<MessagePartHeader> headers;
@@ -82,7 +91,6 @@ public class                GmailAttachmentsAction implements IAction {
                 date = message.getPayload().getHeaders().get(i).getValue();
                 if (this.check_date(date)) {
                     messages.add(message);
-                    System.out.println("add new message wth date : " + message.getPayload().getHeaders().get(2).getValue());
                 }
             }
         }
@@ -90,15 +98,15 @@ public class                GmailAttachmentsAction implements IAction {
     }
 
     private int             searchForDate(List<MessagePartHeader> headers) {
-            int             inc = 0;
+        int             inc = 0;
 
-            for (MessagePartHeader h : headers) {
-                if (h.getName().equals("Date")) {
-                    return inc;
-                }
-                ++inc;
+        for (MessagePartHeader h : headers) {
+            if (h.getName().equals("Date")) {
+                return inc;
             }
-            return 0;
+            ++inc;
+        }
+        return 0;
     }
 
     private boolean         check_date(String dateString) {
@@ -117,8 +125,7 @@ public class                GmailAttachmentsAction implements IAction {
         return false;
     }
 
-    private List<Message>       getMessagesMatchingQuery(Gmail service, String userId, String query)
-            throws IOException {
+    private List<Message>       getMessagesMatchingQuery(Gmail service, String userId, String query) throws IOException {
         ListMessagesResponse    response = service.users().messages().list(userId).setQ(query).execute();
 
         List<Message> messages = new ArrayList<>();
@@ -132,14 +139,10 @@ public class                GmailAttachmentsAction implements IAction {
                 break;
             }
         }
-
-        for (Message message : messages) {
-            System.out.println(message.toPrettyString());
-        }
         return messages;
     }
 
     public Object           getData() {
-        return null;
+        return this.data;
     }
 }

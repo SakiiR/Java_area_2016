@@ -17,6 +17,8 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -36,6 +38,38 @@ public class                GmailService implements IService {
 
         service = new Gmail.Builder(httpTransport, jsonFactory, credential).setApplicationName("GmailApi").build();
         return service;
+    }
+
+    public static class                 File {
+        private byte[]                  data;
+        private String                  filename;
+        private String                  mime;
+
+        public                          File(String filename, byte[] data, String mime) {
+            this.data = data;
+            this.filename = filename;
+            this.mime = mime;
+        }
+
+        public byte[]                   getData() {
+            return this.data;
+        }
+
+        public String                   getFilename() {
+            return filename;
+        }
+
+        public String                   getMime() {
+            return mime;
+        }
+
+        public java.io.File             saveFile() throws FileNotFoundException, IOException {
+            java.io.File                newFile = new java.io.File(String.format("/tmp/%s", filename));
+            FileOutputStream fileOutputStream = new FileOutputStream(newFile.getAbsoluteFile());
+            fileOutputStream.write(this.data);
+            fileOutputStream.close();
+            return newFile;
+        }
     }
 
     public static MimeMessage createEmail(String to,
