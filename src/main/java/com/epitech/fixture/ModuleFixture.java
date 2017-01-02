@@ -31,9 +31,6 @@ public class                    ModuleFixture {
      */
     public void             init() {
         this.add(new Module("facebook", "/img/modules/facebook.png", "Description for facebook", "https://www.facebook.com/v2.8/dialog/oauth?client_id=760127370809959&redirect_uri=http://localhost:8080/module/oauth&response_type=token"));
-        this.add(new Module("twitter", "/img/modules/twitter.png", "Description for twitter", ""));
-        this.add(new Module("epitech","/img/modules/intra-epitech.png","Description for intra epitech", ""));
-        this.add(new Module("office","/img/modules/office.png","Description for office 365", ""));
         this.add(new Module("gmail","/img/modules/gmail.png","Description for gmail/inbox", "https://accounts.google.com/o/oauth2/v2/auth?client_id=801969793224-jh02oeqpfvi2ocjrebbp21dks178qav5.apps.googleusercontent.com&redirect_uri=http://localhost:8080/module/oauth&response_type=token&scope=https://mail.google.com/"));
         this.add(new Module("yammer","/img/modules/yammer.png","Description for yammer", "https://www.yammer.com/oauth2/authorize?client_id=zPX7lhZerhGVn9beAAfGg&redirect_uri=http://localhost:8080/module/oauth&response_type=token"));
         this.add(new Module("dropbox","/img/modules/dropbox.png","Description for dropbox", "https://www.dropbox.com/1/oauth2/authorize?response_type=token&client_id=whfnl4mepngbvsb&redirect_uri=http://localhost:8080/module/oauth"));
