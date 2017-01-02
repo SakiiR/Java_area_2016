@@ -89,12 +89,6 @@ public class                    Area {
 
     @Override
     public String toString() {
-        return "Area{" +
-                "id='" + id + '\'' +
-                ", actionName='" + actionName + '\'' +
-                ", reactionName='" + reactionName + '\'' +
-                ", actionModuleName='" + actionModuleName + '\'' +
-                ", reactionModuleName='" + reactionModuleName + '\'' +
-                '}';
+        return String.format("%s AND %s", this.actionName, this.reactionName);
     }
 }

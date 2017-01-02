@@ -98,6 +98,7 @@ public class AreaWorker implements Runnable {
             for (User user : users) {
                 List<Area> areas = user.getAreas();
                 for (Area area : areas) {
+                    Logger.logInfo("Processing area : %s", area.toString());
                     this.processArea(user, area);
                 }
             }
