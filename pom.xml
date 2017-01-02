@@ -30,6 +30,10 @@
             <url>https://jcenter.bintray.com/</url>
         </repository>
         <repository>
+            <id>nuxeo</id>
+            <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
+        </repository>
+        <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
             <url>https://repo.spring.io/libs-milestone</url>
@@ -100,7 +104,8 @@
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-drive</artifactId>
             <version>v3-rev52-1.22.0</version>
-        </dependency><dependency>
+        </dependency>
+        <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
             <version>1.22.0</version>
@@ -114,6 +119,11 @@
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.onedrive</groupId>
+            <artifactId>onedrive-java-client</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
     <build>

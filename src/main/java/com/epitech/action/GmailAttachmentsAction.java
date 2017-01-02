@@ -24,20 +24,20 @@ import java.util.Locale;
 /**
  * This action recover attachments in gmail mails
  */
-public class                GmailAttachmentsAction implements IAction {
-    private String          token;
+public class                            GmailAttachmentsAction implements IAction {
+    private String                      token;
 
-    private Object          data = null;
+    private Object                      data = null;
 
-    public                  GmailAttachmentsAction(String token) {
+    public                              GmailAttachmentsAction(String token) {
         this.token = token;
     }
 
-    public ErrorCode        run() {
-        GmailService        gmailService = new GmailService();
-        Gmail               service;
-        String              query = "newer_than:1d has:attachment";
-        List<Message>       messages = new ArrayList<>();
+    public ErrorCode                    run() {
+        GmailService                    gmailService = new GmailService();
+        Gmail                           service;
+        String                          query = "newer_than:1d has:attachment";
+        List<Message>                   messages = new ArrayList<>();
 
         Logger.logSuccess("run() GmailAttachmentsAction");
         service = gmailService.buildGmailService(this.token);
@@ -57,9 +57,10 @@ public class                GmailAttachmentsAction implements IAction {
         return ErrorCode.SUCCESS;
     }
 
-    private  void                     getAttachments(Gmail service, String userId, Message message) throws IOException {
-        List<GmailService.File>   files = new ArrayList<>();
-        List<MessagePart> parts = message.getPayload().getParts();
+    private  void                       getAttachments(Gmail service, String userId, Message message) throws IOException {
+        List<GmailService.File>         files = new ArrayList<>();
+        List<MessagePart>               parts = message.getPayload().getParts();
+
         for (MessagePart part : parts) {
             if (part.getFilename() != null && part.getFilename().length() > 0) {
                 String filename = part.getFilename();
@@ -78,10 +79,10 @@ public class                GmailAttachmentsAction implements IAction {
         }
     }
 
-    private List<Message>   getNewMessages(Gmail service, String userId, List<Message> allMessages) throws IOException {
-        List<Message>       messages = new ArrayList<>();
-        String              date;
-        List<MessagePartHeader> headers;
+    private List<Message>               getNewMessages(Gmail service, String userId, List<Message> allMessages) throws IOException {
+        List<Message>                   messages = new ArrayList<>();
+        String                          date;
+        List<MessagePartHeader>         headers;
 
         for (Message m : allMessages) {
             Message message = service.users().messages().get(userId, m.getId()).execute();
@@ -97,8 +98,8 @@ public class                GmailAttachmentsAction implements IAction {
         return messages;
     }
 
-    private int             searchForDate(List<MessagePartHeader> headers) {
-        int             inc = 0;
+    private int                         searchForDate(List<MessagePartHeader> headers) {
+        int                             inc = 0;
 
         for (MessagePartHeader h : headers) {
             if (h.getName().equals("Date")) {
@@ -109,8 +110,8 @@ public class                GmailAttachmentsAction implements IAction {
         return 0;
     }
 
-    private boolean         check_date(String dateString) {
-        SimpleDateFormat    format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+    private boolean                     check_date(String dateString) {
+        SimpleDateFormat                format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
         try {
             Date date = format.parse(dateString);
@@ -125,10 +126,10 @@ public class                GmailAttachmentsAction implements IAction {
         return false;
     }
 
-    private List<Message>       getMessagesMatchingQuery(Gmail service, String userId, String query) throws IOException {
-        ListMessagesResponse    response = service.users().messages().list(userId).setQ(query).execute();
+    private List<Message>               getMessagesMatchingQuery(Gmail service, String userId, String query) throws IOException {
+        ListMessagesResponse            response = service.users().messages().list(userId).setQ(query).execute();
+        List<Message>                   messages = new ArrayList<>();
 
-        List<Message> messages = new ArrayList<>();
         while (response.getMessages() != null) {
             messages.addAll(response.getMessages());
             if (response.getNextPageToken() != null) {
@@ -142,7 +143,7 @@ public class                GmailAttachmentsAction implements IAction {
         return messages;
     }
 
-    public Object           getData() {
+    public Object                       getData() {
         return this.data;
     }
 }
