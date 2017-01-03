@@ -49,8 +49,10 @@ public class                        DriveNewFilesAction implements IAction {
                         Logger.logInfo("Adding file %s -> %s", file.getName(), file.getMimeType());
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                         boolean isOk = false;
+                        String extention = "";
                         try {
                             drive.files().export(file.getId(), "application/pdf").executeAndDownloadTo(outputStream);
+                            extention = ".pdf";
                             isOk = true;
                         } catch (IOException e) {
                             try {
@@ -61,7 +63,7 @@ public class                        DriveNewFilesAction implements IAction {
                             }
                         }
                         if (isOk) {
-                            files.add(new GmailService.File(file.getName(), outputStream.toByteArray(), file.getMimeType()));
+                            files.add(new GmailService.File(file.getName() + extention, outputStream.toByteArray(), file.getMimeType()));
                         }
                     }
                 }
