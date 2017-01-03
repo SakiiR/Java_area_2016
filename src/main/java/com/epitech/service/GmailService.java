@@ -63,9 +63,24 @@ public class                GmailService implements IService {
             return mime;
         }
 
+        public File                     setData(byte[] data) {
+            this.data = data;
+            return this;
+        }
+
+        public File                     setFilename(String filename) {
+            this.filename = filename;
+            return this;
+        }
+
+        public File                     setMime(String mime) {
+            this.mime = mime;
+            return this;
+        }
+
         public java.io.File             saveFile() throws FileNotFoundException, IOException {
             java.io.File                newFile = new java.io.File(String.format("/tmp/%s", filename));
-            FileOutputStream fileOutputStream = new FileOutputStream(newFile.getAbsoluteFile());
+            FileOutputStream            fileOutputStream = new FileOutputStream(newFile.getAbsoluteFile());
             fileOutputStream.write(this.data);
             fileOutputStream.close();
             return newFile;
