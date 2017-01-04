@@ -1,5 +1,7 @@
 package com.epitech.service;
 
+import com.epitech.model.Module;
+import com.epitech.model.UserModule;
 import com.epitech.utils.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,5 +37,9 @@ public class                                PastebinService implements IService 
             result = response.getBody();
         }
         return result;
+    }
+
+    public String       login(String code, Module module) {
+        return "PASTEBIN_TOKEN";
     }
 }
