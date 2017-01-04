@@ -16,7 +16,13 @@ import static org.junit.Assert.*;
 public class YammerPostToGroupReactionTest {
     @Test
     public void run() throws Exception {
-        YammerPostToGroupReaction YG = new YammerPostToGroupReaction("106950-WY4PsTNzrU35VnowfpgQA");
-        YG.run("EIP 2019");
+        //YammerPostToGroupReaction YG = new YammerPostToGroupReaction();
+        /*String body = "Ceci est un test exhaustif.\n" +
+                "Test sur plusieurs lignes.\n\nAHAHAHAHAH....\nah.";
+
+        YammerPostToGroupReaction.PostRequest post = new YammerPostToGroupReaction.PostRequest("TestArea", body);
+        YG.run(post);
+        YammerPostToGroupReaction.PostRequest post2 = new YammerPostToGroupReaction.PostRequest("TestAreaaa", body);
+        YG.run(post2);*/
     }
 }
