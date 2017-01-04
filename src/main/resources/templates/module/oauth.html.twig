@@ -31,7 +31,6 @@
                     method      : 'POST',
                     data        : {code : code, state : state},
                     complete    : function(response) {
-                        console.log(response);
                         $('.message').text(response.responseJSON.message + '... Redirecting .. in 3 seconds ..');
                         setTimeout(function() {
                             window.location.replace("/modules/list");
