@@ -60,4 +60,8 @@ public class                            BodyParser {
         }
         return destinations;
     }
+
+    public HashMap<String, String>      getMap() {
+        return _map;
+    }
 }

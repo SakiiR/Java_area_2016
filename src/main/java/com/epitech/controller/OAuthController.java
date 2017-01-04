@@ -6,19 +6,30 @@ import com.epitech.model.UserModule;
 import com.epitech.repository.ModuleRepository;
 import com.epitech.repository.UserModuleRepository;
 import com.epitech.repository.UserRepository;
+import com.epitech.service.IService;
+import com.epitech.utils.AreaReflector;
 import com.epitech.utils.BodyParser;
 import com.epitech.utils.Logger;
 import com.epitech.utils.ResponseObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriUtils;
 
 import javax.servlet.http.HttpSession;
-import java.util.Base64;
+import java.util.*;
 
 /**
  * This controller is used to connect to an API but
@@ -37,6 +48,26 @@ public class                        OAuthController {
     @Autowired
     private UserRepository          userRepository;
 
+    private ResponseObject          registerUserModule(Module module, User user, String token) {
+        ResponseObject responseObject = new ResponseObject();
+
+        if (token == null) {
+            responseObject.message = "Failed to login ..";
+            responseObject.success = false;
+            return responseObject;
+        }
+        UserModule userModule = new UserModule();
+        userModule.setToken(token)
+                .setUser(user)
+                .setModule(module);
+        user.addModule(userModule);
+        this.userModuleRepository.save(userModule);
+        this.userRepository.save(user);
+        responseObject.message = String.format("Successfully added %s to your modules !", module.getName());
+        responseObject.success = true;
+        return responseObject;
+    }
+
     /**
      * This route connect a user with an OAuth API.
      *
@@ -45,15 +76,15 @@ public class                        OAuthController {
      * @return a JSON String
      */
     @RequestMapping(value = "/module/oauth", method = RequestMethod.POST, produces = "application/json")
-    public String                   oauth(HttpSession httpSession, @RequestBody String body) {
+    public String                   oauth(HttpSession httpSession, @RequestBody String body) throws Exception {
         BodyParser                  bodyParser = new BodyParser(body);
         ResponseObject              responseObject = new ResponseObject();
 
         responseObject.success = false;
-        String access_token = bodyParser.get("access_token");
-        String state = bodyParser.get("state");
-        if (!(access_token == null || state == null)) {
-            BodyParser                  stateBodyParser = new BodyParser(new String(Base64.getDecoder().decode(state.replace("%3D", "="))));
+        String code = UriUtils.decode(bodyParser.get("code"), "utf-8");
+        String state = UriUtils.decode(bodyParser.get("state"), "utf-8");
+        if (!(code == null || state == null)) {
+            BodyParser                  stateBodyParser = new BodyParser(new String(Base64.getDecoder().decode(state)));
             String                      stateType = stateBodyParser.get("type");
             String                      stateUsername = stateBodyParser.get("username");
             String                      connectedUser = (String) httpSession.getAttribute("username");
@@ -65,29 +96,13 @@ public class                        OAuthController {
             if (!(stateType == null || stateUsername == null)) {
                 User user = userRepository.findByUsername(connectedUser);
                 if (!(user == null)) {
-
-                    /**  Check if user already have this module */
-                    boolean found = false;
-                    for (UserModule m : user.getModules()) {
-                        if (m.getModule() != null && m.getModule().getName().equals(stateType)) {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        UserModule userModule = new UserModule();
-                        Module module = moduleRepository.findByName(stateType);
-                        if (!(module == null)) {
-                            userModule.setModule(module)
-                                    .setUser(user)
-                                    .setToken(access_token);
-                            userModuleRepository.save(userModule);
-                            user.addModule(userModule);
-                            userRepository.save(user);
-                            responseObject.success = true;
-                            responseObject.message = String.format("You have been connected to %s", stateType);
-                        } else responseObject.message = "State's Type is unknown !";
-                    } else responseObject.message = "You already have this module !";
+                    Module module = this.moduleRepository.findByName(stateType);
+                    if (module != null) {
+                        IService service = AreaReflector.instanciateService(module.getName());
+                        if (service != null) {
+                            responseObject = this.registerUserModule(module, user, service.login(code, module));
+                        } else responseObject.message = "Failed to instanciate service";
+                    } else responseObject.message = "Bad state module name";
                 } else responseObject.message = "Who are you ?!!";
             } else responseObject.message = "Missing type or username in callback state";
         } else responseObject.message = "Missing Field";
