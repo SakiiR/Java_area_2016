@@ -1,5 +1,6 @@
 package com.epitech.controller;
 
+import com.epitech.model.Area;
 import com.epitech.model.User;
 import com.epitech.model.UserModule;
 import com.epitech.repository.UserModuleRepository;
@@ -18,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This controller is relative to modules
@@ -34,6 +37,7 @@ public class                        ModuleController {
 
     @Autowired
     private UserModuleRepository    userModuleRepository;
+
 
     /**
      * This route return the list of all module
@@ -188,6 +192,7 @@ public class                        ModuleController {
         String                      username = (String) httpSession.getAttribute("username");
         Module                      module;
         User                        user;
+        ArrayList<Area>             areaToRemove = new ArrayList<>();
 
         if (null == username) {
             return "redirect:/login";
@@ -208,6 +213,18 @@ public class                        ModuleController {
                     }
                 }
                 if (found) {
+                    for (Area a : user.getAreas()) {
+                        if (a.getActionModuleName().equals(module.getName())
+                                || a.getReactionModuleName().equals(module.getName())) {
+                            areaToRemove.add(a);
+                        }
+                    }
+                    if (areaToRemove.size() > 0) {
+                        for (Area a : areaToRemove) {
+                            user.getAreas().remove(a);
+                        }
+                        this.userRepository.save(user);
+                    }
                     modelMap.addAttribute("message", String.format("Successfully disconnected from %s !", module.getName().toUpperCase()));
                 } else modelMap.addAttribute("message", "You are not connected to this module !");
             } else modelMap.addAttribute("message", "Who are you ??");

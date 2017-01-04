@@ -14,6 +14,8 @@ import com.epitech.utils.Logger;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This class is a Thread. It is used to
@@ -94,7 +96,6 @@ public class AreaWorker implements Runnable {
             users = this.userRepository.findAll();
 
             Logger.logSuccess("[WORKER] Checking for %d users last check time %s", users.size(), AreaWorker.lastCheck.toString());
-
             for (User user : users) {
                 List<Area> areas = user.getAreas();
                 for (Area area : areas) {
@@ -102,7 +103,6 @@ public class AreaWorker implements Runnable {
                     this.processArea(user, area);
                 }
             }
-
             AreaWorker.lastCheck = new Date();
             try {
                 Thread.sleep(10000);
