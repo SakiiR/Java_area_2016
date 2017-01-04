@@ -54,6 +54,8 @@ public class YammerPostToGroupReaction implements IReaction {
         private String                  groupName;
         private String                  body;
 
+        public PostRequest() {}
+
         public PostRequest(String groupName, String body) {
             this.groupName = groupName;
             this.body = body;
@@ -95,17 +97,19 @@ public class YammerPostToGroupReaction implements IReaction {
             }
         });
         try {
-            PostRequest post = (PostRequest) object;
+            List<PostRequest> posts = (List<PostRequest>) object;
             HttpRequest request = requestFactory.buildGetRequest(new GenericUrl("https://www.yammer.com/api/v1/groups.json?mine=1"));
             request.getHeaders().setAuthorization(String.format("Bearer %s", this.token));
             String Result = request.execute().parseAsString();
             ObjectMapper mapper = new ObjectMapper();
             List<Group> groupList = mapper.readValue(Result, new TypeReference<ArrayList<Group>>() { });
-            for (Group g : groupList) {
-                if (g.getName().equals(post.getGroupName())) {
-                    Logger.logSuccess("Group id found:" + g.getName() + " - " + g.getId());
-                    if (TryToPost(post, g.getId()) != ErrorCode.SUCCESS) {
-                        return ErrorCode.UNKNOWN;
+            for (PostRequest post : posts) {
+                for (Group g : groupList) {
+                    if (g.getName().equals(post.getGroupName())) {
+                        Logger.logSuccess("Group id found:" + g.getName() + " - " + g.getId());
+                        if (TryToPost(post, g.getId()) != ErrorCode.SUCCESS) {
+                            return ErrorCode.UNKNOWN;
+                        }
                     }
                 }
             }
