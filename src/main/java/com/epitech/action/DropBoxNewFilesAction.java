@@ -15,7 +15,7 @@ import com.dropbox.core.v2.users.FullAccount;
 import com.epitech.utils.Logger;
 import com.epitech.worker.AreaWorker;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+//import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import jdk.nashorn.internal.parser.JSONParser;
 
 import java.io.*;
