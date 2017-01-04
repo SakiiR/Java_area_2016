@@ -1,0 +1,32 @@
+Module :
+
+- quand un module est delete d'un user, enlever les area qui l'utilise
+
+
+AREA :
+
+- afficher trois onglets :
+  	   - les areas dispos pour par rapport à mes modules
+	   - mes areas (avec un disconnect) ==> enlève l'area
+	   - toutes les areas dispo
+
+
+TOKEN :
+
+- si token invalide, prendre un refresh token
+- ou notif => sortir les areas correspondantes au module associé ainsi que le
+  module
+
+DOC :
+
+- faire JavaDoc
+- faire UML / Diagramme de class
+- faire tuto d'ajout d'un plugin
+
+PREREQUIS :
+
+- Tester les areas implémentées
+- faire au moins 6 modules (avec action et reaction)
+- relire le sujet
+- push sur dépot git epitech
+
