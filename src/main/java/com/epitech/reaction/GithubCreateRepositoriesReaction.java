@@ -14,6 +14,7 @@ public class GithubCreateRepositoriesReaction implements IReaction {
 
     public                  GithubCreateRepositoriesReaction(String token) { this.token = token ; }
 
+    /* data should be a list of String */
     @Override
     public ErrorCode        run(Object data) {
         try {
