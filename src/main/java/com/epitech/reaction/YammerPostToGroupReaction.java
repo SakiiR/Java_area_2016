@@ -12,6 +12,10 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Key;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +49,41 @@ public class YammerPostToGroupReaction implements IReaction {
 
     }
 
+    public static class                 PostRequest {
+
+        private String                  groupName;
+        private String                  body;
+
+        public PostRequest(String groupName, String body) {
+            this.groupName = groupName;
+            this.body = body;
+        }
+
+        public String                   getBody() { return body; }
+        public void                     setBody(String body) { this.body = body; }
+
+        public String                   getGroupName() { return groupName; }
+        public void                     setGroupName(String groupName) { this.groupName = groupName; }
+
+
+    }
+
+    private  ErrorCode                  TryToPost(PostRequest postRequest, long id) {
+        HttpClient client = HttpClientBuilder.create().build();
+        try {
+            HttpPost req =  new HttpPost("https://www.yammer.com/api/v1/messages.json");
+            StringEntity params =new StringEntity("{\"body\":\""+ postRequest.getBody() +"\",\"group_id\":\""+ id+"\"} ");
+            req.addHeader("Authorization", "Bearer " + this.token);
+            req.addHeader("content-type", "application/json");
+            req.setEntity(params);
+            client.execute(req);
+        } catch (Exception e) {
+            Logger.logError("YammerPostToGroup: " + e.toString());
+            return ErrorCode.UNKNOWN;
+        }
+        return ErrorCode.SUCCESS;
+    }
+
     @Override
     public ErrorCode                    run(Object object) {
         Logger.logSuccess("run() YammerPostToGroupReaction %s", this.token);
@@ -56,16 +95,18 @@ public class YammerPostToGroupReaction implements IReaction {
             }
         });
         try {
-            String postGroup = String.valueOf(object);
+            PostRequest post = (PostRequest) object;
             HttpRequest request = requestFactory.buildGetRequest(new GenericUrl("https://www.yammer.com/api/v1/groups.json?mine=1"));
             request.getHeaders().setAuthorization(String.format("Bearer %s", this.token));
             String Result = request.execute().parseAsString();
             ObjectMapper mapper = new ObjectMapper();
             List<Group> groupList = mapper.readValue(Result, new TypeReference<ArrayList<Group>>() { });
             for (Group g : groupList) {
-                Logger.logInfo("-> |" + g.getName() + "|" + g.getId());
-                if (g.getName().equals(postGroup)) {
-                    Logger.logInfo("SUCCCEEEEEEEESS");
+                if (g.getName().equals(post.getGroupName())) {
+                    Logger.logSuccess("Group id found:" + g.getName() + " - " + g.getId());
+                    if (TryToPost(post, g.getId()) != ErrorCode.SUCCESS) {
+                        return ErrorCode.UNKNOWN;
+                    }
                 }
             }
         } catch (Exception e) {
