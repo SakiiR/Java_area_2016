@@ -1,5 +1,8 @@
 package com.epitech.service;
 
+import com.epitech.model.Module;
+import com.epitech.model.UserModule;
+
 /**
  * This interface is implemented by all
  * Services.
@@ -14,4 +17,5 @@ public interface    IService {
      * @return a token String
      */
     public String   login(String username, String password);
+    public String   login(String code, Module module);
 }
