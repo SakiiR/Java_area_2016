@@ -51,7 +51,7 @@ public class                    AreaFixture {
         this.add(new Area("DriveNewFilesAction", "DropBoxSaveFilesReaction", "drive", "dropbox", "Save new drive file to dropbox"));
         this.add(new Area("DropBoxNewFilesAction", "GoogleDriveSaveFileReaction", "dropbox", "drive", "save new dropbox file to google drive"));
         this.add(new Area("GmailAttachmentsAction", "DropBoxSaveFilesReaction", "gmail", "dropbox", "save all google mail attachments in your dropbox"));
-        this.add(new Area("GithubHasNewRepositoryAction", "GmailSendMessageReaction", "github", "gmail", "Post new repository on yammer"));
+        this.add(new Area("GithubHasNewRepositoryAction", "YammerPostToGroupReaction", "github", "yammer", "Post new repository on yammer"));
     }
 
     /**

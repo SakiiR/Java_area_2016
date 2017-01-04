@@ -1,5 +1,6 @@
 package com.epitech.action;
 
+import com.epitech.reaction.YammerPostToGroupReaction;
 import com.epitech.worker.AreaWorker;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
@@ -16,22 +17,28 @@ public class                        GithubHasNewRepositoryAction implements IAct
     public                          GithubHasNewRepositoryAction(String token) { this.token = token; }
 
     public ErrorCode                run() {
-        List<GHRepository>          newRepositories = new ArrayList<>();
+        List<YammerPostToGroupReaction.PostRequest> repoPost = new ArrayList<>();
         try {
             GitHub hub = GitHub.connectUsingOAuth(this.token);
             PagedIterable<GHRepository> repos = hub.getMyself().listRepositories();
             for (GHRepository repo : repos) {
                 if (AreaWorker.isNewEntity(repo.getCreatedAt())) {
                     Logger.logSuccess("New repository found!" + repo.getName() + " -> " + repo.getCreatedAt().toString());
-                    newRepositories.add(repo);
+                    YammerPostToGroupReaction.PostRequest post = new YammerPostToGroupReaction.PostRequest();
+                    String body = repo.getName() + ".\n\n"  +
+                            "Checkout my new Github repository at: " + repo.getHtmlUrl();
+                    post.setBody(body);
+                    post.setGroupName("TestArea");
+                    repoPost.add(post);
                 }
             }
         }  catch (Exception exception) {
             Logger.logError("GithubAction: Can't connect or get repositories.");
             return ErrorCode.UNKNOWN;
         }
-        this.data = newRepositories;
-        if (!(newRepositories.size() > 0)) {
+        this.data = repoPost;
+        if (!(repoPost.size() > 0)) {
+            Logger.logError("GithubAction: No new repository.");
             this.data = null;
         }
         return ErrorCode.SUCCESS;
