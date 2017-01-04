@@ -2,7 +2,9 @@
 {% block title %}OAuth{% endblock %}
 
 {%  block content %}
-    <h4>Registering new app .. wait a sec</h4>
+    <h4>Registering new app</h4>
+    <p>We are registering you to your app.</p>
+    <p class="message"></p>
 {%  endblock %}
 {% block javascripts %}
     <script type="text/javascript" src="/vendors/jquery/dist/jquery.min.js"></script>
@@ -13,26 +15,26 @@
             var $document = $(document);
 
             $document.ready(function() {
-                var hash = window.location.hash;
+                var hash = window.location.search;
                 var state = null;
-                var access_token = null;
+                var code = null;
                 hash = hash.substr(1).split("&");
                 for(var i = 0 ; i < hash.length ; ++i) {
                     var keyVal = hash[i].split("=");
                     if (keyVal[0] === "state") state = decodeURIComponent(keyVal[1]);
-                    if (keyVal[0] === "access_token") access_token = keyVal[1];
-                    if (access_token !== null && state !== null) break;
+                    if (keyVal[0] === "code") code = keyVal[1];
+                    if (code !== null && state !== null) break;
                 }
 
                 $.ajax({
-                    type    : 'POST',
-                    url     : '/module/oauth',
-                    data    : {access_token : access_token, state : state},
-                    success : function(response) {
+                    url         : '/module/oauth',
+                    method      : 'POST',
+                    data        : {code : code, state : state},
+                    complete    : function(response) {
+                        $('.message').text(response.responseJSON.message + '... Redirecting .. in 3 seconds ..');
                         setTimeout(function() {
-                            window.location.replace('/module/list');
+                            window.location.replace("/modules/list");
                         }, 3000);
-                        Materialize.toast(response.message + " - Redirecting ..", 3000);
                     }
                 });
             });

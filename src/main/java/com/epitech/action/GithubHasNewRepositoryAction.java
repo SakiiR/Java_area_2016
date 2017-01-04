@@ -21,16 +21,17 @@ public class                        GithubHasNewRepositoryAction implements IAct
             GitHub hub = GitHub.connectUsingOAuth(this.token);
             PagedIterable<GHRepository> repos = hub.getMyself().listRepositories();
             for (GHRepository repo : repos) {
-                Logger.logInfo(repo.getCreatedAt().toString());
                 if (AreaWorker.isNewEntity(repo.getCreatedAt())) {
+                    Logger.logSuccess("New repository found!" + repo.getName() + " -> " + repo.getCreatedAt().toString());
                     newRepositories.add(repo);
                 }
             }
         }  catch (Exception exception) {
+            Logger.logError("GithubAction: Can't connect or get repositories.");
             return ErrorCode.UNKNOWN;
         }
         this.data = newRepositories;
-        if (newRepositories.size() < 0) {
+        if (!(newRepositories.size() > 0)) {
             this.data = null;
         }
         return ErrorCode.SUCCESS;
