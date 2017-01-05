@@ -1,6 +1,7 @@
 package com.epitech.controller;
 
 import com.epitech.model.Area;
+import com.epitech.model.Module;
 import com.epitech.model.User;
 import com.epitech.model.UserModule;
 import com.epitech.repository.AreaRepository;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -40,11 +43,45 @@ public class                    AreaController {
         if (null == httpSession.getAttribute("username")) {
             return "redirect:/login";
         }
-
-        modelMap.addAttribute("areas", this.areaRepository.findAll());
+        ArrayList<Area>         availableArea = new ArrayList<>();
+        ArrayList<Module>       userModule = new ArrayList<>();
+        User                    user = this.userRepository.findByUsername((String) httpSession.getAttribute("username"));
+        for (UserModule m : user.getModules()) {
+            userModule.add(m.getModule());
+        }
+        if (userModule.size() > 0) {
+            for (Area a : this.areaRepository.findAll()) {
+                if (this.checkIfUserModule(a.getActionModuleName(), userModule) && this.checkIfUserModule(a.getReactionModuleName(), userModule)
+                        && this.checkIfNotRegisterArea(a, user.getAreas())) {
+                    availableArea.add(a);
+                }
+            }
+        }
+        modelMap.addAttribute("areas", availableArea);
+        modelMap.addAttribute("allareas", this.areaRepository.findAll());
         modelMap.addAttribute("userareas", this.userRepository.findByUsername((String) httpSession.getAttribute("username")).getAreas());
         modelMap.addAttribute("username", httpSession.getAttribute("username"));
         return "area/list.html";
+    }
+
+    private boolean             checkIfNotRegisterArea(Area area, List<Area> userareas) {
+
+        for (Area a : userareas) {
+            if (a.getActionName().equals(area.getActionName()) && a.getReactionName().equals(area.getReactionName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean             checkIfUserModule(String moduleName, ArrayList<Module> modules) {
+
+        for (Module m : modules) {
+            if (m.getName().equals(moduleName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

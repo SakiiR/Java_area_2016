@@ -1,14 +1,16 @@
 Module :
 
-- quand un module est delete d'un user, enlever les area qui l'utilise
+- quand un module est delete d'un user, enlever les area qui l'utilise => ok
 
 
 AREA :
 
 - afficher trois onglets :
-  	   - les areas dispos pour par rapport à mes modules
-	   - mes areas (avec un disconnect) ==> enlève l'area
-	   - toutes les areas dispo
+  	   - les areas dispos pour par rapport à mes modules => ok
+	   - mes areas (avec un disconnect) ==> enlève l'area => ok
+	   - toutes les areas dispo => ok
+
+=> pour les area qui bouclent (genre dropbox -> drive, drive -> dropbox) exception d'upload car conflict => ok
 
 
 TOKEN :
@@ -30,7 +32,7 @@ DOC :
 PREREQUIS :
 
 - Tester les areas implémentées
-- faire au moins 6 modules (avec action et reaction)
+- faire au moins 6 modules (avec action et reaction) => ok
 - relire le sujet
 - push sur dépot git epitech
 
