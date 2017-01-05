@@ -43,17 +43,15 @@ public class YammerPostToGroupReaction implements IReaction {
         public String                   getType() {  return type; }
         public long                     getId() { return id; }
         public String                   getName() { return name; }
-
     }
 
     public static class                 PostRequest {
-
         private String                  groupName;
         private String                  body;
 
-        public PostRequest() {}
+        public                          PostRequest() {}
 
-        public PostRequest(String groupName, String body) {
+        public                          PostRequest(String groupName, String body) {
             this.groupName = groupName;
             this.body = body;
         }
@@ -64,14 +62,13 @@ public class YammerPostToGroupReaction implements IReaction {
         public String                   getGroupName() { return groupName; }
         public void                     setGroupName(String groupName) { this.groupName = groupName; }
 
-
     }
 
     private  ErrorCode                  TryToPost(PostRequest postRequest, long id) {
         HttpClient client = HttpClientBuilder.create().build();
         try {
             HttpPost req =  new HttpPost("https://www.yammer.com/api/v1/messages.json");
-            StringEntity params =new StringEntity("{\"body\":\""+ postRequest.getBody() +"\",\"group_id\":\""+ id+"\"} ");
+            StringEntity params = new StringEntity("{\"body\":\""+ postRequest.getBody() +"\",\"group_id\":\""+ id+"\"} ");
             req.addHeader("Authorization", "Bearer " + this.token);
             req.addHeader("content-type", "application/json");
             req.setEntity(params);
@@ -112,7 +109,7 @@ public class YammerPostToGroupReaction implements IReaction {
             }
         } catch (Exception e) {
             Logger.logError("YammerPostToGroupReaction: " + e.toString());
-            return ErrorCode.UNKNOWN;
+            return ErrorCode.AUTH;
         }
 
         return ErrorCode.SUCCESS;
