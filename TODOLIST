@@ -17,6 +17,10 @@ TOKEN :
 - ou notif => sortir les areas correspondantes au module associé ainsi que le
   module
 
+USER:
+    - Adding user object to session to retreive notification count
+    
+
 DOC :
 
 - faire JavaDoc
