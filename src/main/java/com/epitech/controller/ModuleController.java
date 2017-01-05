@@ -162,7 +162,7 @@ public class                        ModuleController {
      * This route simply return a view with a
      * jquery/ajax call to a route from OAuthController
      *
-     * @see OAuthController
+     * @see OAuthRestController
      * @param httpSession The session parameter object
      * @return a view name.
      */

@@ -7,6 +7,7 @@ import com.epitech.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,12 @@ public class                        NotificationService {
 
     @Autowired
     private UserRepository          userRepository;
+
+
+
+    public static class             NotificationResponse extends ResponseObject {
+        public int                  count;
+    }
 
     /**
      * This method send a notification
@@ -92,5 +99,22 @@ public class                        NotificationService {
         for (User user : users) {
             this.send(user, message);
         }
+    }
+
+    public NotificationResponse     getNotificationsCount(User user) {
+        ArrayList<Notification>     notifications = new ArrayList<>();
+        NotificationResponse        notificationResponse = new NotificationResponse();
+
+
+        for (Notification notification : user.getNotifications()) {
+            if (!notification.isReaded()) {
+                notifications.add(notification);
+            }
+        }
+
+        notificationResponse.message = "Success !";
+        notificationResponse.success = true;
+        notificationResponse.count = notifications.size();
+        return notificationResponse;
     }
 }
