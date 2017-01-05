@@ -34,7 +34,7 @@ public class                        GithubHasNewRepositoryAction implements IAct
             }
         }  catch (Exception exception) {
             Logger.logError("GithubAction: Can't connect or get repositories.");
-            return ErrorCode.UNKNOWN;
+            return ErrorCode.AUTH;
         }
         this.data = repoPost;
         if (!(repoPost.size() > 0)) {
