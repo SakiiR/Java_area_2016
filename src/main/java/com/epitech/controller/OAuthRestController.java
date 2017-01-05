@@ -53,10 +53,21 @@ public class OAuthRestController {
                 .setUser(user)
                 .setModule(module);
         user.addModule(userModule);
-        this.userModuleRepository.save(userModule);
-        this.userRepository.save(user);
-        responseObject.message = String.format("Successfully added %s to your modules !", module.getName());
-        responseObject.success = true;
+        boolean found = false;
+        for (UserModule um : user.getModules()) {
+            if (um.getModule().getName().equals(module.getName())) {
+                found = true;
+            }
+        }
+        if (!found) {
+            this.userModuleRepository.save(userModule);
+            this.userRepository.save(user);
+            responseObject.message = String.format("Successfully added %s to your modules !", module.getName());
+            responseObject.success = true;
+            return responseObject;
+        }
+        responseObject.message = String.format("You are already connected to %s", module.getName());
+        responseObject.success = false;
         return responseObject;
     }
 
