@@ -7,10 +7,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by karraz_s on 04/01/17.
- */
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class YammerPostToGroupReactionTest {
