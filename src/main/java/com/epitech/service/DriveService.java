@@ -1,7 +1,6 @@
 package com.epitech.service;
 
 import com.epitech.model.Module;
-import com.epitech.model.UserModule;
 import com.epitech.utils.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -10,7 +9,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
-import com.google.api.services.gmail.Gmail;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,6 @@
 package com.epitech.action;
 
 import com.dropbox.core.DbxDownloader;
-import com.dropbox.core.v1.DbxEntry;
 import com.dropbox.core.v2.files.FolderMetadata;
 import com.epitech.service.GmailService;
 import com.epitech.utils.ErrorCode;
@@ -11,25 +10,15 @@ import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
-import com.dropbox.core.v2.users.FullAccount;
 import com.epitech.utils.Logger;
 import com.epitech.worker.AreaWorker;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-//import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
-import jdk.nashorn.internal.parser.JSONParser;
 
 import java.io.*;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-/**
- * Created by anakin on 02/01/17.
- */
 public class                            DropBoxNewFilesAction implements IAction {
     private String                      token;
 

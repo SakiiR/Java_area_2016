@@ -1,7 +1,6 @@
 package com.epitech.service;
 
 import com.epitech.model.Module;
-import com.epitech.utils.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class                                        YammerService implements IService {

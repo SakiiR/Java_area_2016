@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by karraz_s on 04/01/17.
- */
 public class YammerPostToGroupReaction implements IReaction {
     private String                          token;
 

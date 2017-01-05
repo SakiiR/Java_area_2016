@@ -7,12 +7,8 @@ import com.epitech.worker.AreaWorker;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.*;
 import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

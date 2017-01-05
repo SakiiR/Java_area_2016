@@ -1,7 +1,6 @@
 package com.epitech.service;
 
 import com.epitech.model.Module;
-import com.epitech.model.UserModule;
 
 /**
  * This interface is implemented by all

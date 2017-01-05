@@ -1,14 +1,10 @@
 package com.epitech.reaction;
 
 import com.epitech.utils.ErrorCode;
-import org.kohsuke.github.GHCreateRepositoryBuilder;
 import org.kohsuke.github.GitHub;
 
 import java.util.ArrayList;
 
-/**
- * Created by Segmev on 04/01/17.
- */
 public class GithubCreateRepositoriesReaction implements IReaction {
     private String          token;
 
@@ -24,7 +20,7 @@ public class GithubCreateRepositoriesReaction implements IReaction {
                 hub.createRepository(name).create();
             }
         } catch (Exception e) {
-            return ErrorCode.UNKNOWN;
+            return ErrorCode.AUTH;
         }
         return ErrorCode.SUCCESS;
     }

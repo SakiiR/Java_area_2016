@@ -5,7 +5,6 @@ import com.epitech.model.Module;
 import com.epitech.model.User;
 import com.epitech.repository.BackofficeUserRepository;
 import com.epitech.repository.ModuleRepository;
-import com.epitech.repository.NotificationRepository;
 import com.epitech.repository.UserRepository;
 import com.epitech.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
