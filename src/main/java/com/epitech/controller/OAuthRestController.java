@@ -30,7 +30,7 @@ import java.util.*;
  * @see ModuleController
  */
 @RestController
-public class                        OAuthController {
+public class OAuthRestController {
     @Autowired
     private ModuleRepository        moduleRepository;
 
