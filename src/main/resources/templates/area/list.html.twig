@@ -49,5 +49,23 @@
             </div>
 
         </div>
+
+        <div class="block col s6">
+            <h3>All areas</h3>
+            <div class="scroller-card">
+                <div class="collection">
+                    {% for area in allareas %}
+                            <li class="collection-item avatar">
+                                <img src="/img/modules/{{ area.actionModuleName}}.png" alt="" class="circle"><br/><br/>
+                                <img src="/img/modules/{{ area.reactionModuleName}}.png" alt="" class="circle">
+                                <p>
+                                    {{ area.description }}
+                                </p>
+                            </li>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
     </div>
 {%  endblock %}

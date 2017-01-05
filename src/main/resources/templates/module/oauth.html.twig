@@ -33,7 +33,7 @@
                     complete    : function(response) {
                         $('.message').text(response.responseJSON.message + '... Redirecting .. in 3 seconds ..');
                         setTimeout(function() {
-                            window.location.replace("/modules/list");
+                            window.location.replace("/module/list");
                         }, 3000);
                     }
                 });
