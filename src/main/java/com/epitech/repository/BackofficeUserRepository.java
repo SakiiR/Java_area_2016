@@ -1,7 +1,6 @@
 package com.epitech.repository;
 
 import com.epitech.model.BackofficeUser;
-import com.epitech.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Component;
 

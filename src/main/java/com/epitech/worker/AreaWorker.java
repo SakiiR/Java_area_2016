@@ -14,8 +14,6 @@ import com.epitech.utils.Logger;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This class is a Thread. It is used to

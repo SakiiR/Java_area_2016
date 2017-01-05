@@ -19,8 +19,6 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This controller is relative to modules

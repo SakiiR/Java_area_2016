@@ -1,6 +1,5 @@
 package com.epitech.reaction;
 
-import com.epitech.action.GmailAttachmentsAction;
 import com.epitech.service.DriveService;
 import com.epitech.service.GmailService;
 import com.epitech.utils.ErrorCode;
@@ -13,7 +12,6 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 
-import java.io.File;
 import java.util.List;
 
 public class                                GoogleDriveSaveFileReaction implements IReaction {

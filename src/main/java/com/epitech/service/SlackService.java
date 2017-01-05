@@ -1,7 +1,6 @@
 package com.epitech.service;
 
 import com.epitech.model.Module;
-import com.epitech.model.UserModule;
 import com.epitech.utils.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;

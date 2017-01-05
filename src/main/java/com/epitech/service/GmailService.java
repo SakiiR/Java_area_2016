@@ -1,8 +1,6 @@
 package com.epitech.service;
 
 import com.epitech.model.Module;
-import com.epitech.model.UserModule;
-import com.epitech.reaction.GmailSendMessageReaction;
 import com.epitech.utils.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
@@ -18,7 +16,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import sun.rmi.runtime.Log;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;

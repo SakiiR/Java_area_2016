@@ -1,8 +1,6 @@
 package com.epitech.service;
 
 import com.epitech.model.Module;
-import com.epitech.model.UserModule;
-import com.epitech.utils.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

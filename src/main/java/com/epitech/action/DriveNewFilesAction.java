@@ -5,7 +5,6 @@ import com.epitech.service.GmailService;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 import com.epitech.worker.AreaWorker;
-import com.google.api.client.util.DateTime;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
