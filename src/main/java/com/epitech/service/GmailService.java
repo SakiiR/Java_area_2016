@@ -133,6 +133,7 @@ public class                GmailService implements IService {
         HttpEntity<MultiValueMap<String, String>>   request = new HttpEntity<>(null, headers);
         ResponseEntity<String>                      response = restTemplate.postForEntity(module.getTokenUrl() + String.format("&code=%s", code), request, String.class);
 
+        Logger.logInfo("Received from google gmail : %s", response.getBody());
         try {
             HashMap<String, Object> json = new ObjectMapper().readValue(response.getBody(), HashMap.class);
             return (String) json.get("access_token");
