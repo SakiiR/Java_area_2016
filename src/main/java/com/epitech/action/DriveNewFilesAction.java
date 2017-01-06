@@ -14,14 +14,26 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This action class get all the new files on Google Drive
+ */
 public class                        DriveNewFilesAction implements IAction {
     private Object                  data = null;
     private String                  token;
 
+    /**
+     * The constructor for DriveNewFilesAction
+     * @param token the token from the oauth2 connexion
+     */
     public                          DriveNewFilesAction(String token) {
         this.token = token;
     }
 
+    /**
+     * The run function is called by the worker thread
+     * to execute the action
+     * @return an ErrorCode status
+     */
     public ErrorCode                run() {
         DriveService                driveService = new DriveService();
         Drive                       drive = driveService.getDriveService(this.token);
@@ -76,6 +88,11 @@ public class                        DriveNewFilesAction implements IAction {
         return ErrorCode.SUCCESS;
     }
 
+    /**
+     * A getter for the Object data with the list
+     * of new files
+     * @return
+     */
     public Object                   getData() {
         return this.data;
     }

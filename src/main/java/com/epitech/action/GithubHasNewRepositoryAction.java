@@ -9,13 +9,25 @@ import java.util.List;
 import java.util.ArrayList;
 
 
+/**
+ * The action class to get new repository on Github
+ */
 public class                        GithubHasNewRepositoryAction implements IAction {
 
     private Object data = null;
     private String token;
 
+    /**
+     * The constructor for GithubHasNewRepositoryAction
+     * @param token the token from the oauth2 connexion
+     */
     public                          GithubHasNewRepositoryAction(String token) { this.token = token; }
 
+    /**
+     * The run function called by the worker thread to
+     * execute the action
+     * @return an ErrorCode Status
+     */
     public ErrorCode                run() {
         List<YammerPostToGroupReaction.PostRequest> repoPost = new ArrayList<>();
         try {
@@ -44,6 +56,10 @@ public class                        GithubHasNewRepositoryAction implements IAct
         return ErrorCode.SUCCESS;
     }
 
+    /**
+     * The getter for object data
+     * @return
+     */
     public Object                   getData() {
         return this.data;
     }

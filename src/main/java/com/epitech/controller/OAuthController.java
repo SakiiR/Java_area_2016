@@ -40,6 +40,13 @@ public class                        OAuthController {
     @Autowired
     private UserRepository          userRepository;
 
+    /**
+     * This function add a userModule to a specific user
+     * @param module the module to add
+     * @param user the user
+     * @param token the token from the oauth2 connexion
+     * @return
+     */
     private ResponseObject          registerUserModule(Module module, User user, String token) {
         ResponseObject responseObject = new ResponseObject();
 
