@@ -91,7 +91,7 @@ public class                        DriveNewFilesAction implements IAction {
     /**
      * A getter for the Object data with the list
      * of new files
-     * @return
+     * @return the Object data
      */
     public Object                   getData() {
         return this.data;

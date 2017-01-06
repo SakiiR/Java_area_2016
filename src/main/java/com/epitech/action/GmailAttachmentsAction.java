@@ -67,7 +67,7 @@ public class                            GmailAttachmentsAction implements IActio
      * @param service the Gmail service
      * @param userId the userID me
      * @param message the specific message
-     * @throws IOException
+     * @throws IOException an IOExcecption
      */
     private  void                       getAttachments(Gmail service, String userId, Message message) throws IOException {
         List<GmailService.File>         files = new ArrayList<>();
@@ -97,7 +97,7 @@ public class                            GmailAttachmentsAction implements IActio
      * @param userId the userID me
      * @param allMessages the list of all messages newer than 1 day
      * @return a list of Message
-     * @throws IOException
+     * @throws IOException an IOException
      */
     private List<Message>               getNewMessages(Gmail service, String userId, List<Message> allMessages) throws IOException {
         List<Message>                   messages = new ArrayList<>();
@@ -122,7 +122,7 @@ public class                            GmailAttachmentsAction implements IActio
      * This function search the date MessagePartHeader in
      * a specific message header
      * @param headers a list of headers
-     * @return
+     * @return an int iterator
      */
     private int                         searchForDate(List<MessagePartHeader> headers) {
         int                             inc = 0;
@@ -164,7 +164,7 @@ public class                            GmailAttachmentsAction implements IActio
      * @param userId the userID me
      * @param query the query
      * @return a list of Message
-     * @throws IOException
+     * @throws IOException an IOException
      */
     private List<Message>               getMessagesMatchingQuery(Gmail service, String userId, String query) throws IOException {
         ListMessagesResponse            response = service.users().messages().list(userId).setQ(query).execute();
@@ -185,7 +185,7 @@ public class                            GmailAttachmentsAction implements IActio
 
     /**
      * the getter for object data
-     * @return
+     * @return an Object data
      */
     public Object                       getData() {
         return this.data;

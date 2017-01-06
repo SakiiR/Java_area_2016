@@ -46,7 +46,7 @@ public class                    Area {
 
     /**
      * the getter for the id
-     * @return
+     * @return a string id
      */
     public String               getId() {
         return id;
@@ -55,7 +55,7 @@ public class                    Area {
     /**
      * the setter for the Id
      * @param id the new Id to set
-     * @return
+     * @return this
      */
     public Area                 setId(String id) {
         this.id = id;
@@ -64,7 +64,7 @@ public class                    Area {
 
     /**
      * the getter for the action name
-     * @return
+     * @return a string action name
      */
     public String               getActionName() {
         return actionName;
@@ -73,7 +73,7 @@ public class                    Area {
     /**
      * the setter for the action name
      * @param actionName
-     * @return
+     * @return an Area this
      */
     public Area                 setActionName(String actionName) {
         this.actionName = actionName;
@@ -82,7 +82,7 @@ public class                    Area {
 
     /**
      * the getter for the reaction name
-     * @return
+     * @return a string reaction name
      */
     public String               getReactionName() {
         return reactionName;
@@ -91,7 +91,7 @@ public class                    Area {
     /**
      * the setter for the reaction name
      * @param reactionName
-     * @return
+     * @return an Area this
      */
     public Area                 setReactionName(String reactionName) {
         this.reactionName = reactionName;
@@ -100,7 +100,7 @@ public class                    Area {
 
     /**
      * the getter for the action module name
-     * @return
+     * @return a string action module name
      */
     public String               getActionModuleName() {
         return actionModuleName;
@@ -109,7 +109,7 @@ public class                    Area {
     /**
      * the setter for the action module name
      * @param actionModuleName
-     * @return
+     * @return an Area this
      */
     public Area                 setActionModuleName(String actionModuleName) {
         this.actionModuleName = actionModuleName;
@@ -118,7 +118,7 @@ public class                    Area {
 
     /**
      * the getter for the reaction module name
-     * @return
+     * @return a string reaction module name
      */
     public String               getReactionModuleName() {
         return reactionModuleName;
@@ -127,7 +127,7 @@ public class                    Area {
     /**
      * the setter for the reaction module name
      * @param reactionModuleName
-     * @return
+     * @return an Area this
      */
     public Area                 setReactionModuleName(String reactionModuleName) {
         this.reactionModuleName = reactionModuleName;
@@ -136,7 +136,7 @@ public class                    Area {
 
     /**
      * the getter for the description of the area
-     * @return
+     * @return a string description
      */
     public String               getDescription() {
         return description;
@@ -145,13 +145,18 @@ public class                    Area {
     /**
      * the setter for the description of the area
      * @param description
-     * @return
+     * @return an Area this
      */
     public Area                 setDescription(String description) {
         this.description = description;
         return this;
     }
 
+    /**
+     * this function returns a string with all informations
+     * about the area
+     * @return a string information
+     */
     @Override
     public String toString() {
         return String.format("%s AND %s", this.actionName, this.reactionName);
