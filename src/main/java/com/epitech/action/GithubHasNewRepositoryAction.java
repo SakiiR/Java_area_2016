@@ -40,7 +40,7 @@ public class                        GithubHasNewRepositoryAction implements IAct
                     String body = repo.getName() + ".\n\n"  +
                             "Checkout my new Github repository at: " + repo.getHtmlUrl();
                     post.setBody(body);
-                    post.setGroupName("TestArea");
+                    post.setGroupName("");
                     repoPost.add(post);
                 }
             }

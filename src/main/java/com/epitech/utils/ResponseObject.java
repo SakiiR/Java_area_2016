@@ -5,7 +5,7 @@ package com.epitech.utils;
  * to the user (for rest controllers).
  *
  * @see org.springframework.web.bind.annotation.RestController
- * @see com.epitech.controller.OAuthController
+ * @see com.epitech.controller.OAuthRestController
  */
 public class        ResponseObject {
     public boolean  success;
