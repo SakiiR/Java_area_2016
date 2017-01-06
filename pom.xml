@@ -37,6 +37,10 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+            <repository>
+                <id>jitpack.io</id>
+                <url>https://jitpack.io</url>
+            </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -127,7 +131,11 @@
             <artifactId>github-api</artifactId>
             <version>1.82</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.allbegray</groupId>
+            <artifactId>slack-api</artifactId>
+            <version>v1.3.0.RELEASE</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
