@@ -28,12 +28,11 @@ public class SlackHasNewChannelsAction implements IAction {
         try {
             SlackWebApiClient client = SlackClientFactory.createWebApiClient(this.token);
             List<Channel> channels = client.getChannelList();
-            Logger.logInfo("Got there " + channels.toString());
             for (Channel chan : channels) {
                 Logger.logWarning(chan.toString());
                 java.util.Date date = new java.util.Date(chan.getCreated()*1000);
-                Logger.logInfo(date.toString());
-                Logger.logInfo(String.valueOf(AreaWorker.isNewEntity(date)));
+                //Logger.logInfo(date.toString());
+                //Logger.logInfo(String.valueOf(AreaWorker.isNewEntity(date)));
                 if (AreaWorker.isNewEntity(date)) {
                     newChannels.add(chan.getName());
                     Logger.logError("New channel found: " + chan.getName());
