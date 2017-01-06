@@ -27,7 +27,9 @@ DOC :
 
 - faire JavaDoc :
   - yammeraction
-  -
+  - utils => areareflector
+  - yammerpostgroupreaction
+  - gmailservice
 - faire UML / Diagramme de class
 - faire tuto d'ajout d'un plugin
 

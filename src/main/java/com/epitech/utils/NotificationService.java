@@ -101,6 +101,12 @@ public class                        NotificationService {
         }
     }
 
+    /**
+     * this function get the notification count for a
+     * specific user
+     * @param user the user
+     * @return a NotificationResponse
+     */
     public NotificationResponse     getNotificationsCount(User user) {
         ArrayList<Notification>     notifications = new ArrayList<>();
         NotificationResponse        notificationResponse = new NotificationResponse();

@@ -17,13 +17,31 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 
+/**
+ * The service for Google Drive
+ */
 public class DriveService implements IService {
+
+    /**
+     * the constructor for DriveService
+     */
     public DriveService() {}
 
+    /**
+     * the function login without oauth
+     * @param username the username to provide to the concerned API.
+     * @param password the password to provide to the concerned API.
+     * @return a sting token
+     */
     public String       login(String username, String password) {
         return "GOOGLEDRIVE_TOKEN";
     }
 
+    /**
+     * the getter for Drive service
+     * @param token the token from oauth2
+     * @return the Drive service
+     */
     public Drive        getDriveService(String token) {
         Drive           service;
         GoogleCredential credential = new GoogleCredential().setAccessToken(token);
@@ -34,6 +52,13 @@ public class DriveService implements IService {
         return service;
     }
 
+    /**
+     * this function log the user to the GoogleDrive Service with an Oauth2
+     * authentication
+     * @param code the string code
+     * @param module the module
+     * @return a string token
+     */
     public String       login(String code, Module module) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

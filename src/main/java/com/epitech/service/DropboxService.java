@@ -11,13 +11,33 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 
+/**
+ * the service for DropBox
+ */
 public class            DropboxService implements IService {
+
+    /**
+     * the constructor for DropBoxService
+     */
     public              DropboxService() {  }
 
+    /**
+     * the login function without oauth
+     * @param username the username to provide to the concerned API.
+     * @param password the password to provide to the concerned API.
+     * @return a string token
+     */
     public String       login(String username, String password) {
         return "DROPBOX_TOKEN";
     }
 
+    /**
+     * the login function for a oauth2
+     * authentication
+     * @param code the code
+     * @param module the module
+     * @return the string token
+     */
     public String       login(String code, Module module) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

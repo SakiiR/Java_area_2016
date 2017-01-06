@@ -67,6 +67,11 @@ public class                    PasswordContainer {
         return this;
     }
 
+    /**
+     * this function returns a string information about the
+     * PasswordContainer
+     * @return the string information
+     */
     @Override
     public String toString() {
         return "PasswordContainer{" +

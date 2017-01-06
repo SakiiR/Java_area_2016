@@ -5,12 +5,25 @@ import org.kohsuke.github.GitHub;
 
 import java.util.ArrayList;
 
+/**
+ * this class is a reaction creating new github repository
+ */
 public class GithubCreateRepositoriesReaction implements IReaction {
     private String          token;
 
+    /**
+     * the constructor for GithubCreateRepositoriesReaction
+     * @param token the token from the oauth2 connexion
+     */
     public                  GithubCreateRepositoriesReaction(String token) { this.token = token ; }
 
     /* data should be a list of String */
+
+    /**
+     * this function run executes the GithubCreateRepositoriesReaction
+     * @param data the data for creating new repositories
+     * @return an ErrorCode status
+     */
     @Override
     public ErrorCode        run(Object data) {
         try {
