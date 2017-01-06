@@ -98,12 +98,19 @@ public class YammerPostToGroupReaction implements IReaction {
             ObjectMapper mapper = new ObjectMapper();
             List<Group> groupList = mapper.readValue(Result, new TypeReference<ArrayList<Group>>() { });
             for (PostRequest post : posts) {
-                for (Group g : groupList) {
-                    if (g.getName().equals(post.getGroupName())) {
-                        Logger.logSuccess("Group id found:" + g.getName() + " - " + g.getId());
-                        if (TryToPost(post, g.getId()) != ErrorCode.SUCCESS) {
-                            return ErrorCode.UNKNOWN;
+                if (post.getGroupName().length() > 0) {
+                    for (Group g : groupList) {
+                        if (g.getName().equals(post.getGroupName())) {
+                            Logger.logSuccess("Group id found:" + g.getName() + " - " + g.getId());
+                            if (TryToPost(post, g.getId()) != ErrorCode.SUCCESS) {
+                                return ErrorCode.UNKNOWN;
+                            }
                         }
+                    }
+                } else {
+                    Logger.logWarning("Group not found. Sending to default group : Group id found:" + groupList.get(0).getName() + " - " + groupList.get(0).getId());
+                    if (TryToPost(post, groupList.get(0).getId()) != ErrorCode.SUCCESS) {
+                        return ErrorCode.UNKNOWN;
                     }
                 }
             }
