@@ -35,7 +35,7 @@ public class    BackofficeUser {
     /**
      * the setter for the username
      * @param username
-     * @return
+     * @return a BackofficeUser this
      */
     public BackofficeUser           setUsername(String username) {
         this.username = username;
@@ -44,7 +44,7 @@ public class    BackofficeUser {
 
     /**
      * the getter for the username
-     * @return
+     * @return a sting username
      */
     public String                   getUsername() {
         return this.username;
@@ -53,7 +53,7 @@ public class    BackofficeUser {
     /**
      * the setter for the password
      * @param password
-     * @return
+     * @return a BackofficeUser this
      */
     public BackofficeUser           setPassword(String password) {
         this.password = password;
@@ -62,7 +62,7 @@ public class    BackofficeUser {
 
     /**
      * the getter for the user password
-     * @return
+     * @return a string password
      */
     public String                   getPassword() {
         return this.password;
@@ -71,7 +71,7 @@ public class    BackofficeUser {
     /**
      * the setter for the salt
      * @param salt
-     * @return
+     * @return a BackofficeUser this
      */
     public BackofficeUser           setSalt(String salt) {
         this.salt = salt;
@@ -80,7 +80,7 @@ public class    BackofficeUser {
 
     /**
      * the getter for the salt
-     * @return
+     * @return a string salt
      */
     public String                   getSalt() {
         return this.salt;
@@ -88,7 +88,7 @@ public class    BackofficeUser {
 
     /**
      * this function return all the informations for a user
-     * @return
+     * @return a string informations
      */
     @Override
     public String                   toString() {

@@ -25,55 +25,109 @@ public class                Notification {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date            created;
 
+    /**
+     * the constructor for Notification
+     */
     public                  Notification() {
         this.created = new Date();
     }
 
+    /**
+     * the getter for the id
+     * @return a string id
+     */
     public String           getId() {
         return id;
     }
 
+    /**
+     * the setter for the id
+     * @param id
+     * @return a Notification this
+     */
     public Notification     setId(String id) {
         this.id = id;
         return this;
     }
 
+    /**
+     * the getter for the user
+     * @return a User
+     */
     public User             getUser() {
         return user;
     }
 
+    /**
+     * the setter for the user
+     * @param user
+     * @return a Notification this
+     */
     public Notification     setUser(User user) {
         this.user = user;
         return this;
     }
 
+    /**
+     * the getter for the message
+     * @return a string message
+     */
     public String           getMessage() {
         return message;
     }
 
+    /**
+     * the setter for the message
+     * @param message
+     * @return a Notification this
+     */
     public Notification     setMessage(String message) {
         this.message = message;
         return this;
     }
 
+    /**
+     * the getter for the created date
+     * @return a Date
+     */
     public Date             getCreated() {
         return created;
     }
 
+    /**
+     * the setter for the created date
+     * @param created
+     * @return a Notification this
+     */
     public Notification     setCreated(Date created) {
         this.created = created;
         return this;
     }
 
+    /**
+     * this function return a boolean false is the
+     * notification is unread, true if it is
+     * @return boolean isReaded
+     */
     public boolean          isReaded() {
         return readed;
     }
 
+    /**
+     * set the readed message to true or false
+     * @param readed
+     * @return a Notification this
+     */
     public Notification     setReaded(boolean readed) {
         this.readed = readed;
         return this;
     }
 
+    /**
+     * this function returns all the information
+     * about a notification
+     * @return a string informations
+     */
     @Override
     public String toString() {
         return "Notification{" +

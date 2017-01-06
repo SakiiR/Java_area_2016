@@ -39,7 +39,7 @@ public class                            DropBoxNewFilesAction implements IAction
     /**
      * The getter for the Object data containing a list
      * of new files
-     * @return
+     * @return the Object data
      */
     public Object                       getData() {
         return this.data;
