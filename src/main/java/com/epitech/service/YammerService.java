@@ -10,13 +10,32 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 
+/**
+ * the service for Yammer
+ */
 public class                                        YammerService implements IService {
+
+    /**
+     * the constructor for the YammerService
+     */
     public                                          YammerService() {}
 
+    /**
+     * the login method for authentication without oauth2
+     * @param username the username to provide to the concerned API.
+     * @param password the password to provide to the concerned API.
+     * @return a token string
+     */
     public String                                   login(String username, String password) {
         return "YAMMER_TOKEN";
     }
 
+    /**
+     * the login method for authentication with oauth2
+     * @param code the code
+     * @param module the module
+     * @return the string token
+     */
     public String                                   login(String code, Module module) {
         RestTemplate                                restTemplate = new RestTemplate();
         HttpHeaders                                 headers = new HttpHeaders();

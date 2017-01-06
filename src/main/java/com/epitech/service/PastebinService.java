@@ -9,15 +9,27 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * the service for Pastebin
+ */
 public class                                PastebinService implements IService {
     private RestTemplate                    rest;
 
+    /**
+     * the constructor for PastebinService
+     */
     public                                  PastebinService() {
         this.rest = new RestTemplate();
     }
 
     public static String                    api_dev_key = "221ed12ce0e20b3d32fed3b3545346f7";
 
+    /**
+     * the login method without oauth authentication
+     * @param username the username to provide to the concerned API.
+     * @param password the password to provide to the concerned API.
+     * @return a string token
+     */
     public String                           login(String username, String password) {
         MultiValueMap<String, String>       postParameters = new LinkedMultiValueMap<>();
         String                              result = null;
@@ -37,6 +49,12 @@ public class                                PastebinService implements IService 
         return result;
     }
 
+    /**
+     * a login method without an oauth2 authentication
+     * @param code the code
+     * @param module the module
+     * @return the string token
+     */
     public String       login(String code, Module module) {
         return "PASTEBIN_TOKEN";
     }

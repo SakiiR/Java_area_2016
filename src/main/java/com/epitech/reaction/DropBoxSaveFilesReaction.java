@@ -11,13 +11,25 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 
+/**
+ * this class is a reaction saving new files on DropBox
+ */
 public class                                DropBoxSaveFilesReaction implements IReaction{
     private String                          token;
 
+    /**
+     * the constructor for DropBoxSaveFilesReaction
+     * @param token the token from the oauth2 connexion
+     */
     public                                  DropBoxSaveFilesReaction(String token) {
         this.token = token;
     }
 
+    /**
+     * the function run executes the dropboxsavefile reaction
+     * @param data the data to save
+     * @return an ErrorCode status
+     */
     public ErrorCode                        run(Object data) {
         List<GmailService.File>             files = (List<GmailService.File>) data;
         DbxRequestConfig                    config = new DbxRequestConfig("area_doudoune");
