@@ -52,13 +52,13 @@ public class OAuthRestController {
         userModule.setToken(token)
                 .setUser(user)
                 .setModule(module);
-        user.addModule(userModule);
         boolean found = false;
         for (UserModule um : user.getModules()) {
             if (um.getModule().getName().equals(module.getName())) {
                 found = true;
             }
         }
+        user.addModule(userModule);
         if (!found) {
             this.userModuleRepository.save(userModule);
             this.userRepository.save(user);
