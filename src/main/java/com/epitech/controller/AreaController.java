@@ -64,6 +64,13 @@ public class                    AreaController {
         return "area/list.html";
     }
 
+    /**
+     * This function check if an area is already
+     * taken by a user
+     * @param area the area to check
+     * @param userareas the list of userareas
+     * @return false if it is, true if not
+     */
     private boolean             checkIfNotRegisterArea(Area area, List<Area> userareas) {
 
         for (Area a : userareas) {
@@ -74,6 +81,13 @@ public class                    AreaController {
         return true;
     }
 
+    /**
+     * This function check if a module is already taken
+     * by a user
+     * @param moduleName the module name to evaluate
+     * @param modules a list of user modules
+     * @return true if it is, false if it's not
+     */
     private boolean             checkIfUserModule(String moduleName, ArrayList<Module> modules) {
 
         for (Module m : modules) {

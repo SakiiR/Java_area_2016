@@ -33,6 +33,10 @@ public class                        YammerNewPrivateMessageAction implements IAc
     /** reaction data */
     private Object                  data;
 
+    /**
+     * the constructor for the YammerNewPrivateMessageAction
+     * @param token the token from the oauth2 connexion
+     */
     public                          YammerNewPrivateMessageAction(String token) {
         this.token = token;
     }

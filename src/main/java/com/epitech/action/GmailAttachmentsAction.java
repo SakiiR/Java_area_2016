@@ -25,10 +25,19 @@ public class                            GmailAttachmentsAction implements IActio
 
     private Object                      data = null;
 
+    /**
+     * the Constructor for GmailAttachmentsAction
+     * @param token the token from the oauth2 connexion
+     */
     public                              GmailAttachmentsAction(String token) {
         this.token = token;
     }
 
+    /**
+     * The run function called by the worker thread
+     * to execute the action
+     * @return an ErrorCode status
+     */
     public ErrorCode                    run() {
         GmailService                    gmailService = new GmailService();
         Gmail                           service;
@@ -53,6 +62,13 @@ public class                            GmailAttachmentsAction implements IActio
         return ErrorCode.SUCCESS;
     }
 
+    /**
+     * This function attachments from a specific message on Gmail
+     * @param service the Gmail service
+     * @param userId the userID me
+     * @param message the specific message
+     * @throws IOException
+     */
     private  void                       getAttachments(Gmail service, String userId, Message message) throws IOException {
         List<GmailService.File>         files = new ArrayList<>();
         List<MessagePart>               parts = message.getPayload().getParts();
@@ -75,6 +91,14 @@ public class                            GmailAttachmentsAction implements IActio
         }
     }
 
+    /**
+     * this function get all messages newer than the last check
+     * @param service the Gmail Service
+     * @param userId the userID me
+     * @param allMessages the list of all messages newer than 1 day
+     * @return a list of Message
+     * @throws IOException
+     */
     private List<Message>               getNewMessages(Gmail service, String userId, List<Message> allMessages) throws IOException {
         List<Message>                   messages = new ArrayList<>();
         String                          date;
@@ -94,6 +118,12 @@ public class                            GmailAttachmentsAction implements IActio
         return messages;
     }
 
+    /**
+     * This function search the date MessagePartHeader in
+     * a specific message header
+     * @param headers a list of headers
+     * @return
+     */
     private int                         searchForDate(List<MessagePartHeader> headers) {
         int                             inc = 0;
 
@@ -106,6 +136,12 @@ public class                            GmailAttachmentsAction implements IActio
         return 0;
     }
 
+    /**
+     * this function check if a given date is newer or
+     * older than the last check
+     * @param dateString the date to evaluate
+     * @return a boolean true or false
+     */
     private boolean                     check_date(String dateString) {
         SimpleDateFormat                format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
@@ -122,6 +158,14 @@ public class                            GmailAttachmentsAction implements IActio
         return false;
     }
 
+    /**
+     * This function get messages matching with a specific query
+     * @param service the Gmail Service
+     * @param userId the userID me
+     * @param query the query
+     * @return a list of Message
+     * @throws IOException
+     */
     private List<Message>               getMessagesMatchingQuery(Gmail service, String userId, String query) throws IOException {
         ListMessagesResponse            response = service.users().messages().list(userId).setQ(query).execute();
         List<Message>                   messages = new ArrayList<>();
@@ -139,6 +183,10 @@ public class                            GmailAttachmentsAction implements IActio
         return messages;
     }
 
+    /**
+     * the getter for object data
+     * @return
+     */
     public Object                       getData() {
         return this.data;
     }

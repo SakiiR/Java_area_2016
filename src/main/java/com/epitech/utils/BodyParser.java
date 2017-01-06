@@ -61,6 +61,10 @@ public class                            BodyParser {
         return destinations;
     }
 
+    /**
+     * The getter for the hashmap
+     * @return
+     */
     public HashMap<String, String>      getMap() {
         return _map;
     }

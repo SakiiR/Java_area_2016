@@ -19,19 +19,37 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This action class get all the new files
+ * on DropBox
+ */
 public class                            DropBoxNewFilesAction implements IAction {
     private String                      token;
 
     private Object                      data = null;
 
+    /**
+     * The constructor for DropBoxNewFilesAction
+     * @param token the token from the oauth2 Connexion
+     */
     public                              DropBoxNewFilesAction(String token) {
         this.token = token;
     }
 
+    /**
+     * The getter for the Object data containing a list
+     * of new files
+     * @return
+     */
     public Object                       getData() {
         return this.data;
     }
 
+    /**
+     * The run function called by the worker thread to
+     * execute the action
+     * @return an ErrorCode status
+     */
     public ErrorCode                    run() {
         DbxRequestConfig config = new DbxRequestConfig("Area_doudoune");
         DbxClientV2 client = new DbxClientV2(config, this.token);
