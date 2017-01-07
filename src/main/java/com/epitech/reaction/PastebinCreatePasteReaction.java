@@ -31,12 +31,26 @@ public class PastebinCreatePasteReaction implements IReaction{
 
     private String token;
 
+    /**
+     * the constructor for GithubCreateRepositoriesReaction
+     * @param token the token from the oauth2 connexion
+     */
+
     public PastebinCreatePasteReaction(String token) {
         this.token = token;
     }
 
+    /**
+     * this function run executes the GithubCreateRepositoriesReaction
+     * @param data the data for creating new repositories
+     * @return an ErrorCode status
+     */
+
     @Override
     public ErrorCode run(Object data) {
+        if (data == null) {
+            return ErrorCode.SUCCESS;
+        }
         List<SlackPostSnippetAction.SnippetObject> files = (List<SlackPostSnippetAction.SnippetObject>) data;
         PasteBuilder pasteBuilder;
         Paste paste;
@@ -52,15 +66,15 @@ public class PastebinCreatePasteReaction implements IReaction{
                 pasteBuilder.setVisiblity(PasteVisiblity.Public);
                 pasteBuilder.setExpire(PasteExpire.OneWeek);
                 paste = pasteBuilder.build();
-                Logger.logInfo(file.getContent());
                 if (paste == null) {
                     Logger.logError("FAILURE");
-                }
-                postResult = pastebin.post(paste, token);
-                if (postResult.hasError()) {
-                    Logger.logError("Creating Paste error : " + postResult.getError());
                 } else {
-                    Logger.logSuccess("Creating Paste at URL " + postResult.get());
+                    postResult = pastebin.post(paste, token);
+                    if (postResult.hasError()) {
+                        Logger.logError("Creating Paste error : " + postResult.getError());
+                    } else {
+                        Logger.logSuccess("Creating Paste at URL " + postResult.get());
+                    }
                 }
             }
         } catch (Exception e) {
