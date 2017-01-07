@@ -80,6 +80,7 @@ public class                            DropBoxNewFilesAction implements IAction
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                     Logger.logError("Errror !");
+                                    return ErrorCode.AUTH;
                                 }
                             }
                         }
