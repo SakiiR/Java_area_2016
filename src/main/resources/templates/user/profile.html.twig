@@ -1,0 +1,23 @@
+{% extends "../layout/layout.html.twig" %}
+{% block title %}Logout{% endblock %}
+
+{% block content %}
+    <div class="col s12 m7">
+        <h2 class="header">{{ user.username }}</h2>
+        <div class="card horizontal">
+            <div class="card-image">
+                <img src="http://lorempixel.com/100/190/nature/6">
+            </div>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <p>Id       : {{ user.id }}</p>
+                    <p>Username : {{ user.username }}</p>
+                    <p>Connected Modules : {{ user.modules.size() }}</p>
+                    <p>Connected Area : {{ user.areas.size() }}</p>
+                </div>
+                <div class="card-action">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
