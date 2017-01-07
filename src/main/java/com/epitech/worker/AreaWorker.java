@@ -6,12 +6,15 @@ import com.epitech.model.User;
 import com.epitech.model.UserModule;
 import com.epitech.reaction.IReaction;
 import com.epitech.repository.AreaRepository;
+import com.epitech.repository.UserModuleRepository;
 import com.epitech.repository.UserRepository;
 import com.epitech.service.IService;
 import com.epitech.utils.AreaReflector;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
+import com.epitech.utils.NotificationService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,15 +23,19 @@ import java.util.List;
  * check for all user Area and execute
  * Actions and Reactions.
  */
-public class AreaWorker implements Runnable {
+public class                        AreaWorker implements Runnable {
 
     private UserRepository          userRepository;
     private AreaRepository          areaRepository;
-    // etc ..
+    private NotificationService     notificationService;
+    private UserModuleRepository    userModuleRepository;
 
     public static Date              lastCheck;
 
     private boolean                 isRunning = true;
+
+    private List<Area>              areaToRemove = new ArrayList<>();
+    private List<UserModule>        userModuleToRemove = new ArrayList<>();
 
     /**
      * Contructor
@@ -36,11 +43,19 @@ public class AreaWorker implements Runnable {
      * @param userRepository user repository
      * @param areaRepository area repository
      */
-    public                          AreaWorker(UserRepository userRepository, AreaRepository areaRepository) {
+    public                          AreaWorker(UserRepository userRepository, AreaRepository areaRepository, NotificationService notificationService, UserModuleRepository userModuleRepository) {
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
+        this.notificationService = notificationService;
+        this.userModuleRepository = userModuleRepository;
     }
 
+    /**
+     * Check if the date in going after the stored one.
+     *
+     * @param date the date to check
+     * @return if the date is valid
+     */
     public static boolean           isNewEntity(Date date) {
         return date.getTime() > AreaWorker.lastCheck.getTime();
     }
@@ -54,11 +69,28 @@ public class AreaWorker implements Runnable {
      */
     private String                  getTokenByModuleName(User user, String moduleName) {
         for (UserModule userModule : user.getModules()) {
-            if (userModule.getModule().getName().equals(moduleName)) {
+            if (userModule != null && userModule.getModule().getName().equals(moduleName)) {
                 return userModule.getToken();
             }
         }
         return null;
+    }
+
+    private void                    handleAuthError(User user, String moduleName) {
+        for (Area a : user.getAreas()) {
+            if (a.getActionModuleName().equals(moduleName) || a.getReactionModuleName().equals(moduleName)) {
+                a.setTmpUser(user);
+                this.areaToRemove.add(a);
+                this.notificationService.send(user, String.format("you have been disconnected from Area %s <-> %s : %s", a.getActionName(), a.getReactionName(), a.getDescription()));
+            }
+        }
+        for (UserModule userModule : user.getModules()) {
+            if (userModule.getModule().getName().equals(moduleName)) {
+                this.userModuleToRemove.add(userModule);
+                this.notificationService.send(user, String.format("You have been disconnected from %s", userModule.getModule().getName()));
+            }
+        }
+        Logger.logSuccess("Removed and sent notification for updating invalid userModule And Area ( BAD_TOKEN )");
     }
 
     /**
@@ -73,12 +105,43 @@ public class AreaWorker implements Runnable {
         IService                    actionService = AreaReflector.instanciateService(area.getActionModuleName());
         IService                    reactionService = AreaReflector.instanciateService(area.getReactionModuleName());
         IAction                     action = AreaReflector.instanciateAction(area.getActionName(), actionToken);
+        ErrorCode                   actionStatus = action.run();
+        ErrorCode                   reactionStatus;
 
-        if (action.run() == ErrorCode.SUCCESS && action.getData() != null) {
+        if (actionStatus == ErrorCode.AUTH) {
+            this.handleAuthError(user, area.getActionModuleName());
+            return;
+        }
+        if (actionStatus == ErrorCode.SUCCESS && action.getData() != null) {
             IReaction reaction = AreaReflector.instanciateReaction(area.getReactionName(), reactionToken, action.getData());
-            reaction.run(action.getData());
+            reactionStatus = reaction.run(action.getData());
+            this.handleAuthError(user, area.getReactionModuleName());
+            return;
         }
         Logger.logInfo("Finished Area !");
+    }
+
+    /**
+     * Remove all unused area and usermodule
+     * with bad token.
+     */
+    private void                    removeUselessAreaAndModule() {
+        User                        user;
+
+        if (this.areaToRemove.size() > 0) {
+            user = this.areaToRemove.get(0).getTmpUser();
+            user.getAreas().removeAll(this.areaToRemove);
+            this.userRepository.save(user);
+        }
+
+        if (this.userModuleToRemove.size() > 0) {
+            user = this.userModuleToRemove.get(0).getUser();
+            user.getModules().removeAll(this.userModuleToRemove);
+            this.userModuleRepository.delete(this.userModuleToRemove);
+            this.userRepository.save(user);
+        }
+        this.areaToRemove.clear();
+        this.userModuleToRemove.clear();
     }
 
     /**
@@ -100,6 +163,7 @@ public class AreaWorker implements Runnable {
                     Logger.logInfo("Processing area : %s", area.toString());
                     this.processArea(user, area);
                 }
+                this.removeUselessAreaAndModule();
             }
             AreaWorker.lastCheck = new Date();
             try {
