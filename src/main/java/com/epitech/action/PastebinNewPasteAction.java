@@ -46,7 +46,7 @@ public class PastebinNewPasteAction implements IAction {
                     Logger.logSuccess("New paste created at <" + date.toString() + " with title " + paste.getKey());
                     keys.add("<www.pastebin.com/" + paste.getKey() + ">");
                 } else {
-                    Logger.logSuccess("Checked Paste created at " + date.toString() + " with title " + paste.getKey());
+                    Logger.logInfo("Checked Paste created at " + date.toString() + " with title " + paste.getKey());
                 }
             }
         } catch (Exception e) {
