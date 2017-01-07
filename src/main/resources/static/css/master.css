@@ -27,3 +27,7 @@
 .circle {
     border-radius: 50% !important;
 }
+
+.card-image > img {
+    max-width: 115px;
+}

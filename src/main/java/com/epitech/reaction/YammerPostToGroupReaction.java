@@ -21,14 +21,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * this class is a reaction posting to a yammer group from an action
+ */
 public class YammerPostToGroupReaction implements IReaction {
     private String                          token;
 
+    /** Google HTTP Factories */
     static final HttpTransport              HTTP_TRANSPORT = new NetHttpTransport();
     static final JsonFactory                JSON_FACTORY = new JacksonFactory();
 
+    /**
+     * YammerPostToGroupReaction constructor
+     * @param token the userId for authentification
+     */
     public YammerPostToGroupReaction(String token) { this.token = token; }
 
+    /**
+     * Group class for parsing json response
+     *
+     */
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class                 Group extends GenericJson {
         @Key(value="group")
@@ -45,12 +57,20 @@ public class YammerPostToGroupReaction implements IReaction {
         public String                   getName() { return name; }
     }
 
+    /**
+     * PostRequest class store information for sharing the @body content to @groupName group on yammer
+     */
     public static class                 PostRequest {
         private String                  groupName;
         private String                  body;
 
         public                          PostRequest() {}
 
+        /**
+         * PostRequest constructor
+         * @param groupName group to share the new post
+         * @param body content of the new message post
+         */
         public                          PostRequest(String groupName, String body) {
             this.groupName = groupName;
             this.body = body;
@@ -64,6 +84,12 @@ public class YammerPostToGroupReaction implements IReaction {
 
     }
 
+    /**
+     * TryToPost post
+     * @param postRequest new post to share on yammer
+     * @param id groupId found from groupName
+     * @return an ErrorCode status
+     */
     private  ErrorCode                  TryToPost(PostRequest postRequest, long id) {
         HttpClient client = HttpClientBuilder.create().build();
         try {
@@ -80,6 +106,11 @@ public class YammerPostToGroupReaction implements IReaction {
         return ErrorCode.SUCCESS;
     }
 
+    /**
+     * run the reaction
+     * @param object List<PostRequest> a list of future new post
+     * @return an ErrorCode status
+     */
     @Override
     public ErrorCode                    run(Object object) {
         Logger.logSuccess("run() YammerPostToGroupReaction %s", this.token);
