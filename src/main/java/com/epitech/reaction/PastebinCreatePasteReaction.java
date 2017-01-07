@@ -5,11 +5,17 @@ import com.besaba.revonline.pastebinapi.Pastebin;
 import com.besaba.revonline.pastebinapi.impl.factory.PastebinFactory;
 import com.besaba.revonline.pastebinapi.paste.Paste;
 import com.besaba.revonline.pastebinapi.paste.PasteBuilder;
+import com.besaba.revonline.pastebinapi.paste.PasteExpire;
 import com.besaba.revonline.pastebinapi.paste.PasteVisiblity;
 import com.besaba.revonline.pastebinapi.response.Response;
 import com.epitech.action.SlackPostSnippetAction;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.FileOutputStream;
 import java.net.URL;
@@ -21,24 +27,20 @@ import java.util.Scanner;
 /**
  * Created by terrea_l on 07/01/17.
  */
-public class PostPasteFromFileReaction implements IReaction{
+public class PastebinCreatePasteReaction implements IReaction{
 
     private String token;
 
-    public PostPasteFromFileReaction(String token) {
+    public PastebinCreatePasteReaction(String token) {
         this.token = token;
     }
 
     @Override
     public ErrorCode run(Object data) {
         List<SlackPostSnippetAction.SnippetObject> files = (List<SlackPostSnippetAction.SnippetObject>) data;
-        Paste paste;
         PasteBuilder pasteBuilder;
-        URL dl_url;
-        Scanner s;
+        Paste paste;
         Response<String> postResult;
-        String text;
-        String tmp = "";
         try {
             PastebinFactory factory = new PastebinFactory();
             Pastebin pastebin = factory.createPastebin("221ed12ce0e20b3d32fed3b3545346f7");
@@ -46,24 +48,25 @@ public class PostPasteFromFileReaction implements IReaction{
                 pasteBuilder = factory.createPaste();
                 pasteBuilder.setRaw(file.getContent());
                 pasteBuilder.setTitle(file.getTitle());
-                pasteBuilder.setMachineFriendlyLanguage(file.getType());
+                pasteBuilder.setMachineFriendlyLanguage("text");
                 pasteBuilder.setVisiblity(PasteVisiblity.Public);
+                pasteBuilder.setExpire(PasteExpire.OneWeek);
                 paste = pasteBuilder.build();
+                Logger.logInfo(file.getContent());
+                if (paste == null) {
+                    Logger.logError("FAILURE");
+                }
                 postResult = pastebin.post(paste, token);
                 if (postResult.hasError()) {
                     Logger.logError("Creating Paste error : " + postResult.getError());
                 } else {
                     Logger.logSuccess("Creating Paste at URL " + postResult.get());
                 }
-                Logger.logInfo("POUET");
             }
         } catch (Exception e) {
-
-            Logger.logError("Pastebin: " + e.toString() + " : " + tmp);
+            Logger.logError("Pastebin: " + e.toString());
             return ErrorCode.AUTH;
-
         }
-
         return ErrorCode.SUCCESS;
     }
 }
