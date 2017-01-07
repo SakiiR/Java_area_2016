@@ -13,6 +13,10 @@ import java.util.List;
 /**
  * Created by karraz_s on 05/01/17.
  */
+
+/**
+ * Action class to get any new channel on Slack
+ */
 public class SlackHasNewChannelsAction implements IAction {
 
     private Object data = null;
@@ -22,6 +26,10 @@ public class SlackHasNewChannelsAction implements IAction {
         this.token = token;
     }
 
+    /**
+     * Function called by worker to get user's new slack channels
+     * @return an ErrorCode status
+     */
     @Override
     public ErrorCode run() {
         List<String> newChannels = new ArrayList<>();
@@ -49,6 +57,9 @@ public class SlackHasNewChannelsAction implements IAction {
         return ErrorCode.SUCCESS;
     }
 
+    /**
+     * @return collected channels
+     */
     @Override
     public Object getData() {
         return this.data;
