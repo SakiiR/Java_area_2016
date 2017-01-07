@@ -32,7 +32,7 @@ public class PastebinNewPasteAction implements IAction {
         try {
             PastebinFactory factory = new PastebinFactory();
             Pastebin pastebin = factory.createPastebin("221ed12ce0e20b3d32fed3b3545346f7");
-            final Response<List<Paste>> pastesResponse = pastebin.getPastesOf(token, 5);
+            final Response<List<Paste>> pastesResponse = pastebin.getPastesOf(token, 15);
 
             if (pastesResponse.hasError()) {
                 System.out.println("Impossible to get pastes ! " + pastesResponse.getError());
@@ -43,10 +43,11 @@ public class PastebinNewPasteAction implements IAction {
             for (Paste paste : pastes) {
                 Date date = new Date(paste.getPublishDate());
                 if (AreaWorker.isNewEntity(date)) {
-                    Logger.logSuccess("New paste created at " + date.toString() + " with title " + paste.getKey());
-                    keys.add("www.pastebin.com/" + paste.getKey());
+                    Logger.logSuccess("New paste created at <" + date.toString() + " with title " + paste.getKey());
+                    keys.add("<www.pastebin.com/" + paste.getKey() + ">");
+                } else {
+                    Logger.logSuccess("Checked Paste created at " + date.toString() + " with title " + paste.getKey());
                 }
-                Logger.logSuccess("Checked Paste created at " + date.toString() + " with title " + paste.getKey());
             }
         } catch (Exception e) {
             Logger.logError("Pastebin: " + e.toString());
