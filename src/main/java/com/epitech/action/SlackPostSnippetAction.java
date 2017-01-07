@@ -1,7 +1,6 @@
 package com.epitech.action;
 
 import allbegray.slack.SlackClientFactory;
-import allbegray.slack.type.Channel;
 import allbegray.slack.type.File;
 import allbegray.slack.type.FileList;
 import allbegray.slack.webapi.SlackWebApiClient;
@@ -10,18 +9,14 @@ import com.epitech.utils.Logger;
 import com.epitech.worker.AreaWorker;
 import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonObjectParser;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import sun.net.www.http.HttpClient;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.epitech.action.YammerNewPrivateMessageAction.JSON_FACTORY;
 
 /**
  * Created by terrea_l on 07/01/17.
@@ -48,7 +43,11 @@ public class SlackPostSnippetAction implements IAction {
         }
 
         public void setContent(String content) {
-            this.content = content;
+            if (content != null) {
+                this.content = content;
+            } else {
+                this.content = "";
+            }
         }
 
         public String getType() {
@@ -56,7 +55,11 @@ public class SlackPostSnippetAction implements IAction {
         }
 
         public void setType(String type) {
-            this.type = type;
+            if (type != null) {
+                this.type = type;
+            } else {
+                this.type = "text";
+            }
         }
 
         public String getTitle() {
@@ -64,35 +67,36 @@ public class SlackPostSnippetAction implements IAction {
         }
 
         public void setTitle(String title) {
-            this.title = title;
+            if (title != null) {
+                this.title = title;
+            } else {
+                this.title = "";
+            }
         }
-
     }
 
     @Override
     public ErrorCode run() {
         List<SnippetObject> codes = new ArrayList<>();
         SnippetObject code;
-        HttpRequestFactory requestFactory = this.HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
-            @Override
-            public void initialize(HttpRequest httpRequest) throws IOException {
-                httpRequest.setParser(new JsonObjectParser(JSON_FACTORY));
-            }
-        });
+        String text;
+        URL url;
+        InputStream in;
         try {
             SlackWebApiClient client = SlackClientFactory.createWebApiClient(this.token);
             FileList files = client.getFileList();
             for (File file : files.getFiles()) {
                 java.util.Date date = new java.util.Date(file.getCreated()*1000);
-                if (Objects.equals(file.getMode(), "snippet")) { //&& AreaWorker.isNewEntity(date)) {
+                if (Objects.equals(file.getMode(), "snippet") && AreaWorker.isNewEntity(date)) {
+                    url = new URL(file.getUrl_private_download());
+                    in = url.openStream();
                     code = new SnippetObject();
-                    HttpRequest request = requestFactory.buildGetRequest(new GenericUrl(file.getUrl_private_download()));
-                    request.getHeaders().setAuthorization(String.format("Bearer %s", this.token));
-                    request.execute();
-                    code.setContent(request.toString());
+                    text = org.apache.commons.io.IOUtils.toString(in);
+                    code.setContent(text);
                     code.setTitle(file.getTitle());
                     code.setType(file.getFiletype());
                     codes.add(code);
+                    in.close();
                 }
             }
         } catch (Exception e) {
