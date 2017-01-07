@@ -19,6 +19,8 @@ public class                    Area {
     private String              reactionModuleName;
     private String              description;
 
+    private User                tmpUser;
+
     /**
      * the Constructor for Area
      */
@@ -149,6 +151,15 @@ public class                    Area {
      */
     public Area                 setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public User                 getTmpUser() {
+        return tmpUser;
+    }
+
+    public Area                 setTmpUser(User tmpUser) {
+        this.tmpUser = tmpUser;
         return this;
     }
 
