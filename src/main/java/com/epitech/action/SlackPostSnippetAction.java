@@ -27,6 +27,11 @@ public class SlackPostSnippetAction implements IAction {
     private Object data;
     static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
+    /**
+     * the Constructor for GmailAttachmentsAction
+     * @param token the token from the oauth2 connexion
+     */
+
     public SlackPostSnippetAction(String token) {
         this.token = token;
         data = null;
@@ -75,6 +80,12 @@ public class SlackPostSnippetAction implements IAction {
         }
     }
 
+    /**
+     * The run function called by the worker thread
+     * to execute the action
+     * @return an ErrorCode status
+     */
+
     @Override
     public ErrorCode run() {
         List<SnippetObject> codes = new ArrayList<>();
@@ -87,20 +98,23 @@ public class SlackPostSnippetAction implements IAction {
             FileList files = client.getFileList();
             for (File file : files.getFiles()) {
                 java.util.Date date = new java.util.Date(file.getCreated()*1000);
-                if (Objects.equals(file.getMode(), "snippet") && AreaWorker.isNewEntity(date)) {
-                    url = new URL(file.getUrl_private_download());
-                    in = url.openStream();
-                    code = new SnippetObject();
-                    text = org.apache.commons.io.IOUtils.toString(in);
-                    code.setContent(text);
-                    code.setTitle(file.getTitle());
-                    code.setType(file.getFiletype());
-                    codes.add(code);
-                    in.close();
+                if (AreaWorker.isNewEntity(date)) {
+                    if (file.getMode().compareToIgnoreCase("snippet") == 0) {
+                        url = new URL(file.getUrl_private_download());
+                        in = url.openStream();
+                        code = new SnippetObject();
+                        text = org.apache.commons.io.IOUtils.toString(in);
+                        code.setContent(text);
+                        code.setTitle(file.getTitle());
+                        code.setType(file.getFiletype());
+                        codes.add(code);
+                        in.close();
+                    }
                 }
             }
         } catch (Exception e) {
             Logger.logError("Slack: " + e.toString());
+            data = null;
             return ErrorCode.AUTH;
         }
         if (codes.size() == 0) {
@@ -110,6 +124,11 @@ public class SlackPostSnippetAction implements IAction {
         }
         return ErrorCode.SUCCESS;
     }
+
+    /**
+     * the getter for object data
+     * @return an Object data
+     */
 
     @Override
     public Object getData() {
