@@ -49,8 +49,8 @@ public class                    AreaFixture {
         this.add(new Area("GmailAttachmentsAction", "GoogleDriveSaveFileReaction", "gmail", "drive", "Save all google mail attachments in your google drive")); //checked OK
         this.add(new Area("YammerNewPrivateMessageAction", "GmailSendMessageReaction", "yammer", "gmail", "Add a new gmail mesage when a new yammer private message is inbox")); // checked OK
         this.add(new Area("DriveNewFilesAction", "DropBoxSaveFilesReaction", "drive", "dropbox", "Save new drive file to dropbox")); // Checked ok
-        this.add(new Area("DropBoxNewFilesAction", "GoogleDriveSaveFileReaction", "dropbox", "drive", "save new dropbox file to google drive"));
-        this.add(new Area("GmailAttachmentsAction", "DropBoxSaveFilesReaction", "gmail", "dropbox", "save all google mail attachments in your dropbox"));
+        this.add(new Area("DropBoxNewFilesAction", "GoogleDriveSaveFileReaction", "dropbox", "drive", "save new dropbox file to google drive")); //Checked ok
+        this.add(new Area("GmailAttachmentsAction", "DropBoxSaveFilesReaction", "gmail", "dropbox", "save all google mail attachments in your dropbox")); //checked ok
         this.add(new Area("GithubHasNewRepositoryAction", "YammerPostToGroupReaction", "github", "yammer", "Post new repository on yammer"));
         this.add(new Area("SlackHasNewChannelsAction", "GithubCreateRepositoriesReaction", "slack", "github", "Create a new Github project for any new channel on Slack.")); //checked OK
         this.add(new Area("PastebinNewPasteAction", "SlackPostPastebinReaction", "pastebin", "slack", "Share new pastebin link on general slack channel")); // checked ok
