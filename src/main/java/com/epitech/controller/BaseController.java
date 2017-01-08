@@ -13,9 +13,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class BaseController {
     /**
-     * Index action
+     * Base Index Action.
      *
-     * @return a view name
+     * @param httpSession the session parameters object.
+     * @param modelMap the view parameters object.
+     * @return a view name.
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String   index(HttpSession httpSession, ModelMap modelMap) {

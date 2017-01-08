@@ -1,0 +1,11 @@
+com.epitech
+com.epitech.action
+com.epitech.config
+com.epitech.controller
+com.epitech.fixture
+com.epitech.model
+com.epitech.reaction
+com.epitech.repository
+com.epitech.service
+com.epitech.utils
+com.epitech.worker

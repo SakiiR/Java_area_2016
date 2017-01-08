@@ -108,7 +108,7 @@ public class YammerPostToGroupReaction implements IReaction {
 
     /**
      * run the reaction
-     * @param object List<PostRequest> a list of future new post
+     * @param object a list of future new post
      * @return an ErrorCode status
      */
     @Override

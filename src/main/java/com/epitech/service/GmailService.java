@@ -38,7 +38,7 @@ public class                                        GmailService implements ISer
      *
      * @param username the username to provide to the concerned API.
      * @param password the password to provide to the concerned API.
-     * @return
+     * @return a String token.
      */
     public String                                   login(String username, String password) {
         return "GMAIL_TOKEN";

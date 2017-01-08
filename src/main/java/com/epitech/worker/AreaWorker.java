@@ -42,8 +42,10 @@ public class                        AreaWorker implements Runnable {
     /**
      * Contructor
      *
-     * @param userRepository user repository
-     * @param areaRepository area repository
+     * @param userRepository the user repository
+     * @param areaRepository  the area repository
+     * @param notificationService  the notification service
+     * @param userModuleRepository  the userModule repository
      */
     public                          AreaWorker(UserRepository userRepository, AreaRepository areaRepository, NotificationService notificationService, UserModuleRepository userModuleRepository) {
         this.userRepository = userRepository;

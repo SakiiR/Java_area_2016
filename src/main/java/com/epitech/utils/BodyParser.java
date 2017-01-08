@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * This class is used to parse body parameters.
- * ex : "foo=bar&bar=foo" => {"foo" : "bar", "bar" : "foo"}
+ * ex : "foo=bar&amp;bar=foo" = {"foo" : "bar", "bar" : "foo"}
  *
  * @see HashMap
  */
@@ -45,7 +45,7 @@ public class                            BodyParser {
      * value inside a request body.
      *
      * @param body The body to parse.
-     * @return a list of destination (ex : to=SakiiR&to=Karine => {SakiiR, Karine})
+     * @return a list of destination (ex : to=SakiiR&amp;to=Karine = {SakiiR, Karine})
      */
     public static List<String>          getDestinations(String body) {
         List<String>                    destinations = new ArrayList<>();
