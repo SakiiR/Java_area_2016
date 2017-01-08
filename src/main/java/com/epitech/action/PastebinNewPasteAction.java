@@ -4,12 +4,10 @@ import com.besaba.revonline.pastebinapi.Pastebin;
 import com.besaba.revonline.pastebinapi.impl.factory.PastebinFactory;
 import com.besaba.revonline.pastebinapi.paste.Paste;
 import com.besaba.revonline.pastebinapi.response.Response;
-import com.epitech.reaction.YammerPostToGroupReaction;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 import com.epitech.worker.AreaWorker;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
