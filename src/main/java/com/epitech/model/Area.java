@@ -27,6 +27,7 @@ public class                    Area {
 
     /**
      * the constructor for Area
+     *
      * @param actionName the action name
      * @param reactionName the reaction name
      * @param actionModuleName the actionModule name
@@ -47,6 +48,7 @@ public class                    Area {
 
     /**
      * the getter for the id
+     *
      * @return a string id
      */
     public String               getId() {
@@ -55,6 +57,7 @@ public class                    Area {
 
     /**
      * the setter for the Id
+     *
      * @param id the new Id to set
      * @return this
      */
@@ -65,6 +68,7 @@ public class                    Area {
 
     /**
      * the getter for the action name
+     *
      * @return a string action name
      */
     public String               getActionName() {
@@ -73,7 +77,8 @@ public class                    Area {
 
     /**
      * the setter for the action name
-     * @param actionName
+     *
+     * @param actionName the String action name.
      * @return an Area this
      */
     public Area                 setActionName(String actionName) {
@@ -83,6 +88,7 @@ public class                    Area {
 
     /**
      * the getter for the reaction name
+     *
      * @return a string reaction name
      */
     public String               getReactionName() {
@@ -91,7 +97,8 @@ public class                    Area {
 
     /**
      * the setter for the reaction name
-     * @param reactionName
+     *
+     * @param reactionName the string reaction name
      * @return an Area this
      */
     public Area                 setReactionName(String reactionName) {
@@ -101,6 +108,7 @@ public class                    Area {
 
     /**
      * the getter for the action module name
+     *
      * @return a string action module name
      */
     public String               getActionModuleName() {
@@ -109,7 +117,8 @@ public class                    Area {
 
     /**
      * the setter for the action module name
-     * @param actionModuleName
+     *
+     * @param actionModuleName the string action module name.
      * @return an Area this
      */
     public Area                 setActionModuleName(String actionModuleName) {
@@ -119,6 +128,7 @@ public class                    Area {
 
     /**
      * the getter for the reaction module name
+     *
      * @return a string reaction module name
      */
     public String               getReactionModuleName() {
@@ -127,7 +137,8 @@ public class                    Area {
 
     /**
      * the setter for the reaction module name
-     * @param reactionModuleName
+     *
+     * @param reactionModuleName the String reaction module name.
      * @return an Area this
      */
     public Area                 setReactionModuleName(String reactionModuleName) {
@@ -137,6 +148,7 @@ public class                    Area {
 
     /**
      * the getter for the description of the area
+     *
      * @return a string description
      */
     public String               getDescription() {
@@ -144,8 +156,9 @@ public class                    Area {
     }
 
     /**
-     * the setter for the description of the area
-     * @param description
+     * the setter for the description of the area.
+     *
+     * @param description The string description.
      * @return an Area this
      */
     public Area                 setDescription(String description) {
@@ -174,8 +187,9 @@ public class                    Area {
     }
 
     /**
-     * this function returns a string with all informations
-     * about the area
+     * this function returns a string with all information
+     * about the area.
+     *
      * @return a string information
      */
     @Override

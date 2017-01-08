@@ -45,7 +45,7 @@ public class OAuthRestController {
      * @param module the module to add
      * @param user the user
      * @param token the token from the oauth2 connexion
-     * @return
+     * @return a json response.
      */
     private ResponseObject          registerUserModule(Module module, User user, String token) {
         ResponseObject responseObject = new ResponseObject();
@@ -84,6 +84,7 @@ public class OAuthRestController {
      * @param httpSession the session parameter object
      * @param body the POST parameters Object
      * @return a JSON String
+     * @throws Exception an except.
      */
     @RequestMapping(value = "/module/oauth", method = RequestMethod.POST, produces = "application/json")
     public String                   oauth(HttpSession httpSession, @RequestBody String body) throws Exception {

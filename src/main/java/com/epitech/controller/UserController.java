@@ -36,6 +36,8 @@ public class                        UserController {
     /**
      * This route simply return the login form.
      *
+     * @param httpSession The session parameters Object
+     * @param modelMap The view parameters Object.
      * @return a view name
      */
     @RequestMapping(value  = "/login", method = RequestMethod.GET)
@@ -87,6 +89,8 @@ public class                        UserController {
      * This route simply return the Register
      * Form.
      *
+     * @param modelMap The view parameters Object.
+     * @param httpSession The session parameters Object
      * @return a view name.
      */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -104,6 +108,7 @@ public class                        UserController {
      *
      * @param user The POSTed user.
      * @param modelMap The view parameter Object.
+     * @param httpSession The session parameter Object.
      * @return a view name.
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -143,7 +148,7 @@ public class                        UserController {
      * @return a view name.
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String                   logout(HttpSession httpSession, ModelMap modelMap) {
+    public String                   logout(HttpSession httpSession) {
         if (null == httpSession.getAttribute("username")) {
             return "redirect:/login";
         }

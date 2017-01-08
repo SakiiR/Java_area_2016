@@ -28,6 +28,7 @@ public class                Module {
 
     /**
      * the constructor for Module
+     *
      * @param name the module name
      * @param imageUrl the image url
      * @param description the description
@@ -41,6 +42,7 @@ public class                Module {
 
     /**
      * the constructor for Module
+     *
      * @param name the module name
      * @param imageUrl the image url
      * @param description the description
@@ -57,6 +59,7 @@ public class                Module {
 
     /**
      * the getter for the module name
+     *
      * @return a string name
      */
     public String           getName() {
@@ -65,7 +68,8 @@ public class                Module {
 
     /**
      * the setter for the module name
-     * @param name
+     *
+     * @param name the name to set.
      * @return a Module this
      */
     public Module           setName(String name) {
@@ -75,6 +79,7 @@ public class                Module {
 
     /**
      * the getter for the image url
+     *
      * @return a string image url
      */
     public String           getImageUrl() {
@@ -83,7 +88,8 @@ public class                Module {
 
     /**
      * the setter for the image url
-     * @param imageUrl
+     *
+     * @param imageUrl the image url to set.
      * @return a Module this
      */
     public Module           setImageUrl(String imageUrl) {
@@ -93,6 +99,7 @@ public class                Module {
 
     /**
      * the getter for the description
+     *
      * @return a string description
      */
     public String           getDescription() {
@@ -101,7 +108,8 @@ public class                Module {
 
     /**
      * the setter for the description
-     * @param description
+     *
+     * @param description the description to set.
      * @return a Module this
      */
     public Module           setDescription(String description) {
@@ -111,6 +119,7 @@ public class                Module {
 
     /**
      * the getter for the login url
+     *
      * @return a string login url
      */
     public String           getLoginUrl() {
@@ -119,7 +128,8 @@ public class                Module {
 
     /**
      * the setter for the login url
-     * @param loginUrl
+     *
+     * @param loginUrl the login url to set.
      * @return a Module this
      */
     public Module           setLoginUrl(String loginUrl) {
@@ -129,6 +139,7 @@ public class                Module {
 
     /**
      * the getter for the id
+     *
      * @return a string id
      */
     public String           getId() {
@@ -137,7 +148,8 @@ public class                Module {
 
     /**
      * the setter for the id
-     * @param id
+     *
+     * @param id the id to set.
      * @return a Module this
      */
     public Module           setId(String id) {
@@ -147,6 +159,7 @@ public class                Module {
 
     /**
      * the getter for the token url
+     *
      * @return a string token url
      */
     public String           getTokenUrl() {
@@ -155,7 +168,8 @@ public class                Module {
 
     /**
      * the setter for the token url
-     * @param tokenUrl
+     *
+     * @param tokenUrl the token url to set.
      * @return a Module this
      */
     public Module           setTokenUrl(String tokenUrl) {
@@ -164,8 +178,9 @@ public class                Module {
     }
 
     /**
-     * this function return all the informations about a module
-     * @return a string informations
+     * This function return all the information about a module
+     *
+     * @return a string information
      */
     @Override
     public String           toString() {

@@ -164,6 +164,7 @@ public class                        ModuleController {
      *
      * @see OAuthRestController
      * @param httpSession The session parameter object
+     * @param modelMap The view parameter object
      * @return a view name.
      */
     @RequestMapping(value = "/module/oauth", method = RequestMethod.GET)

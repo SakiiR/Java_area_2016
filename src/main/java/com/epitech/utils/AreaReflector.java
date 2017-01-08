@@ -90,7 +90,7 @@ public class                    AreaReflector {
      * name in Camel case.
      *
      * @param moduleName the module name to process.
-     * @return a formatted string ( ex : 'foo' => 'FooService' )
+     * @return a formatted string ( ex : 'foo' : 'FooService' )
      */
     public static String        getServiceNameByModuleName(String moduleName) {
         return  Character.toUpperCase(moduleName.charAt(0)) + moduleName.substring(1) + "Service";
