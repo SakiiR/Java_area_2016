@@ -37,6 +37,8 @@ public class                        AreaWorker implements Runnable {
     private List<Area>              areaToRemove = new ArrayList<>();
     private List<UserModule>        userModuleToRemove = new ArrayList<>();
 
+    static public int               refresh_time = 60000;
+
     /**
      * Contructor
      *
@@ -176,7 +178,8 @@ public class                        AreaWorker implements Runnable {
             }
             AreaWorker.lastCheck = new Date();
             try {
-                Thread.sleep(60000);
+                Logger.logWarning("Waiting for next check ( %d milliseconds ) ..", AreaWorker.refresh_time);
+                Thread.sleep(AreaWorker.refresh_time);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
