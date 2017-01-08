@@ -91,8 +91,6 @@ public class SlackPostSnippetAction implements IAction {
         List<SnippetObject> codes = new ArrayList<>();
         SnippetObject code;
         String text;
-        URL url;
-        InputStream in;
         try {
             SlackWebApiClient client = SlackClientFactory.createWebApiClient(this.token);
             FileList files = client.getFileList();
@@ -100,15 +98,12 @@ public class SlackPostSnippetAction implements IAction {
                 java.util.Date date = new java.util.Date(file.getCreated()*1000);
                 if (AreaWorker.isNewEntity(date)) {
                     if (file.getMode().compareToIgnoreCase("snippet") == 0) {
-                        url = new URL(file.getUrl_private_download());
-                        in = url.openStream();
                         code = new SnippetObject();
-                        text = org.apache.commons.io.IOUtils.toString(in);
+                        text = file.getPreview();
                         code.setContent(text);
                         code.setTitle(file.getTitle());
                         code.setType(file.getFiletype());
                         codes.add(code);
-                        in.close();
                     }
                 }
             }
