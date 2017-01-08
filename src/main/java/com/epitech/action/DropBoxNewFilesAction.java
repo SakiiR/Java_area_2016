@@ -2,7 +2,6 @@ package com.epitech.action;
 
 import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.v2.files.FolderMetadata;
-import com.epitech.service.GmailService;
 import com.epitech.utils.AreaFile;
 import com.epitech.utils.ErrorCode;
 import com.dropbox.core.DbxException;

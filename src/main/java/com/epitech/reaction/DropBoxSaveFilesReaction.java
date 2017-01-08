@@ -2,7 +2,6 @@ package com.epitech.reaction;
 
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
-import com.epitech.service.GmailService;
 import com.epitech.utils.AreaFile;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;

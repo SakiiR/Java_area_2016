@@ -2,8 +2,6 @@ package com.epitech.reaction;
 
 import allbegray.slack.webapi.SlackWebApiClient;
 import allbegray.slack.SlackClientFactory;
-import allbegray.slack.type.Channel;
-import allbegray.slack.webapi.SlackWebApiClient;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 

@@ -1,7 +1,6 @@
 package com.epitech.action;
 
 import com.epitech.service.DriveService;
-import com.epitech.service.GmailService;
 import com.epitech.utils.AreaFile;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
