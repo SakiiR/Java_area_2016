@@ -19,7 +19,8 @@ import java.util.Objects;
 
 
 /**
- * Created by terrea_l on 07/01/17.
+ * This class is used to know if a snippet
+ * is posted on a slack channel.
  */
 public class SlackPostSnippetAction implements IAction {
 
@@ -31,52 +32,57 @@ public class SlackPostSnippetAction implements IAction {
      * the Constructor for GmailAttachmentsAction
      * @param token the token from the oauth2 connexion
      */
-
     public SlackPostSnippetAction(String token) {
         this.token = token;
         data = null;
     }
 
-    public static class SnippetObject {
+    /**
+     * This class represent a Slack Snippet.
+     */
+    public static class         SnippetObject {
 
         String content;
         String type;
         String title;
 
-        public String getContent() {
+        public String           getContent() {
             return content;
         }
 
-        public void setContent(String content) {
+        public SnippetObject    setContent(String content) {
             if (content != null) {
                 this.content = content;
             } else {
                 this.content = "";
             }
+            return this;
         }
 
-        public String getType() {
+        public String           getType() {
             return type;
         }
 
-        public void setType(String type) {
+        public SnippetObject    setType(String type) {
             if (type != null) {
                 this.type = type;
             } else {
                 this.type = "text";
             }
+            return this;
         }
 
-        public String getTitle() {
+        public String           getTitle() {
             return title;
         }
 
-        public void setTitle(String title) {
+        public SnippetObject    setTitle(String title) {
             if (title != null) {
                 this.title = title;
             } else {
                 this.title = "";
             }
+            return this;
         }
     }
 
@@ -85,7 +91,6 @@ public class SlackPostSnippetAction implements IAction {
      * to execute the action
      * @return an ErrorCode status
      */
-
     @Override
     public ErrorCode run() {
         List<SnippetObject> codes = new ArrayList<>();
@@ -124,7 +129,6 @@ public class SlackPostSnippetAction implements IAction {
      * the getter for object data
      * @return an Object data
      */
-
     @Override
     public Object getData() {
         return data;

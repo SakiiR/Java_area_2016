@@ -1,7 +1,7 @@
 package com.epitech.reaction;
 
 import com.epitech.service.DriveService;
-import com.epitech.service.GmailService;
+import com.epitech.utils.AreaFile;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -14,11 +14,14 @@ import com.google.api.services.drive.Drive;
 
 import java.util.List;
 
+/**
+ * This class is used to save a drive file.
+ */
 public class                                GoogleDriveSaveFileReaction implements IReaction {
     private String                          token;
 
     /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"), ".credentials/drive-java-quickstart");
+    private static final java.io.File       DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"), ".credentials/drive-java-quickstart");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory     DATA_STORE_FACTORY;
@@ -39,18 +42,29 @@ public class                                GoogleDriveSaveFileReaction implemen
         }
     }
 
+    /**
+     * Constructor.
+     *
+     * @param token the token to set.
+     */
     public                                  GoogleDriveSaveFileReaction(String token) {
         this.token = token;
     }
 
+    /**
+     * Main method.
+     *
+     * @param object the data object returned by the action.
+     * @return a status code.
+     */
     public ErrorCode                        run(Object object) {
-        List<GmailService.File>   files = (List<GmailService.File>) object;
+        List<AreaFile>                      files = (List<AreaFile>) object;
         DriveService                        driveService = new DriveService();
         Drive                               drive = driveService.getDriveService(this.token);
 
 
         Logger.logInfo("Reaction GoogleDriveSaveFileReaction with %d files", files.size());
-        for (GmailService.File file : files) {
+        for (AreaFile file : files) {
             try {
                 java.io.File f = file.saveFile();
                 com.google.api.services.drive.model.File fileMetaData = new com.google.api.services.drive.model.File();

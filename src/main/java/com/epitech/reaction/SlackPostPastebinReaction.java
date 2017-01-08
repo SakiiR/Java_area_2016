@@ -9,8 +9,9 @@ import com.epitech.utils.Logger;
 
 import java.util.List;
 
+
 /**
- * Created by terrea_l on 06/01/17.
+ * This class is used to create pastebin on slack.
  */
 public class SlackPostPastebinReaction implements IReaction {
 
@@ -20,7 +21,6 @@ public class SlackPostPastebinReaction implements IReaction {
      * the constructor for GithubCreateRepositoriesReaction
      * @param token the token from the oauth2 connexion
      */
-
     public SlackPostPastebinReaction(String token) {
         this.token = token;
     }
@@ -30,7 +30,6 @@ public class SlackPostPastebinReaction implements IReaction {
      * @param data the data for creating new repositories
      * @return an ErrorCode status
      */
-
     @Override
     public ErrorCode run(Object data) {
         if (data == null) {

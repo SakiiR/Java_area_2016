@@ -1,6 +1,7 @@
 package com.epitech.action;
 
 import com.epitech.service.GmailService;
+import com.epitech.utils.AreaFile;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 import com.epitech.worker.AreaWorker;
@@ -70,7 +71,7 @@ public class                            GmailAttachmentsAction implements IActio
      * @throws IOException an IOExcecption
      */
     private  void                       getAttachments(Gmail service, String userId, Message message) throws IOException {
-        List<GmailService.File>         files = new ArrayList<>();
+        List<AreaFile>                  files = new ArrayList<>();
         List<MessagePart>               parts = message.getPayload().getParts();
 
         for (MessagePart part : parts) {
@@ -82,7 +83,7 @@ public class                            GmailAttachmentsAction implements IActio
 
                 Base64 base64Url = new Base64(true);
                 byte[] fileByteArray = base64Url.decodeBase64(attachPart.getData());
-                files.add(new GmailService.File(filename, fileByteArray, part.getMimeType()));
+                files.add(new AreaFile(filename, fileByteArray, part.getMimeType()));
             }
         }
         this.data = files;

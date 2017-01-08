@@ -191,6 +191,13 @@ public class                        UserController {
         return "user/notifications.html";
     }
 
+    /**
+     * This action is used to list members.
+     *
+     * @param httpSession The session parameters object.
+     * @param modelMap The view parameters object.
+     * @return a view name.
+     */
     @RequestMapping(value = "/members", method = RequestMethod.GET)
     public String                   userList(HttpSession httpSession, ModelMap modelMap) {
         if (null == httpSession.getAttribute("username")) {
@@ -201,6 +208,15 @@ public class                        UserController {
         return "user/list.html";
     }
 
+    /**
+     * This action is used to display
+     * user information.
+     *
+     * @param modelMap The view parameters object.
+     * @param httpSession The session parameters object.
+     * @param id The id parameters.
+     * @return a view name.
+     */
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public String                   userProfile(ModelMap modelMap, HttpSession httpSession, @PathVariable(value="id") String id) {
         User                        user = this.userRepository.findByUsername((String) httpSession.getAttribute("username"));

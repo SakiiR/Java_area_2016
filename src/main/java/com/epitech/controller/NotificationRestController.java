@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * This controller is used to retrieve
+ * information about notification.
+ */
 @RestController
 public class                                        NotificationRestController {
 
@@ -19,6 +23,13 @@ public class                                        NotificationRestController {
     @Autowired
     private UserRepository                          userRepository;
 
+    /**
+     * This action is used to retrieve
+     * notification count.
+     *
+     * @param httpSession the session parameters object?
+     * @return a json object.
+     */
     @RequestMapping(value = "/notification/count", method = RequestMethod.GET, produces = "application/json")
     public NotificationService.NotificationResponse countNotifications(HttpSession httpSession) {
         User                                        user = this.userRepository.findByUsername((String) httpSession.getAttribute("username"));

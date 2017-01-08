@@ -16,5 +16,14 @@ public interface    IService {
      * @return a token String
      */
     public String   login(String username, String password);
+
+    /**
+     * This virtual method is used to login with a
+     * code for a oauth module.
+     *
+     * @param code the code.
+     * @param module the oauth module.
+     * @return a token String.
+     */
     public String   login(String code, Module module);
 }

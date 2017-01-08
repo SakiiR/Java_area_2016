@@ -58,7 +58,7 @@ public class                        GithubHasNewRepositoryAction implements IAct
 
     /**
      * The getter for object data
-     * @return
+     * @return an object data.
      */
     public Object                   getData() {
         return this.data;

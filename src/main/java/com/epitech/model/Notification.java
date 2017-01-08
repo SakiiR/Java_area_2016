@@ -42,7 +42,7 @@ public class                Notification {
 
     /**
      * the setter for the id
-     * @param id
+     * @param id the id to set
      * @return a Notification this
      */
     public Notification     setId(String id) {
@@ -60,7 +60,7 @@ public class                Notification {
 
     /**
      * the setter for the user
-     * @param user
+     * @param user the user to set
      * @return a Notification this
      */
     public Notification     setUser(User user) {
@@ -78,7 +78,7 @@ public class                Notification {
 
     /**
      * the setter for the message
-     * @param message
+     * @param message the message to set.
      * @return a Notification this
      */
     public Notification     setMessage(String message) {
@@ -96,7 +96,7 @@ public class                Notification {
 
     /**
      * the setter for the created date
-     * @param created
+     * @param created the created date to set.
      * @return a Notification this
      */
     public Notification     setCreated(Date created) {
@@ -115,7 +115,7 @@ public class                Notification {
 
     /**
      * set the readed message to true or false
-     * @param readed
+     * @param readed the readed state to set.
      * @return a Notification this
      */
     public Notification     setReaded(boolean readed) {
@@ -126,7 +126,7 @@ public class                Notification {
     /**
      * this function returns all the information
      * about a notification
-     * @return a string informations
+     * @return a string information
      */
     @Override
     public String toString() {

@@ -20,6 +20,11 @@ public class                    ModuleFixture {
         this.moduleRepository = moduleRepository;
     }
 
+    /**
+     * Secure add.
+     *
+     * @param module the module to add.
+     */
     public void                 add(Module module) {
         if (null == this.moduleRepository.findByName(module.getName())) {
             this.moduleRepository.save(module);

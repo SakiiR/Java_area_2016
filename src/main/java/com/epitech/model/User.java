@@ -36,6 +36,7 @@ public class                        User {
 
     /**
      * the constructor for User
+     *
      * @param username the username
      * @param password the user password
      */
@@ -46,6 +47,7 @@ public class                        User {
 
     /**
      * the setter for user name
+     *
      * @param username the username
      * @return the User this
      */
@@ -56,6 +58,7 @@ public class                        User {
 
     /**
      * the getter for user name
+     *
      * @return the string username
      */
     public String                   getUsername() {
@@ -64,6 +67,7 @@ public class                        User {
 
     /**
      * the setter for the user password
+     *
      * @param password the password
      * @return the User this
      */
@@ -74,6 +78,7 @@ public class                        User {
 
     /**
      * the getter for the password
+     *
      * @return the string password
      */
     public String                   getPassword() {
@@ -82,6 +87,7 @@ public class                        User {
 
     /**
      * the setter for the salt
+     *
      * @param salt the salt
      * @return the User this
      */
@@ -92,6 +98,7 @@ public class                        User {
 
     /**
      * the setter for the salt
+     *
      * @return the string salt
      */
     public String                   getSalt() {
@@ -100,6 +107,7 @@ public class                        User {
 
     /**
      * the getter for modules
+     *
      * @return the list of user modules
      */
     public List<UserModule>         getModules() {
@@ -108,6 +116,7 @@ public class                        User {
 
     /**
      * the setter of the modules
+     *
      * @param modules a userModule list
      * @return the User this
      */
@@ -118,6 +127,7 @@ public class                        User {
 
     /**
      * this function add a module to a user
+     *
      * @param userModule the userModule to add
      * @return the User this
      */
@@ -128,6 +138,7 @@ public class                        User {
 
     /**
      * this function removes a UserModule
+     *
      * @param userModule the userModule to remove
      * @return the User this
      */
@@ -138,6 +149,7 @@ public class                        User {
 
     /**
      * the getter for the id
+     *
      * @return the string id
      */
     public String                   getId() {
@@ -146,6 +158,7 @@ public class                        User {
 
     /**
      * the setter for the id
+     *
      * @param id the id to set
      * @return the user this
      */
@@ -156,6 +169,7 @@ public class                        User {
 
     /**
      * the getter for notifications
+     *
      * @return a list of Notifications
      */
     public List<Notification>       getNotifications() {
@@ -164,6 +178,7 @@ public class                        User {
 
     /**
      * the setter for notifications
+     *
      * @param notifications the notifications
      * @return the User this
      */
@@ -174,6 +189,7 @@ public class                        User {
 
     /**
      * this function add notification
+     *
      * @param notification the notification
      * @return the User this
      */
@@ -184,6 +200,7 @@ public class                        User {
 
     /**
      * this function remove notification
+     *
      * @param notification the notification
      * @return the User this
      */
@@ -194,6 +211,7 @@ public class                        User {
 
     /**
      * this function get areas
+     *
      * @return a list of areas
      */
     public List<Area>               getAreas() {
@@ -202,6 +220,7 @@ public class                        User {
 
     /**
      * the setter for areas
+     *
      * @param areas the areas
      * @return the User this
      */
@@ -212,6 +231,7 @@ public class                        User {
 
     /**
      * this function add area
+     *
      * @param area the area
      * @return the User this
      */
@@ -222,6 +242,7 @@ public class                        User {
 
     /**
      * this function remove area
+     *
      * @param area the area
      * @return the User this
      */
@@ -231,8 +252,9 @@ public class                        User {
     }
 
     /**
-     * this function return a string with all informations about
+     * this function return a string with all information about
      * the user
+     *
      * @return the string information
      */
     @Override

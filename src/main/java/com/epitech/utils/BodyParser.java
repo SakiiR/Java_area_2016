@@ -63,7 +63,7 @@ public class                            BodyParser {
 
     /**
      * The getter for the hashmap
-     * @return
+     * @return a hash map
      */
     public HashMap<String, String>      getMap() {
         return _map;
