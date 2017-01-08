@@ -11,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by karraz_s on 05/01/17.
- */
-
-/**
  * Action class to get any new channel on Slack
  */
 public class SlackHasNewChannelsAction implements IAction {
