@@ -115,7 +115,9 @@ public class                        AreaWorker implements Runnable {
         if (actionStatus == ErrorCode.SUCCESS && action.getData() != null) {
             IReaction reaction = AreaReflector.instanciateReaction(area.getReactionName(), reactionToken, action.getData());
             reactionStatus = reaction.run(action.getData());
-            this.handleAuthError(user, area.getReactionModuleName());
+            if (reactionStatus == ErrorCode.AUTH) {
+                this.handleAuthError(user, area.getReactionModuleName());
+            }
             return;
         }
         Logger.logInfo("Finished Area !");

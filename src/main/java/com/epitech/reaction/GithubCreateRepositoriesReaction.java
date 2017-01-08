@@ -1,6 +1,7 @@
 package com.epitech.reaction;
 
 import com.epitech.utils.ErrorCode;
+import com.epitech.utils.Logger;
 import org.kohsuke.github.GitHub;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class GithubCreateRepositoriesReaction implements IReaction {
                 hub.createRepository(name).create();
             }
         } catch (Exception e) {
+            Logger.logError("Error while creating github repository : %s", e.getMessage());
             return ErrorCode.AUTH;
         }
         return ErrorCode.SUCCESS;
