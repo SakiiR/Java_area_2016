@@ -16,12 +16,26 @@ public class SlackPostPastebinReaction implements IReaction {
 
     private String token;
 
+    /**
+     * the constructor for GithubCreateRepositoriesReaction
+     * @param token the token from the oauth2 connexion
+     */
+
     public SlackPostPastebinReaction(String token) {
         this.token = token;
     }
 
+    /**
+     * this function run executes the GithubCreateRepositoriesReaction
+     * @param data the data for creating new repositories
+     * @return an ErrorCode status
+     */
+
     @Override
     public ErrorCode run(Object data) {
+        if (data == null) {
+            return ErrorCode.SUCCESS;
+        }
         List<String> urls = (List<String>) data;
         try {
             SlackWebApiClient webApiClient = SlackClientFactory.createWebApiClient(token);
