@@ -3,6 +3,7 @@ package com.epitech.reaction;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
 import com.epitech.service.GmailService;
+import com.epitech.utils.AreaFile;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 
@@ -31,11 +32,11 @@ public class                                DropBoxSaveFilesReaction implements 
      * @return an ErrorCode status
      */
     public ErrorCode                        run(Object data) {
-        List<GmailService.File>             files = (List<GmailService.File>) data;
+        List<AreaFile>                      files = (List<AreaFile>) data;
         DbxRequestConfig                    config = new DbxRequestConfig("area_doudoune");
         DbxClientV2                         client = new DbxClientV2(config, this.token);
 
-        for (GmailService.File file : files) {
+        for (AreaFile file : files) {
             try {
                 File savedFile = file.saveFile();
                 InputStream in = new FileInputStream(savedFile.getAbsoluteFile());

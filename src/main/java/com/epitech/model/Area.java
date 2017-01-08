@@ -18,7 +18,6 @@ public class                    Area {
     private String              actionModuleName;
     private String              reactionModuleName;
     private String              description;
-
     private User                tmpUser;
 
     /**
@@ -154,10 +153,21 @@ public class                    Area {
         return this;
     }
 
+    /**
+     * One assigned user to get.
+     *
+     * @return the user.
+     */
     public User                 getTmpUser() {
         return tmpUser;
     }
 
+    /**
+     * One assigned user to set.
+     *
+     * @param tmpUser the user to set.
+     * @return a user instance.
+     */
     public Area                 setTmpUser(User tmpUser) {
         this.tmpUser = tmpUser;
         return this;

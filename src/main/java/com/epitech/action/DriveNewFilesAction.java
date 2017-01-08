@@ -2,6 +2,7 @@ package com.epitech.action;
 
 import com.epitech.service.DriveService;
 import com.epitech.service.GmailService;
+import com.epitech.utils.AreaFile;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
 import com.epitech.worker.AreaWorker;
@@ -37,7 +38,7 @@ public class                        DriveNewFilesAction implements IAction {
     public ErrorCode                run() {
         DriveService                driveService = new DriveService();
         Drive                       drive = driveService.getDriveService(this.token);
-        List<GmailService.File>     files = new ArrayList<>();
+        List<AreaFile>              files = new ArrayList<>();
 
         String pageToken = null;
         do {
@@ -74,7 +75,7 @@ public class                        DriveNewFilesAction implements IAction {
                             }
                         }
                         if (isOk) {
-                            files.add(new GmailService.File(file.getName() + extention, outputStream.toByteArray(), file.getMimeType()));
+                            files.add(new AreaFile(file.getName() + extention, outputStream.toByteArray(), file.getMimeType()));
                         }
                     }
                 }

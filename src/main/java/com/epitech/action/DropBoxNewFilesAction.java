@@ -3,6 +3,7 @@ package com.epitech.action;
 import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.v2.files.FolderMetadata;
 import com.epitech.service.GmailService;
+import com.epitech.utils.AreaFile;
 import com.epitech.utils.ErrorCode;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
@@ -51,9 +52,9 @@ public class                            DropBoxNewFilesAction implements IAction
      * @return an ErrorCode status
      */
     public ErrorCode                    run() {
-        DbxRequestConfig config = new DbxRequestConfig("Area_doudoune");
-        DbxClientV2 client = new DbxClientV2(config, this.token);
-        List<GmailService.File> filesData = new ArrayList<>();
+        DbxRequestConfig                config = new DbxRequestConfig("Area_doudoune");
+        DbxClientV2                     client = new DbxClientV2(config, this.token);
+        List<AreaFile>                  filesData = new ArrayList<>();
 
         try {
             ListFolderResult result = client.files().listFolderBuilder("").withIncludeDeleted(false)
@@ -75,7 +76,7 @@ public class                            DropBoxNewFilesAction implements IAction
                                     download.download(outputStream);
                                     String mimeType = URLConnection.guessContentTypeFromName(meta.getName());
                                     byte[] fileByteArray = outputStream.toByteArray();
-                                    filesData.add(new GmailService.File(meta.getName(), fileByteArray, mimeType));
+                                    filesData.add(new AreaFile(meta.getName(), fileByteArray, mimeType));
 
                                 } catch (IOException e) {
                                     e.printStackTrace();

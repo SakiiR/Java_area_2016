@@ -6,7 +6,19 @@ import com.epitech.service.IService;
 
 import java.lang.reflect.Constructor;
 
+/**
+ * This class is used to instanciate some Area
+ * class by String.
+ */
 public class                    AreaReflector {
+    /**
+     * This method is used to instanciate an action
+     * by name.
+     *
+     * @param actionName th string action name.
+     * @param token the token given at action construction.
+     * @return a new instance of Action.
+     */
     public static IAction       instanciateAction(String actionName, String token) {
         IAction                 actionObject = null;
 
@@ -24,6 +36,16 @@ public class                    AreaReflector {
         return actionObject;
     }
 
+    /**
+     * This method is used to instanciate a reaction
+     * by String name.
+     *
+     * @param reactionName the reaction name.
+     * @param token the token given at reaction construction.
+     * @param data the data returned by the run action method.
+     * @see IAction#run()
+     * @return a new reaction instance.
+     */
     public static IReaction     instanciateReaction(String reactionName, String token, Object data) {
         IReaction               reactionObject = null;
 
@@ -41,6 +63,13 @@ public class                    AreaReflector {
         return reactionObject;
     }
 
+    /**
+     * This method is used to instanciate an action
+     * by String name.
+     *
+     * @param serviceName the service name.
+     * @return a new Service instance.
+     */
     public static IService      instanciateService(String serviceName) {
         IService                serviceObject = null;
 
@@ -56,6 +85,13 @@ public class                    AreaReflector {
         return serviceObject;
     }
 
+    /**
+     * This method is used to get service
+     * name in Camel case.
+     *
+     * @param moduleName the module name to process.
+     * @return a formatted string ( ex : 'foo' => 'FooService' )
+     */
     public static String        getServiceNameByModuleName(String moduleName) {
         return  Character.toUpperCase(moduleName.charAt(0)) + moduleName.substring(1) + "Service";
     }

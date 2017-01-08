@@ -27,6 +27,7 @@ public class            UserModule {
 
     /**
      * the constructor for UserModule
+     *
      * @param module the module
      * @param token the token from oauth2 connexion
      */
@@ -37,6 +38,7 @@ public class            UserModule {
 
     /**
      * the getter for module
+     *
      * @return the module to get
      */
     public Module       getModule() {
@@ -45,6 +47,7 @@ public class            UserModule {
 
     /**
      * the setter for module
+     *
      * @param module the module
      * @return this UserModule this
      */
@@ -55,6 +58,7 @@ public class            UserModule {
 
     /**
      * the getter for token
+     *
      * @return the string token
      */
     public String       getToken() {
@@ -63,6 +67,7 @@ public class            UserModule {
 
     /**
      * the setter for token
+     *
      * @param token the token
      * @return the UserModule this
      */
@@ -73,6 +78,7 @@ public class            UserModule {
 
     /**
      * the getter for user
+     *
      * @return the user
      */
     public User         getUser() {
@@ -81,6 +87,7 @@ public class            UserModule {
 
     /**
      * the setter for user
+     *
      * @param user the user
      * @return the UserModule this
      */
@@ -91,6 +98,7 @@ public class            UserModule {
 
     /**
      * the getter for id
+     *
      * @return the string id
      */
     public String       getId() {
@@ -99,6 +107,7 @@ public class            UserModule {
 
     /**
      * the setter for id
+     *
      * @param id the id
      * @return the UserModule this
      */
@@ -109,6 +118,7 @@ public class            UserModule {
 
     /**
      * this function return a string information for the UserModule
+     *
      * @return a string information
      */
     @Override

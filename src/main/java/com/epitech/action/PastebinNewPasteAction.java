@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by terrea_l on 06/01/17.
+ * This class is used to add paste on pastebin.
  */
 public class PastebinNewPasteAction implements IAction {
     private String token;
@@ -25,7 +25,6 @@ public class PastebinNewPasteAction implements IAction {
      * the Constructor for GmailAttachmentsAction
      * @param token the token from the oauth2 connexion
      */
-
     public PastebinNewPasteAction(String token) {
         this.token = token;
         data = null;
@@ -36,7 +35,6 @@ public class PastebinNewPasteAction implements IAction {
      * to execute the action
      * @return an ErrorCode status
      */
-
     @Override
     public ErrorCode run() {
         final List<String> keys = new ArrayList<>();
@@ -78,7 +76,6 @@ public class PastebinNewPasteAction implements IAction {
      * the getter for object data
      * @return an Object data
      */
-
     @Override
     public Object getData() {
         return data;

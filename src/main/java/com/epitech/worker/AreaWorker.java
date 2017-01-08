@@ -76,6 +76,13 @@ public class                        AreaWorker implements Runnable {
         return null;
     }
 
+    /**
+     * Remove some area and usermodule when
+     * they are no more connected.
+     *
+     * @param user the user concerned.
+     * @param moduleName The module concerned.
+     */
     private void                    handleAuthError(User user, String moduleName) {
         for (Area a : user.getAreas()) {
             if (a.getActionModuleName().equals(moduleName) || a.getReactionModuleName().equals(moduleName)) {

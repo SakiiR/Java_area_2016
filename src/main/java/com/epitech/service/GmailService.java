@@ -22,86 +22,62 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 
 
-public class                GmailService implements IService {
-    public                  GmailService() {}
+/**
+ * This class is used to interact with gmail API.
+ */
+public class                                        GmailService implements IService {
+    public                                          GmailService() {}
 
-    public String           login(String username, String password) {
+    /**
+     * NOP
+     *
+     * @param username the username to provide to the concerned API.
+     * @param password the password to provide to the concerned API.
+     * @return
+     */
+    public String                                   login(String username, String password) {
         return "GMAIL_TOKEN";
     }
 
-    public Gmail            buildGmailService(String token) {
-        Gmail               service;
-        GoogleCredential    credential = new GoogleCredential().setAccessToken(token);
-        JsonFactory         jsonFactory = new JacksonFactory();
-        HttpTransport       httpTransport = new NetHttpTransport();
+    /**
+     * Get the gmail service object.
+     *
+     * @param token the token string.
+     * @return a gmail object.
+     * @see Gmail
+     */
+    public Gmail                                    buildGmailService(String token) {
+        Gmail                                       service;
+        GoogleCredential                            credential = new GoogleCredential().setAccessToken(token);
+        JsonFactory                                 jsonFactory = new JacksonFactory();
+        HttpTransport                               httpTransport = new NetHttpTransport();
 
         service = new Gmail.Builder(httpTransport, jsonFactory, credential).setApplicationName("GmailApi").build();
         return service;
     }
 
-    public static class                 File {
-        private byte[]                  data;
-        private String                  filename;
-        private String                  mime;
-
-        public                          File(String filename, byte[] data, String mime) {
-            this.data = data;
-            this.filename = filename;
-            this.mime = mime;
-        }
-
-        public byte[]                   getData() {
-            return this.data;
-        }
-
-        public String                   getFilename() {
-            return filename;
-        }
-
-        public String                   getMime() {
-            return mime;
-        }
-
-        public File                     setData(byte[] data) {
-            this.data = data;
-            return this;
-        }
-
-        public File                     setFilename(String filename) {
-            this.filename = filename;
-            return this;
-        }
-
-        public File                     setMime(String mime) {
-            this.mime = mime;
-            return this;
-        }
-
-        public java.io.File             saveFile() throws FileNotFoundException, IOException {
-            java.io.File                newFile = new java.io.File(String.format("/tmp/%s", filename));
-            FileOutputStream            fileOutputStream = new FileOutputStream(newFile.getAbsoluteFile());
-            fileOutputStream.write(this.data);
-            fileOutputStream.close();
-            return newFile;
-        }
-    }
-
-    public static MimeMessage createEmail(String to,
-                                          String from,
-                                          String subject,
-                                          String bodyText)
-            throws MessagingException {
-        Properties props = new Properties();
-        Session session = Session.getDefaultInstance(props, null);
-
-        MimeMessage email = new MimeMessage(session);
+    /**
+     * Build a gmail message to send it.
+     *
+     * @param to an email.
+     * @param from  an email.
+     * @param subject a subject.
+     * @param bodyText a mail body.
+     * @return a MimeMessage.
+     * @throws MessagingException throw a MessagingException
+     */
+    public static MimeMessage                       createEmail(String to,
+                                                                String from,
+                                                                String subject,
+                                                                String bodyText) throws MessagingException {
+        Properties                                  props = new Properties();
+        Session                                     session = Session.getDefaultInstance(props, null);
+        MimeMessage                                 email = new MimeMessage(session);
 
         email.setFrom(new InternetAddress(from));
         email.addRecipient(javax.mail.Message.RecipientType.TO,
@@ -112,14 +88,32 @@ public class                GmailService implements IService {
         return email;
     }
 
-    public static void sendMessage(Gmail service, String userId, MimeMessage email) throws IOException, MessagingException {
-        Message message = GmailService.createMessageWithEmail(email);
-        message = service.users().messages().send(userId, message).execute();
+    /**
+     * Send a gmail message.
+     *
+     * @param service the gmail service as dependency..
+     * @param userId the user id concerned. ( ex : "me" )
+     * @param email the email Object
+     * @throws IOException throw a IOException.
+     * @throws MessagingException throw a MessagingException.
+     */
+    public static void                              sendMessage(Gmail service, String userId, MimeMessage email) throws IOException, MessagingException {
+        Message                                     message = GmailService.createMessageWithEmail(email);
+
+        service.users().messages().send(userId, message).execute();
     }
 
-    public static Message createMessageWithEmail(MimeMessage email)
-            throws MessagingException, IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    /**
+     * Build a message.
+     *
+     * @param email an email.
+     * @return a google Message .
+     * @throws MessagingException throw a MessagingException.
+     * @throws IOException throw a IOException.
+     */
+    public static Message                           createMessageWithEmail(MimeMessage email) throws MessagingException, IOException {
+        ByteArrayOutputStream                       baos = new ByteArrayOutputStream();
+
         email.writeTo(baos);
         String encodedEmail = Base64.encodeBase64URLSafeString(baos.toByteArray());
         Message message = new Message();
@@ -127,6 +121,13 @@ public class                GmailService implements IService {
         return message;
     }
 
+    /**
+     * Login via the oauth code.
+     *
+     * @param code the code.
+     * @param module the oauth module.
+     * @return a string Token.
+     */
     public String                                   login(String code, Module module) {
         RestTemplate                                restTemplate = new RestTemplate();
         HttpHeaders                                 headers = new HttpHeaders();

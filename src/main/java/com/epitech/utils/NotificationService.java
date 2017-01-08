@@ -25,7 +25,9 @@ public class                        NotificationService {
     private UserRepository          userRepository;
 
 
-
+    /**
+     * JSON Object.
+     */
     public static class             NotificationResponse extends ResponseObject {
         public int                  count;
     }

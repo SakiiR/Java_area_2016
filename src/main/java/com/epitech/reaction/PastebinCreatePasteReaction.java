@@ -1,6 +1,5 @@
 package com.epitech.reaction;
 
-import allbegray.slack.type.File;
 import com.besaba.revonline.pastebinapi.Pastebin;
 import com.besaba.revonline.pastebinapi.impl.factory.PastebinFactory;
 import com.besaba.revonline.pastebinapi.paste.Paste;
@@ -11,21 +10,10 @@ import com.besaba.revonline.pastebinapi.response.Response;
 import com.epitech.action.SlackPostSnippetAction;
 import com.epitech.utils.ErrorCode;
 import com.epitech.utils.Logger;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
-
-import java.io.FileOutputStream;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.util.List;
-import java.util.Scanner;
 
 /**
- * Created by terrea_l on 07/01/17.
+ * This class is used to create a paste.
  */
 public class PastebinCreatePasteReaction implements IReaction{
 
@@ -35,7 +23,6 @@ public class PastebinCreatePasteReaction implements IReaction{
      * the constructor for GithubCreateRepositoriesReaction
      * @param token the token from the oauth2 connexion
      */
-
     public PastebinCreatePasteReaction(String token) {
         this.token = token;
     }
@@ -45,7 +32,6 @@ public class PastebinCreatePasteReaction implements IReaction{
      * @param data the data for creating new repositories
      * @return an ErrorCode status
      */
-
     @Override
     public ErrorCode run(Object data) {
         if (data == null) {
