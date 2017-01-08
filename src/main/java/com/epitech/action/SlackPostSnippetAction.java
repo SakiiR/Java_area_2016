@@ -10,12 +10,8 @@ import com.epitech.worker.AreaWorker;
 import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 /**
