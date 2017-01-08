@@ -29,5 +29,9 @@
 }
 
 .card-image > img {
-    max-width: 115px;
+    width: 115px !important;
+}
+
+li.collection-item.avatar {
+    height: 120px;
 }
