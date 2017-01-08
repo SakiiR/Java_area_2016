@@ -39,11 +39,9 @@ public class SlackHasNewChannelsAction implements IAction {
             for (Channel chan : channels) {
                 Logger.logWarning(chan.toString());
                 java.util.Date date = new java.util.Date(chan.getCreated()*1000);
-                //Logger.logInfo(date.toString());
-                //Logger.logInfo(String.valueOf(AreaWorker.isNewEntity(date)));
                 if (AreaWorker.isNewEntity(date)) {
                     newChannels.add(chan.getName());
-                    Logger.logError("New channel found: " + chan.getName());
+                    Logger.logSuccess("New channel found: " + chan.getName());
                 }
             }
         } catch (Exception e) {
