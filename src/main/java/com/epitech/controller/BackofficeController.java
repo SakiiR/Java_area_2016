@@ -278,7 +278,7 @@ public class                            BackofficeController {
         }
 
         modelMap.addAttribute("backoffice_username", httpSession.getAttribute("backoffice_username"));
-        return "backoffice/notifications.html";
+        return "redirect:/backoffice/notifications";
     }
 
     /**
