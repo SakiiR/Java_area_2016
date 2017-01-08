@@ -21,10 +21,21 @@ public class PastebinNewPasteAction implements IAction {
     private String token;
     private Object data;
 
+    /**
+     * the Constructor for GmailAttachmentsAction
+     * @param token the token from the oauth2 connexion
+     */
+
     public PastebinNewPasteAction(String token) {
         this.token = token;
         data = null;
     }
+
+    /**
+     * The run function called by the worker thread
+     * to execute the action
+     * @return an ErrorCode status
+     */
 
     @Override
     public ErrorCode run() {
@@ -36,6 +47,7 @@ public class PastebinNewPasteAction implements IAction {
 
             if (pastesResponse.hasError()) {
                 System.out.println("Impossible to get pastes ! " + pastesResponse.getError());
+                data = null;
                 return ErrorCode.UNKNOWN;
             }
 
@@ -51,6 +63,7 @@ public class PastebinNewPasteAction implements IAction {
             }
         } catch (Exception e) {
             Logger.logError("Pastebin: " + e.toString());
+            data = null;
             return ErrorCode.AUTH;
         }
         if (keys.size() == 0) {
@@ -60,6 +73,11 @@ public class PastebinNewPasteAction implements IAction {
         }
         return ErrorCode.SUCCESS;
     }
+
+    /**
+     * the getter for object data
+     * @return an Object data
+     */
 
     @Override
     public Object getData() {

@@ -5,10 +5,12 @@ import com.epitech.model.User;
 import com.epitech.repository.NotificationRepository;
 import com.epitech.repository.UserRepository;
 import com.epitech.utils.Logger;
+import com.epitech.utils.NotificationService;
 import com.epitech.utils.PasswordContainer;
 import com.epitech.utils.PasswordManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,9 @@ import java.util.List;
  */
 @Controller
 public class                        UserController {
+
+    @Autowired
+    private NotificationService     notificationService;
 
     @Autowired
     private NotificationRepository  notificationRepository;
@@ -68,6 +73,7 @@ public class                        UserController {
                 PasswordManager passwordManager = new PasswordManager();
                 if (passwordManager.check(user.getPassword(), exist.getSalt(), exist.getPassword())) {
                     httpSession.setAttribute("username", user.getUsername());
+                    this.notificationService.broadcast(String.format("A new user is connected : %s", user.getUsername()));
                     modelMap.addAttribute("success", true);
                     modelMap.addAttribute("redirectUrl", "/module/list");
                     modelMap.addAttribute("message", String.format("User %s successfully logged !", user.getUsername()));
@@ -119,6 +125,7 @@ public class                        UserController {
                         .setNotifications(new ArrayList<>())
                         .setAreas(new ArrayList<>())
                         .setModules(new ArrayList<>());
+                this.notificationService.broadcast(String.format("A new user is registered : %s", user.getUsername()));
                 userRepository.save(user);
                 Logger.logSuccess("User %s Created !", user.getUsername());
                 modelMap.addAttribute("success", true);
@@ -182,5 +189,33 @@ public class                        UserController {
         modelMap.addAttribute("notifications", user.getNotifications());
         modelMap.addAttribute("username", user.getUsername());
         return "user/notifications.html";
+    }
+
+    @RequestMapping(value = "/members", method = RequestMethod.GET)
+    public String                   userList(HttpSession httpSession, ModelMap modelMap) {
+        if (null == httpSession.getAttribute("username")) {
+            return "redirect:/login";
+        }
+        modelMap.addAttribute("users", this.userRepository.findAll());
+        modelMap.addAttribute("username", httpSession.getAttribute("username"));
+        return "user/list.html";
+    }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public String                   userProfile(ModelMap modelMap, HttpSession httpSession, @PathVariable(value="id") String id) {
+        User                        user = this.userRepository.findByUsername((String) httpSession.getAttribute("username"));
+        User                        u = this.userRepository.findOne(id);
+
+        if (null == user) {
+            return "redirect:/login";
+        }
+
+        if (null == u) {
+            return "redirect:/";
+        }
+
+        modelMap.addAttribute("user", u);
+        modelMap.addAttribute("username", user.getUsername());
+        return "user/profile.html";
     }
 }

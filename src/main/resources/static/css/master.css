@@ -27,3 +27,11 @@
 .circle {
     border-radius: 50% !important;
 }
+
+.card-image > img {
+    width: 115px !important;
+}
+
+li.collection-item.avatar {
+    height: 120px;
+}
